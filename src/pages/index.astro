@@ -12,94 +12,162 @@ const featuresLender = [
 ];
 ---
 
-<main>
-  <section class="hero" id="start">
-    <div>
-      <h1>
-        Borrow from people. <span>Lend to people.</span><br />
-        One simple bridge.
-      </h1>
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Amicbridge — Borrow from people. Lend to people.</title>
+    <meta
+      name="description"
+      content="Amicbridge connects people who want to borrow with people who want to lend. You agree the terms – we just help you find each other."
+    />
+  </head>
 
-      <p class="hero-text">
-        Amicbridge connects people who want to <strong>borrow</strong> with people who want to
-        <strong>lend</strong>. You agree the terms – we just help you find each other.
-      </p>
+  <body>
+    <header class="topbar">
+      <div class="container topbar-inner">
+        <a class="brand" href="#start" aria-label="Amicbridge home">
+          <span class="brand-mark">A</span>
+          <span class="brand-name">Amicbridge</span>
+        </a>
 
-      <div class="cta-row">
-        <button class="btn btn-primary">I want to borrow</button>
-        <button class="btn btn-outline">I want to lend</button>
+        <nav class="nav">
+          <a href="#how">How it works</a>
+          <a href="#safety">Safety</a>
+          <a href="#get-started">Get started</a>
+        </nav>
       </div>
+    </header>
 
-      <p class="tiny-note">
-        Accounts, messaging and full matching are coming soon. For now, you can join the early access list.
-      </p>
-    </div>
+    <main>
+      <section class="hero" id="start">
+        <div class="container hero-grid">
+          <div class="hero-copy">
+            <h1>
+              Borrow from people. <span>Lend to people.</span><br />
+              One simple bridge.
+            </h1>
 
-    <aside>
-      <div class="card">
-        <div class="pill">
-          <span class="pill-dot"></span>
-          Live preview · Example match
-        </div>
+            <p class="hero-text">
+              Amicbridge connects people who want to <strong>borrow</strong> with people who want to
+              <strong>lend</strong>. You agree the terms – we just help you find each other.
+            </p>
 
-        <p class="inline-label">Borrower</p>
+            <div class="cta-row" id="get-started">
+              <a class="btn btn-primary" href="#early-access">I want to borrow</a>
+              <a class="btn btn-outline" href="#early-access">I want to lend</a>
+            </div>
 
-        <div class="fake-input">
-          <span>Amount</span>
-          <strong>€2,000</strong>
-        </div>
+            <p class="tiny-note">
+              Accounts, messaging and full matching are coming soon. For now, you can join the early access list.
+            </p>
 
-        <div class="input-row">
-          <div class="fake-input">
-            <span>Duration</span>
-            <strong>6 months</strong>
+            <form class="early-access" id="early-access" method="post">
+              <label class="sr-only" for="email">Email</label>
+              <input
+                id="email"
+                name="email"
+                type="email"
+                placeholder="Email for early access"
+                autocomplete="email"
+                required
+              />
+              <button class="btn btn-primary" type="submit">Join list</button>
+            </form>
+
+            <p class="tiny-note">
+              (Demo form — wire it to Netlify Forms, Supabase, Mailchimp, etc.)
+            </p>
           </div>
-          <div class="fake-input">
-            <span>Max interest</span>
-            <strong>5%</strong>
+
+          <aside class="hero-aside">
+            <div class="card">
+              <div class="pill">
+                <span class="pill-dot" aria-hidden="true"></span>
+                Live preview · Example match
+              </div>
+
+              <p class="inline-label">Borrower</p>
+
+              <div class="fake-input">
+                <span>Amount</span>
+                <strong>€2,000</strong>
+              </div>
+
+              <div class="input-row">
+                <div class="fake-input">
+                  <span>Duration</span>
+                  <strong>6 months</strong>
+                </div>
+                <div class="fake-input">
+                  <span>Max interest</span>
+                  <strong>5%</strong>
+                </div>
+              </div>
+
+              <p class="inline-label">Lender</p>
+
+              <div class="fake-input">
+                <span>Offer</span>
+                <strong>€2,000 · 4.5% APR</strong>
+              </div>
+
+              <div class="toggle-row" role="tablist" aria-label="Loan type">
+                <span class="toggle-chip active" role="tab" aria-selected="true">Personal loan</span>
+                <span class="toggle-chip" role="tab" aria-selected="false">Small business</span>
+              </div>
+
+              <p class="tiny-note" style="margin-top: 0.8rem;">
+                Example only. On the real platform you’ll be able to post your own request or lending offer and talk
+                directly to matches.
+              </p>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <section class="features" id="how">
+        <div class="container features-grid">
+          <div class="feature-card">
+            <h2>For borrowers</h2>
+            <ul>
+              {featuresBorrower.map((item) => <li>{item}</li>)}
+            </ul>
+          </div>
+
+          <div class="feature-card">
+            <h2>For lenders</h2>
+            <ul>
+              {featuresLender.map((item) => <li>{item}</li>)}
+            </ul>
           </div>
         </div>
+      </section>
 
-        <p class="inline-label">Lender</p>
-
-        <div class="fake-input">
-          <span>Offer</span>
-          <strong>€2,000 · 4.5% APR</strong>
+      <section class="section">
+        <div class="container section-inner">
+          <h2 class="section-title">How it works</h2>
+          <ol class="steps">
+            <li><strong>Post.</strong> Borrowers describe what they need. Lenders describe what they’re willing to offer.</li>
+            <li><strong>Match.</strong> Amicbridge surfaces potential fits based on amount, duration and preferences.</li>
+            <li><strong>Talk.</strong> You chat, ask questions, and agree terms directly.</li>
+            <li><strong>Decide.</strong> You proceed (or don’t). We don’t hold money or force anything.</li>
+          </ol>
         </div>
+      </section>
 
-        <div class="toggle-row">
-          <span class="toggle-chip active">Personal loan</span>
-          <span class="toggle-chip">Small business</span>
+      <footer class="footer" id="safety">
+        <div class="container footer-inner">
+          <p>
+            <strong>Important:</strong> Amicbridge is a connection platform. We do not provide loans, hold money,
+            or guarantee repayments. Always do your own checks and consult a professional if needed before lending
+            or borrowing.
+          </p>
+
+          <p class="tiny-note">© {new Date().getFullYear()} Amicbridge</p>
         </div>
-
-        <p class="tiny-note" style="margin-top: 0.8rem;">
-          Example only. On the real platform you’ll be able to post your own request or lending offer and talk directly to matches.
-        </p>
-      </div>
-    </aside>
-  </section>
-
-  <section class="features" id="how">
-    <div class="feature-card">
-      <h2>For borrowers</h2>
-      <ul>
-        {featuresBorrower.map((item) => <li>{item}</li>)}
-      </ul>
-    </div>
-
-    <div class="feature-card">
-      <h2>For lenders</h2>
-      <ul>
-        {featuresLender.map((item) => <li>{item}</li>)}
-      </ul>
-    </div>
-  </section>
-
-  <footer id="safety">
-    <p>
-      <strong>Important:</strong>
-      Amicbridge is a connection platform. We do not provide loans, hold money, or guarantee repayments.
-      Always do your own checks and consult a professional if needed before lending or borrowing.
-    </p>
-  </footer>
-</main>
+      </footer>
+    </main>
+  </body>
+</html>
