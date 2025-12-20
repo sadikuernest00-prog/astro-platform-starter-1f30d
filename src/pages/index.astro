@@ -1,3 +1,4 @@
+---
 const featuresBorrower = [
   "Reach real people willing to lend, not just banks.",
   "Explain your situation in your own words.",
@@ -9,113 +10,96 @@ const featuresLender = [
   "Set your own interest rate and conditions.",
   "Chat with borrowers before you commit.",
 ];
+---
 
-export default function AmicbridgeLanding() {
-  return (
-    <main>
-      {/* HERO */}
-      <section className="hero" id="start">
-        <div>
-          <h1>
-            Borrow from people. <span>Lend to people.</span>
-            <br />
-            One simple bridge.
-          </h1>
+<main>
+  <section class="hero" id="start">
+    <div>
+      <h1>
+        Borrow from people. <span>Lend to people.</span><br />
+        One simple bridge.
+      </h1>
 
-          <p className="hero-text">
-            Amicbridge connects people who want to{" "}
-            <strong>borrow</strong> with people who want to{" "}
-            <strong>lend</strong>. You agree the terms – we just help you find
-            each other.
-          </p>
+      <p class="hero-text">
+        Amicbridge connects people who want to <strong>borrow</strong> with people who want to
+        <strong>lend</strong>. You agree the terms – we just help you find each other.
+      </p>
 
-          <div className="cta-row">
-            <button className="btn btn-primary">I want to borrow</button>
-            <button className="btn btn-outline">I want to lend</button>
+      <div class="cta-row">
+        <button class="btn btn-primary">I want to borrow</button>
+        <button class="btn btn-outline">I want to lend</button>
+      </div>
+
+      <p class="tiny-note">
+        Accounts, messaging and full matching are coming soon. For now, you can join the early access list.
+      </p>
+    </div>
+
+    <aside>
+      <div class="card">
+        <div class="pill">
+          <span class="pill-dot"></span>
+          Live preview · Example match
+        </div>
+
+        <p class="inline-label">Borrower</p>
+
+        <div class="fake-input">
+          <span>Amount</span>
+          <strong>€2,000</strong>
+        </div>
+
+        <div class="input-row">
+          <div class="fake-input">
+            <span>Duration</span>
+            <strong>6 months</strong>
           </div>
-
-          <p className="tiny-note">
-            Accounts, messaging and full matching are coming soon. For now, you
-            can join the early access list.
-          </p>
-        </div>
-
-        {/* PREVIEW CARD */}
-        <aside>
-          <div className="card">
-            <div className="pill">
-              <span className="pill-dot"></span>
-              Live preview · Example match
-            </div>
-
-            <p className="inline-label">Borrower</p>
-
-            <div className="fake-input">
-              <span>Amount</span>
-              <strong>€2,000</strong>
-            </div>
-
-            <div className="input-row">
-              <div className="fake-input">
-                <span>Duration</span>
-                <strong>6 months</strong>
-              </div>
-              <div className="fake-input">
-                <span>Max interest</span>
-                <strong>5%</strong>
-              </div>
-            </div>
-
-            <p className="inline-label">Lender</p>
-
-            <div className="fake-input">
-              <span>Offer</span>
-              <strong>€2,000 · 4.5% APR</strong>
-            </div>
-
-            <div className="toggle-row">
-              <span className="toggle-chip active">Personal loan</span>
-              <span className="toggle-chip">Small business</span>
-            </div>
-
-            <p className="tiny-note" style={{ marginTop: "0.8rem" }}>
-              Example only. On the real platform you’ll be able to post your own
-              request or lending offer and talk directly to matches.
-            </p>
+          <div class="fake-input">
+            <span>Max interest</span>
+            <strong>5%</strong>
           </div>
-        </aside>
-      </section>
-
-      {/* FEATURES */}
-      <section className="features" id="how">
-        <div className="feature-card">
-          <h2>For borrowers</h2>
-          <ul>
-            {featuresBorrower.map((item, i) => (
-              <li key={i}>{item}</li>
-            ))}
-          </ul>
         </div>
 
-        <div className="feature-card">
-          <h2>For lenders</h2>
-          <ul>
-            {featuresLender.map((item, i) => (
-              <li key={i}>{item}</li>
-            ))}
-          </ul>
-        </div>
-      </section>
+        <p class="inline-label">Lender</p>
 
-      {/* FOOTER / SAFETY */}
-      <footer id="safety">
-        <p>
-          <strong>Important:</strong> Amicbridge is a connection platform. We do
-          not provide loans, hold money, or guarantee repayments. Always do your
-          own checks and consult a professional if needed before lending or
-          borrowing.
+        <div class="fake-input">
+          <span>Offer</span>
+          <strong>€2,000 · 4.5% APR</strong>
+        </div>
+
+        <div class="toggle-row">
+          <span class="toggle-chip active">Personal loan</span>
+          <span class="toggle-chip">Small business</span>
+        </div>
+
+        <p class="tiny-note" style="margin-top: 0.8rem;">
+          Example only. On the real platform you’ll be able to post your own request or lending offer and talk directly to matches.
         </p>
-      </footer>
-    </main>
-  );
-}
+      </div>
+    </aside>
+  </section>
+
+  <section class="features" id="how">
+    <div class="feature-card">
+      <h2>For borrowers</h2>
+      <ul>
+        {featuresBorrower.map((item) => <li>{item}</li>)}
+      </ul>
+    </div>
+
+    <div class="feature-card">
+      <h2>For lenders</h2>
+      <ul>
+        {featuresLender.map((item) => <li>{item}</li>)}
+      </ul>
+    </div>
+  </section>
+
+  <footer id="safety">
+    <p>
+      <strong>Important:</strong>
+      Amicbridge is a connection platform. We do not provide loans, hold money, or guarantee repayments.
+      Always do your own checks and consult a professional if needed before lending or borrowing.
+    </p>
+  </footer>
+</main>
