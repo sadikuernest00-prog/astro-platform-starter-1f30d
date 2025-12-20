@@ -1,33 +1,20 @@
 ---
-const featuresBorrower = [
-  "Reach real people willing to lend, not just banks.",
-  "Explain your situation in your own words.",
-  "Negotiate repayment terms directly with lenders.",
+const site = {
+  name: "Amicbridge",
+  tagline: "Borrowing & lending — made human, simple, and transparent.",
+  domain: "amicbridge.com",
+};
+
+const borrowerBenefits = [
+  "Request funding from real people — not only banks.",
+  "Explain your story and terms in your own words.",
+  "Get flexible offers and negotiate directly.",
 ];
 
-const featuresLender = [
-  "See real people and projects, not just numbers.",
-  "Set your own interest rate and conditions.",
-  "Chat with borrowers before you commit.",
-];
-
-const faqs = [
-  {
-    q: "Does Amicbridge provide loans?",
-    a: "No. Amicbridge is a connection platform. We don’t lend, we don’t hold funds, and we don’t guarantee repayment.",
-  },
-  {
-    q: "How do rates and terms work?",
-    a: "Borrowers and lenders discuss and agree terms directly. You can set limits (e.g., max APR, duration) and decide whether to proceed.",
-  },
-  {
-    q: "Is this available in my country?",
-    a: "Early access is opening in phases. Join the list to be notified when your region is supported.",
-  },
-  {
-    q: "What protections exist for lenders?",
-    a: "We provide tools for identity checks, messaging, and matching signals (coming soon). Lenders should always do their own due diligence.",
-  },
+const investorBenefits = [
+  "Review real borrowers and use-cases — not just numbers.",
+  "Set your own return target and conditions.",
+  "Choose your risk level and deal size.",
 ];
 ---
 
@@ -36,604 +23,581 @@ const faqs = [
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Amicbridge — People-first lending, simple and direct</title>
-    <meta
-      name="description"
-      content="Connect with real borrowers and lenders. Agree terms directly — Amicbridge helps you find each other."
-    />
-
-    <!-- If you have global styles, import them like this: -->
-    <!-- <link rel="stylesheet" href="/styles/global.css" /> -->
+    <title>{site.name} — Simple borrowing & lending</title>
+    <meta name="description" content="Amicbridge is a people-first borrowing and lending platform. Send a borrowing request or an investment request in minutes." />
+    <meta name="robots" content="index,follow" />
   </head>
 
   <body>
+    <!-- Top bar -->
     <header class="topbar">
       <div class="container topbar-inner">
-        <a class="brand" href="#top" aria-label="Amicbridge home">
-          <span class="brand-mark" aria-hidden="true">A</span>
-          <span class="brand-name">Amicbridge</span>
-          <span class="brand-badge">Early Access</span>
+        <a class="brand" href="#top" aria-label={`${site.name} home`}>
+          <span class="logo">A</span>
+          <span class="brand-text">
+            <span class="brand-name">{site.name}</span>
+            <span class="brand-sub">{site.domain}</span>
+          </span>
         </a>
 
-        <nav class="nav" aria-label="Primary">
+        <nav class="nav" aria-label="Primary navigation">
           <a href="#how">How it works</a>
-          <a href="#benefits">Benefits</a>
-          <a href="#trust">Trust & safety</a>
-          <a class="nav-cta" href="#get-started">Get started</a>
+          <a href="#forms">Send request</a>
+          <a class="nav-cta" href="#invest">Investment</a>
         </nav>
       </div>
     </header>
 
     <main id="top">
-      <!-- HERO -->
+      <!-- Hero -->
       <section class="hero">
         <div class="container hero-grid">
           <div class="hero-copy">
-            <p class="eyebrow">People-first lending marketplace</p>
+            <p class="badge">Early access • Requests open</p>
 
             <h1>
               Borrow from people.<br />
-              <span>Lend to people.</span><br />
-              A simpler bridge.
+              <span>Lend (invest) in people.</span><br />
+              Simple. Direct. Clear.
             </h1>
 
-            <p class="hero-text">
-              Amicbridge helps borrowers and lenders find each other and agree terms directly.
-              No bank-style black boxes — just clear terms, real conversations, and informed decisions.
+            <p class="lead">
+              {site.name} is a connection platform for borrowing and lending. You choose the terms — we help you
+              send a request and find the right match.
             </p>
 
-            <div class="cta-row" id="get-started">
-              <a class="btn btn-primary" href="#early-access">Join early access</a>
-              <a class="btn btn-outline" href="#how">See how it works</a>
+            <div class="cta-row">
+              <a class="btn btn-primary" href="#borrow">Send borrowing request</a>
+              <a class="btn btn-outline" href="#invest">Send investment request</a>
             </div>
 
-            <div class="trust-row" aria-label="Trust indicators">
-              <div class="trust-chip">
-                <span class="dot dot-green" aria-hidden="true"></span>
-                Identity & profile signals (coming soon)
+            <p class="note">
+              <strong>Important:</strong> Amicbridge does not provide loans, does not hold funds, and does not
+              guarantee repayments. Always do your own checks.
+            </p>
+
+            <div class="mini-grid" aria-label="Highlights">
+              <div class="mini-card">
+                <strong>Fast</strong>
+                <span>Send a request in minutes.</span>
               </div>
-              <div class="trust-chip">
-                <span class="dot dot-purple" aria-hidden="true"></span>
-                Direct messaging & negotiation
+              <div class="mini-card">
+                <strong>Flexible</strong>
+                <span>Set amount, duration, and target rate.</span>
               </div>
-              <div class="trust-chip">
-                <span class="dot dot-gray" aria-hidden="true"></span>
-                We don’t hold funds
+              <div class="mini-card">
+                <strong>Human</strong>
+                <span>Explain your situation or strategy.</span>
               </div>
             </div>
-
-            <form class="early-access" id="early-access" method="post">
-              <label class="sr-only" for="email">Email</label>
-              <input
-                id="email"
-                name="email"
-                type="email"
-                placeholder="Email for early access"
-                autocomplete="email"
-                required
-              />
-              <button class="btn btn-primary" type="submit">Request invite</button>
-              <p class="tiny-note">
-                We’ll email you when your region opens. No spam. Unsubscribe anytime.
-              </p>
-            </form>
           </div>
 
-          <!-- HERO PREVIEW CARD -->
-          <aside class="hero-aside">
-            <div class="card">
-              <div class="card-top">
-                <div class="pill">
-                  <span class="pill-dot" aria-hidden="true"></span>
-                  Live preview · Example match
-                </div>
-                <span class="pill-secondary">Transparent terms</span>
+          <aside class="hero-panel" aria-label="Preview">
+            <div class="panel">
+              <div class="panel-title">
+                <span class="dot" aria-hidden="true"></span>
+                Example preview
               </div>
 
-              <p class="inline-label">Borrow request</p>
-
-              <div class="fake-input">
-                <span>Amount</span>
-                <strong>€2,000</strong>
+              <div class="panel-block">
+                <div class="label">Borrow request</div>
+                <div class="row">
+                  <div class="chip"><span>Amount</span><strong>€2,000</strong></div>
+                  <div class="chip"><span>Duration</span><strong>6 months</strong></div>
+                </div>
+                <div class="chip full"><span>Max APR</span><strong>5%</strong></div>
               </div>
 
-              <div class="input-row">
-                <div class="fake-input">
-                  <span>Duration</span>
-                  <strong>6 months</strong>
-                </div>
-                <div class="fake-input">
-                  <span>Max APR</span>
-                  <strong>5%</strong>
+              <div class="divider" aria-hidden="true"></div>
+
+              <div class="panel-block">
+                <div class="label">Investor offer</div>
+                <div class="chip full"><span>Offer</span><strong>€2,000 at 4.5% APR</strong></div>
+                <div class="row">
+                  <div class="chip"><span>Type</span><strong>Personal</strong></div>
+                  <div class="chip"><span>Risk</span><strong>Medium</strong></div>
                 </div>
               </div>
 
-              <p class="inline-label">Lender offer</p>
-
-              <div class="fake-input">
-                <span>Offer</span>
-                <strong>€2,000 · 4.5% APR</strong>
-              </div>
-
-              <div class="toggle-row" role="tablist" aria-label="Loan type">
-                <span class="toggle-chip active" role="tab" aria-selected="true">Personal</span>
-                <span class="toggle-chip" role="tab" aria-selected="false">Business</span>
-              </div>
-
-              <div class="divider" role="separator" aria-hidden="true"></div>
-
-              <div class="mini-metrics">
-                <div class="metric">
-                  <span class="metric-label">Matching</span>
-                  <strong class="metric-value">Strong</strong>
-                </div>
-                <div class="metric">
-                  <span class="metric-label">Chat</span>
-                  <strong class="metric-value">Open</strong>
-                </div>
-                <div class="metric">
-                  <span class="metric-label">Decision</span>
-                  <strong class="metric-value">Yours</strong>
-                </div>
-              </div>
-
-              <p class="tiny-note" style="margin-top: 0.8rem;">
-                Example only. In the real platform you’ll post your own request/offer and talk directly to matches.
+              <p class="panel-note">
+                Example only. Real matching, messaging, and onboarding will be added as the platform evolves.
               </p>
             </div>
           </aside>
         </div>
       </section>
 
-      <!-- BENEFITS -->
-      <section class="section" id="benefits">
-        <div class="container">
-          <div class="section-head">
-            <h2>Built for clarity, not complexity</h2>
-            <p class="section-sub">
-              Whether you’re borrowing or lending, Amicbridge is designed to make terms understandable
-              and conversations straightforward.
-            </p>
-          </div>
-
-          <div class="features-grid">
-            <div class="feature-card">
-              <h3>For borrowers</h3>
-              <ul>
-                {featuresBorrower.map((item) => <li>{item}</li>)}
-              </ul>
-            </div>
-
-            <div class="feature-card">
-              <h3>For lenders</h3>
-              <ul>
-                {featuresLender.map((item) => <li>{item}</li>)}
-              </ul>
-            </div>
-          </div>
-
-          <div class="note-bar">
-            <strong>Coming soon:</strong> profiles, matching signals, messaging, and early access onboarding.
-          </div>
-        </div>
-      </section>
-
-      <!-- HOW IT WORKS -->
-      <section class="section section-muted" id="how">
+      <!-- How it works -->
+      <section class="section" id="how">
         <div class="container">
           <div class="section-head">
             <h2>How it works</h2>
-            <p class="section-sub">
-              A simple flow: post, match, talk, decide. No hidden steps.
-            </p>
-          </div>
-
-          <ol class="steps">
-            <li>
-              <div class="step-num">1</div>
-              <div class="step-body">
-                <strong>Create a request or offer</strong>
-                <p>Set amount, duration, and preferences. Borrowers can explain their situation in their own words.</p>
-              </div>
-            </li>
-            <li>
-              <div class="step-num">2</div>
-              <div class="step-body">
-                <strong>Get potential matches</strong>
-                <p>We surface compatible profiles. You stay in control of what you share and when.</p>
-              </div>
-            </li>
-            <li>
-              <div class="step-num">3</div>
-              <div class="step-body">
-                <strong>Chat and negotiate</strong>
-                <p>Ask questions, clarify expectations, and agree terms directly.</p>
-              </div>
-            </li>
-            <li>
-              <div class="step-num">4</div>
-              <div class="step-body">
-                <strong>Proceed (or don’t)</strong>
-                <p>Decisions are yours. Amicbridge doesn’t hold money or guarantee outcomes.</p>
-              </div>
-            </li>
-          </ol>
-        </div>
-      </section>
-
-      <!-- TRUST / SAFETY -->
-      <section class="section" id="trust">
-        <div class="container">
-          <div class="section-head">
-            <h2>Trust & safety</h2>
-            <p class="section-sub">
-              Fintech reality check: trust is a system, not a vibe. Here’s how we think about it.
-            </p>
-          </div>
-
-          <div class="trust-grid">
-            <div class="trust-card">
-              <h3>Transparency first</h3>
-              <p>Clear terms and direct conversation. No opaque “approval score” magic tricks.</p>
-            </div>
-            <div class="trust-card">
-              <h3>Signals & verification</h3>
-              <p>Identity and profile signals are planned. You choose what to accept before proceeding.</p>
-            </div>
-            <div class="trust-card">
-              <h3>No custody</h3>
-              <p>We don’t hold user funds. You remain in control of your decisions and arrangements.</p>
-            </div>
-          </div>
-
-          <div class="disclaimer">
             <p>
-              <strong>Important:</strong> Amicbridge is a connection platform. We do not provide loans, hold money, or
-              guarantee repayments. Always do your own checks and consult a professional if needed before lending
-              or borrowing.
+              Amicbridge is built around one idea: a simple request creates clarity. Borrowers and investors can
+              meet on understandable terms.
             </p>
+          </div>
+
+          <div class="steps">
+            <div class="step">
+              <div class="step-num">1</div>
+              <div>
+                <strong>Send a request</strong>
+                <p>Borrowers request funding. Investors describe their investment strategy and conditions.</p>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-num">2</div>
+              <div>
+                <strong>Review and connect</strong>
+                <p>We review incoming requests and help connect relevant matches (manual during early access).</p>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-num">3</div>
+              <div>
+                <strong>Agree terms directly</strong>
+                <p>You choose: proceed, negotiate, or decline. The decision is always yours.</p>
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
-      <!-- FAQ -->
-      <section class="section section-muted" id="faq">
+      <!-- Benefits -->
+      <section class="section alt">
+        <div class="container two-col">
+          <div class="card">
+            <h3>For borrowers</h3>
+            <ul>
+              {borrowerBenefits.map((b) => <li>{b}</li>)}
+            </ul>
+          </div>
+
+          <div class="card">
+            <h3>For investors / lenders</h3>
+            <ul>
+              {investorBenefits.map((b) => <li>{b}</li>)}
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- Forms -->
+      <section class="section" id="forms">
         <div class="container">
           <div class="section-head">
-            <h2>FAQ</h2>
-            <p class="section-sub">Quick answers. No corporate fog machine.</p>
+            <h2>Send a request</h2>
+            <p>
+              Choose the form you need. Both go to the same secure inbox via Formspree.
+            </p>
           </div>
 
-          <div class="faq">
-            {faqs.map((item) => (
-              <details class="faq-item">
-                <summary>{item.q}</summary>
-                <p>{item.a}</p>
-              </details>
-            ))}
+          <div class="forms-grid">
+            <!-- Borrow request -->
+            <article class="form-card" id="borrow">
+              <h3>Borrowing request</h3>
+              <p class="muted">Tell us what you need and the terms you can handle.</p>
+
+              <form action="https://formspree.io/f/xzznjkvd" method="POST">
+                <input type="hidden" name="requestType" value="Borrowing request" />
+
+                <div class="grid2">
+                  <label>
+                    Full name
+                    <input name="name" type="text" placeholder="Your name" required />
+                  </label>
+                  <label>
+                    Email
+                    <input name="email" type="email" placeholder="you@email.com" required />
+                  </label>
+                </div>
+
+                <div class="grid3">
+                  <label>
+                    Amount (EUR)
+                    <input name="amount" type="number" min="0" step="100" placeholder="2000" required />
+                  </label>
+                  <label>
+                    Duration (months)
+                    <input name="durationMonths" type="number" min="1" step="1" placeholder="6" required />
+                  </label>
+                  <label>
+                    Max APR (%)
+                    <input name="maxApr" type="number" min="0" step="0.1" placeholder="5" />
+                  </label>
+                </div>
+
+                <label>
+                  Purpose / situation
+                  <textarea
+                    name="message"
+                    rows="5"
+                    placeholder="Explain what the loan is for, your situation, and any important details."
+                    required></textarea>
+                </label>
+
+                <label class="checkbox">
+                  <input type="checkbox" name="acceptDisclaimer" required />
+                  <span>I understand Amicbridge does not provide loans or guarantee repayment.</span>
+                </label>
+
+                <button class="btn btn-primary" type="submit">Send borrowing request</button>
+                <p class="tiny">By submitting, you agree to be contacted about your request.</p>
+              </form>
+            </article>
+
+            <!-- Investment request -->
+            <article class="form-card" id="invest">
+              <h3>Investment request</h3>
+              <p class="muted">Share your strategy and what kinds of borrowers you want to support.</p>
+
+              <form action="https://formspree.io/f/xzznjkvd" method="POST">
+                <input type="hidden" name="requestType" value="Investment request" />
+
+                <div class="grid2">
+                  <label>
+                    Full name
+                    <input name="name" type="text" placeholder="Your name" required />
+                  </label>
+                  <label>
+                    Email
+                    <input name="email" type="email" placeholder="you@email.com" required />
+                  </label>
+                </div>
+
+                <div class="grid3">
+                  <label>
+                    Budget (EUR)
+                    <input name="budget" type="number" min="0" step="100" placeholder="5000" required />
+                  </label>
+                  <label>
+                    Target APR (%)
+                    <input name="targetApr" type="number" min="0" step="0.1" placeholder="6" />
+                  </label>
+                  <label>
+                    Preferred duration (months)
+                    <input name="preferredDurationMonths" type="number" min="1" step="1" placeholder="6–24" />
+                  </label>
+                </div>
+
+                <label>
+                  Investment strategy / conditions
+                  <textarea
+                    name="strategy"
+                    rows="5"
+                    placeholder="Example: personal loans only, max 12 months, prefer stable income, require basic verification, etc."
+                    required></textarea>
+                </label>
+
+                <label>
+                  Notes (optional)
+                  <textarea name="notes" rows="3" placeholder="Any extra details."></textarea>
+                </label>
+
+                <label class="checkbox">
+                  <input type="checkbox" name="acceptDisclaimer" required />
+                  <span>I understand lending involves risk and Amicbridge does not guarantee repayments.</span>
+                </label>
+
+                <button class="btn btn-primary" type="submit">Send investment request</button>
+                <p class="tiny">By submitting, you agree to be contacted about your request.</p>
+              </form>
+            </article>
           </div>
         </div>
       </section>
 
-      <!-- FOOTER -->
-      <footer class="footer">
+      <!-- Footer -->
+      <footer class="footer" id="safety">
         <div class="container footer-inner">
-          <div class="footer-left">
-            <div class="brand footer-brand">
-              <span class="brand-mark" aria-hidden="true">A</span>
-              <span class="brand-name">Amicbridge</span>
+          <div>
+            <div class="foot-brand">
+              <span class="logo small" aria-hidden="true">A</span>
+              <strong>{site.name}</strong>
             </div>
-            <p class="tiny-note">
-              A people-first connection platform for borrowing and lending.
+            <p class="muted" style="margin-top: 0.5rem;">
+              Connection platform only. We do not provide loans, hold money, or guarantee repayments.
             </p>
           </div>
 
-          <div class="footer-right">
+          <div class="foot-links">
             <a href="#how">How it works</a>
-            <a href="#trust">Trust & safety</a>
-            <a href="#get-started">Get started</a>
+            <a href="#borrow">Borrow</a>
+            <a href="#invest">Invest</a>
           </div>
         </div>
 
-        <div class="container footer-bottom">
-          <p class="tiny-note">© {new Date().getFullYear()} Amicbridge. All rights reserved.</p>
+        <div class="container foot-bottom">
+          <p class="tiny">© {new Date().getFullYear()} {site.name}. All rights reserved.</p>
         </div>
       </footer>
     </main>
 
-    <!-- OPTIONAL: Minimal styles in the same file (so you truly have "full code") -->
     <style>
       :root{
-        --bg:#0b0f17;
-        --panel:rgba(255,255,255,.06);
-        --panel2:rgba(255,255,255,.04);
-        --border:rgba(255,255,255,.12);
-        --text:rgba(255,255,255,.92);
-        --muted:rgba(255,255,255,.68);
-        --muted2:rgba(255,255,255,.55);
-        --accent:#7c5cff;
-        --good:#22c55e;
-        --shadow:0 24px 80px rgba(0,0,0,.35);
-        --r:18px;
+        --bg:#ffffff;
+        --text:#0f172a;
+        --muted:#475569;
+        --muted2:#64748b;
+        --border:#e2e8f0;
+        --soft:#f8fafc;
+        --soft2:#f1f5f9;
+        --accent:#2563eb;
+        --accent2:#1d4ed8;
+        --shadow:0 16px 50px rgba(2, 6, 23, 0.08);
+        --r:16px;
       }
       *{box-sizing:border-box}
       html,body{margin:0;padding:0}
       body{
-        font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Arial;
-        background:
-          radial-gradient(1200px 600px at 30% 10%, rgba(124,92,255,.22), transparent 55%),
-          radial-gradient(900px 600px at 80% 30%, rgba(34,197,94,.12), transparent 60%),
-          var(--bg);
-        color:var(--text);
-        line-height:1.5;
+        font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
+        background: var(--bg);
+        color: var(--text);
+        line-height: 1.5;
       }
-      a{color:inherit;text-decoration:none}
-      a:hover{text-decoration:underline}
+      a{color:inherit}
       .container{width:min(1120px,calc(100% - 2rem));margin:0 auto}
 
       /* Topbar */
       .topbar{
-        position:sticky;top:0;z-index:20;
-        backdrop-filter:blur(10px);
-        background:rgba(11,15,23,.55);
-        border-bottom:1px solid rgba(255,255,255,.08);
+        position: sticky; top: 0; z-index: 20;
+        background: rgba(255,255,255,.88);
+        backdrop-filter: blur(10px);
+        border-bottom: 1px solid var(--border);
       }
-      .topbar-inner{display:flex;align-items:center;justify-content:space-between;padding:.95rem 0}
-      .brand{display:inline-flex;align-items:center;gap:.6rem;font-weight:750;letter-spacing:.2px}
-      .brand-mark{
-        width:34px;height:34px;display:grid;place-items:center;border-radius:10px;
-        background:linear-gradient(135deg, rgba(124,92,255,1), rgba(34,197,94,.85));
-        box-shadow:0 12px 30px rgba(124,92,255,.18); color:white;
+      .topbar-inner{
+        display:flex;align-items:center;justify-content:space-between;
+        padding: .95rem 0;
+        gap: 1rem;
       }
-      .brand-name{opacity:.95}
-      .brand-badge{
-        margin-left:.35rem;
-        font-size:.78rem;
-        padding:.22rem .5rem;
-        border:1px solid rgba(255,255,255,.14);
-        border-radius:999px;
-        color:var(--muted);
-        background:rgba(255,255,255,.06);
+      .brand{
+        display:flex;align-items:center;gap:.7rem;
+        text-decoration:none;
       }
-      .nav{display:flex;align-items:center;gap:1rem;font-size:.95rem;color:var(--muted)}
-      .nav a{padding:.35rem .45rem;border-radius:12px}
-      .nav a:hover{background:rgba(255,255,255,.06);text-decoration:none}
+      .logo{
+        width:36px;height:36px;border-radius:12px;
+        display:grid;place-items:center;
+        background: linear-gradient(135deg, var(--accent), #22c55e);
+        color:#fff;font-weight:800;
+        box-shadow: 0 10px 25px rgba(37, 99, 235, 0.20);
+      }
+      .logo.small{width:30px;height:30px;border-radius:10px}
+      .brand-text{display:flex;flex-direction:column;line-height:1.1}
+      .brand-name{font-weight:800}
+      .brand-sub{font-size:.86rem;color:var(--muted2)}
+      .nav{display:flex;gap:1rem;align-items:center}
+      .nav a{
+        text-decoration:none;
+        color: var(--muted);
+        font-weight:600;
+        padding:.35rem .45rem;
+        border-radius: 10px;
+      }
+      .nav a:hover{background: var(--soft2); color: var(--text)}
       .nav-cta{
-        color:rgba(255,255,255,.92);
-        border:1px solid rgba(255,255,255,.14);
-        background:rgba(255,255,255,.06);
+        border:1px solid var(--border);
+        background: var(--soft);
+        color: var(--text) !important;
       }
 
       /* Hero */
-      .hero{padding:4.4rem 0 2.6rem}
-      .hero-grid{display:grid;grid-template-columns:1.2fr .9fr;gap:2rem;align-items:start}
-      .eyebrow{
-        display:inline-flex;align-items:center;gap:.5rem;
-        font-size:.9rem;color:var(--muted);
-        padding:.35rem .6rem;border-radius:999px;
-        border:1px solid rgba(255,255,255,.12);
-        background:rgba(255,255,255,.05);
+      .hero{padding: 3.6rem 0 2.4rem}
+      .hero-grid{
+        display:grid;
+        grid-template-columns: 1.1fr .9fr;
+        gap: 2rem;
+        align-items: start;
+      }
+      .badge{
+        display:inline-flex;align-items:center;
+        font-size:.9rem;
+        color: var(--muted);
+        background: var(--soft);
+        border:1px solid var(--border);
+        padding:.35rem .6rem;
+        border-radius: 999px;
+        margin: 0;
       }
       h1{
-        margin:.9rem 0 0;
-        font-size:clamp(2.1rem,4vw,3.35rem);
-        line-height:1.07;
-        letter-spacing:-.02em;
+        margin: .9rem 0 0;
+        font-size: clamp(2.1rem, 4vw, 3.1rem);
+        line-height: 1.07;
+        letter-spacing: -0.02em;
       }
       h1 span{
-        background:linear-gradient(90deg, rgba(124,92,255,1), rgba(34,197,94,.95));
-        -webkit-background-clip:text;background-clip:text;color:transparent;
+        background: linear-gradient(90deg, var(--accent), #16a34a);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
       }
-      .hero-text{margin:1rem 0 1.2rem;color:var(--muted);font-size:1.06rem;max-width:64ch}
-
-      /* Buttons */
-      .cta-row{display:flex;gap:.8rem;flex-wrap:wrap;margin:.6rem 0 1.1rem}
+      .lead{margin: 1rem 0 1.2rem; color: var(--muted); font-size: 1.05rem; max-width: 62ch;}
+      .cta-row{display:flex;gap:.8rem;flex-wrap:wrap; margin: .6rem 0 1.1rem;}
       .btn{
         display:inline-flex;align-items:center;justify-content:center;
-        border-radius:999px;
-        padding:.82rem 1.08rem;
-        font-weight:700;font-size:.98rem;
-        border:1px solid rgba(255,255,255,.14);
-        background:rgba(255,255,255,.06);
-        color:rgba(255,255,255,.92);
-      }
-      .btn:hover{filter:brightness(1.08);text-decoration:none}
-      .btn-primary{
-        border-color:transparent;
-        background:linear-gradient(135deg, rgba(124,92,255,1), rgba(34,197,94,.92));
-        box-shadow:0 18px 40px rgba(124,92,255,.16);
-      }
-      .btn-outline{background:transparent}
-
-      /* Trust chips */
-      .trust-row{display:flex;gap:.55rem;flex-wrap:wrap;margin:.2rem 0 1.2rem}
-      .trust-chip{
-        display:inline-flex;align-items:center;gap:.5rem;
-        padding:.38rem .6rem;border-radius:999px;
-        border:1px solid rgba(255,255,255,.12);
-        background:rgba(255,255,255,.05);
-        color:var(--muted);
-        font-size:.9rem;
-      }
-      .dot{width:9px;height:9px;border-radius:999px}
-      .dot-green{background:var(--good);box-shadow:0 0 0 6px rgba(34,197,94,.12)}
-      .dot-purple{background:var(--accent);box-shadow:0 0 0 6px rgba(124,92,255,.14)}
-      .dot-gray{background:rgba(255,255,255,.45);box-shadow:0 0 0 6px rgba(255,255,255,.08)}
-
-      /* Form */
-      .early-access{margin-top:.7rem}
-      .early-access input{
-        width:min(420px,100%);
-        padding:.82rem .95rem;border-radius:999px;
-        border:1px solid rgba(255,255,255,.14);
-        background:rgba(0,0,0,.18);
-        color:rgba(255,255,255,.92);
-        outline:none;
-        margin-right:.55rem;
-      }
-      .early-access input::placeholder{color:rgba(255,255,255,.45)}
-      .tiny-note{font-size:.86rem;color:var(--muted2);margin:.6rem 0 0}
-
-      /* Card */
-      .card{
-        background:var(--panel);
+        padding:.82rem 1.05rem;
+        border-radius: 999px;
+        font-weight:800;
         border:1px solid var(--border);
-        border-radius:var(--r);
-        padding:1rem;
-        box-shadow:var(--shadow);
+        background: var(--soft);
+        color: var(--text);
+        text-decoration:none;
+        cursor:pointer;
       }
-      .card-top{display:flex;align-items:center;justify-content:space-between;gap:.6rem;flex-wrap:wrap}
-      .pill{
-        display:inline-flex;align-items:center;gap:.55rem;
-        padding:.35rem .6rem;border-radius:999px;
-        background:rgba(255,255,255,.08);
-        border:1px solid rgba(255,255,255,.12);
-        font-size:.85rem;color:var(--muted);
-        margin-bottom:.7rem;
+      .btn:hover{filter:brightness(0.98)}
+      .btn-primary{
+        background: var(--accent);
+        border-color: var(--accent);
+        color: #fff;
+        box-shadow: 0 14px 30px rgba(37,99,235,.18);
       }
-      .pill-dot{
-        width:10px;height:10px;border-radius:999px;background:var(--good);
-        box-shadow:0 0 0 6px rgba(34,197,94,.12);
+      .btn-primary:hover{background: var(--accent2); border-color: var(--accent2)}
+      .btn-outline{background:#fff}
+      .note{
+        margin: 0.9rem 0 0;
+        font-size: .95rem;
+        color: var(--muted);
+        background: var(--soft);
+        border: 1px solid var(--border);
+        padding: .85rem 1rem;
+        border-radius: var(--r);
       }
-      .pill-secondary{
-        font-size:.85rem;color:var(--muted);
-        padding:.3rem .55rem;border-radius:999px;
-        border:1px solid rgba(255,255,255,.12);
-        background:rgba(255,255,255,.05);
+
+      .mini-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.8rem;margin-top:1.1rem}
+      .mini-card{
+        border: 1px solid var(--border);
+        background: #fff;
+        border-radius: var(--r);
+        padding: .9rem 1rem;
       }
-      .inline-label{
-        margin:1rem 0 .35rem;
-        font-size:.82rem;color:var(--muted2);
-        text-transform:uppercase;letter-spacing:.14em;
+      .mini-card strong{display:block}
+      .mini-card span{display:block;color:var(--muted);margin-top:.25rem;font-size:.95rem}
+
+      /* Right panel */
+      .panel{
+        border:1px solid var(--border);
+        background: #fff;
+        border-radius: var(--r);
+        padding: 1.05rem;
+        box-shadow: var(--shadow);
       }
-      .fake-input{
-        display:flex;align-items:center;justify-content:space-between;gap:1rem;
-        padding:.72rem .8rem;border-radius:14px;
-        border:1px solid rgba(255,255,255,.12);
-        background:rgba(0,0,0,.18);
+      .panel-title{
+        display:flex;align-items:center;gap:.5rem;
+        font-weight:800;color:var(--muted);
+        margin-bottom: .9rem;
       }
-      .fake-input span{color:var(--muted2);font-size:.92rem}
-      .fake-input strong{font-weight:780}
-      .input-row{display:grid;grid-template-columns:1fr 1fr;gap:.65rem;margin-top:.65rem}
-      .toggle-row{display:flex;gap:.5rem;margin-top:.7rem;flex-wrap:wrap}
-      .toggle-chip{
-        padding:.45rem .65rem;border-radius:999px;font-size:.88rem;
-        border:1px solid rgba(255,255,255,.12);
-        color:var(--muted);background:rgba(255,255,255,.06);
+      .dot{width:10px;height:10px;border-radius:999px;background:#22c55e; box-shadow:0 0 0 6px rgba(34,197,94,.12)}
+      .label{
+        font-size:.78rem;
+        text-transform: uppercase;
+        letter-spacing: .14em;
+        color: var(--muted2);
+        margin-bottom: .35rem;
       }
-      .toggle-chip.active{
-        color:rgba(255,255,255,.92);
-        border-color:rgba(124,92,255,.55);
-        background:rgba(124,92,255,.16);
+      .panel-block{margin-bottom: .9rem}
+      .row{display:grid;grid-template-columns: 1fr 1fr; gap:.6rem}
+      .chip{
+        border:1px solid var(--border);
+        background: var(--soft);
+        border-radius: 14px;
+        padding: .7rem .75rem;
+        display:flex;align-items:center;justify-content:space-between; gap:.8rem;
       }
-      .divider{height:1px;background:rgba(255,255,255,.12);margin:1rem 0}
-      .mini-metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:.6rem}
-      .metric{
-        border:1px solid rgba(255,255,255,.1);
-        background:rgba(255,255,255,.04);
-        border-radius:14px;
-        padding:.65rem .7rem;
-      }
-      .metric-label{display:block;color:var(--muted2);font-size:.82rem}
-      .metric-value{display:block;margin-top:.2rem}
+      .chip span{color: var(--muted); font-weight: 650; font-size:.92rem}
+      .chip strong{font-weight:900}
+      .chip.full{margin-top:.6rem}
+      .divider{height:1px;background: var(--border); margin: 1rem 0}
+      .panel-note{margin:0;color:var(--muted);font-size:.92rem}
 
       /* Sections */
-      .section{padding:3rem 0}
-      .section-muted{background:linear-gradient(180deg, rgba(255,255,255,.03), transparent)}
-      .section-head{max-width:70ch;margin-bottom:1.2rem}
-      .section-head h2{margin:0;font-size:1.6rem}
-      .section-sub{margin:.5rem 0 0;color:var(--muted)}
-      .features-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
-      .feature-card{
-        background:var(--panel2);
-        border:1px solid rgba(255,255,255,.1);
-        border-radius:var(--r);
-        padding:1.2rem;
-      }
-      .feature-card h3{margin:0 0 .65rem;font-size:1.15rem}
-      .feature-card ul{margin:0;padding-left:1.1rem;color:var(--muted)}
-      .feature-card li{margin:.5rem 0}
-      .note-bar{
-        margin-top:1rem;
-        padding:.85rem 1rem;
-        border-radius:var(--r);
-        border:1px solid rgba(255,255,255,.12);
-        background:rgba(255,255,255,.05);
-        color:var(--muted);
-      }
+      .section{padding: 2.8rem 0}
+      .section.alt{background: var(--soft)}
+      .section-head{max-width: 75ch; margin-bottom: 1.2rem;}
+      .section-head h2{margin:0;font-size: 1.7rem}
+      .section-head p{margin:.55rem 0 0; color: var(--muted);}
 
-      /* Steps */
-      .steps{list-style:none;padding:0;margin:0;display:grid;gap:.85rem}
-      .steps li{
-        display:flex;gap:.9rem;
-        padding:1rem;
-        border-radius:var(--r);
-        border:1px solid rgba(255,255,255,.1);
-        background:rgba(255,255,255,.04);
+      .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
+      .step{
+        background:#fff;
+        border: 1px solid var(--border);
+        border-radius: var(--r);
+        padding: 1rem 1.05rem;
+        display:flex;gap:.85rem;
       }
       .step-num{
         width:34px;height:34px;border-radius:12px;
         display:grid;place-items:center;
-        background:rgba(124,92,255,.18);
-        border:1px solid rgba(124,92,255,.35);
-        color:rgba(255,255,255,.92);
-        font-weight:800;
+        background: rgba(37,99,235,.10);
+        border:1px solid rgba(37,99,235,.22);
+        color: var(--accent);
+        font-weight: 900;
+        flex: 0 0 auto;
       }
-      .step-body p{margin:.35rem 0 0;color:var(--muted)}
+      .step p{margin:.35rem 0 0; color: var(--muted);}
 
-      /* Trust */
-      .trust-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
-      .trust-card{
-        border-radius:var(--r);
-        border:1px solid rgba(255,255,255,.1);
-        background:rgba(255,255,255,.04);
-        padding:1.1rem;
+      .two-col{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+      .card{
+        background:#fff;
+        border:1px solid var(--border);
+        border-radius: var(--r);
+        padding: 1.1rem 1.2rem;
+        box-shadow: 0 8px 30px rgba(2,6,23,.04);
       }
-      .trust-card h3{margin:0 0 .35rem}
-      .trust-card p{margin:0;color:var(--muted)}
-      .disclaimer{
-        margin-top:1.2rem;
-        padding:1rem 1.1rem;
-        border-radius:var(--r);
-        border:1px solid rgba(255,255,255,.12);
-        background:rgba(0,0,0,.16);
-        color:var(--muted);
-      }
+      .card h3{margin:0 0 .6rem}
+      ul{margin:0;padding-left:1.2rem;color:var(--muted)}
+      li{margin:.5rem 0}
 
-      /* FAQ */
-      .faq{display:grid;gap:.65rem}
-      .faq-item{
-        border:1px solid rgba(255,255,255,.1);
-        background:rgba(255,255,255,.04);
-        border-radius:var(--r);
-        padding:.9rem 1rem;
+      /* Forms */
+      .forms-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;align-items:start}
+      .form-card{
+        background:#fff;
+        border:1px solid var(--border);
+        border-radius: var(--r);
+        padding: 1.2rem;
+        box-shadow: 0 10px 40px rgba(2,6,23,.05);
       }
-      .faq-item summary{
-        cursor:pointer;
-        font-weight:700;
-        color:rgba(255,255,255,.9);
+      .form-card h3{margin:0 0 .35rem}
+      .muted{color: var(--muted)}
+      form{margin-top: .9rem}
+      label{display:block;font-weight:750;margin:.75rem 0 .25rem}
+      input, textarea{
+        width: 100%;
+        border:1px solid var(--border);
+        background: #fff;
+        border-radius: 14px;
+        padding: .78rem .85rem;
+        font: inherit;
+        color: var(--text);
+        outline: none;
       }
-      .faq-item p{margin:.6rem 0 0;color:var(--muted)}
+      textarea{resize: vertical}
+      input:focus, textarea:focus{
+        border-color: rgba(37,99,235,.45);
+        box-shadow: 0 0 0 4px rgba(37,99,235,.12);
+      }
+      .grid2{display:grid;grid-template-columns:1fr 1fr;gap:.8rem}
+      .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:.8rem}
+      .checkbox{display:flex;gap:.6rem;align-items:flex-start;font-weight:650;color:var(--muted);margin-top:.8rem}
+      .checkbox input{width:auto;margin-top:.2rem}
+      .tiny{margin:.6rem 0 0;color:var(--muted2);font-size:.88rem}
 
       /* Footer */
-      .footer{padding:2.5rem 0 1.8rem;border-top:1px solid rgba(255,255,255,.08)}
+      .footer{border-top:1px solid var(--border); padding: 2.2rem 0 1.6rem; background:#fff}
       .footer-inner{display:flex;align-items:flex-start;justify-content:space-between;gap:1rem;flex-wrap:wrap}
-      .footer-right{display:flex;gap:1rem;color:var(--muted)}
-      .footer-right a{padding:.2rem .2rem}
-      .footer-bottom{padding-top:1rem;margin-top:1rem;border-top:1px solid rgba(255,255,255,.08)}
-
-      /* A11y */
-      .sr-only{
-        position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;
-        clip:rect(0,0,0,0);white-space:nowrap;border:0;
-      }
+      .foot-brand{display:flex;align-items:center;gap:.6rem}
+      .foot-links{display:flex;gap:1rem;flex-wrap:wrap}
+      .foot-links a{color:var(--muted);font-weight:650;text-decoration:none}
+      .foot-links a:hover{text-decoration:underline}
+      .foot-bottom{margin-top:1.2rem;padding-top:1rem;border-top:1px solid var(--border)}
+      .tiny{color:var(--muted2)}
 
       /* Responsive */
-      @media (max-width: 920px){
+      @media (max-width: 980px){
         .hero-grid{grid-template-columns:1fr}
-        .features-grid{grid-template-columns:1fr}
-        .trust-grid{grid-template-columns:1fr}
-        .early-access input{margin-right:0;margin-bottom:.6rem}
+        .steps{grid-template-columns:1fr}
+        .two-col{grid-template-columns:1fr}
+        .forms-grid{grid-template-columns:1fr}
+        .grid3{grid-template-columns:1fr}
       }
     </style>
   </body>
