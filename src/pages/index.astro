@@ -1,19 +1,798 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import Markdown from '../components/Markdown.astro';
-
-const explainer = `
-An Astro website can go way beyond static pages - on the right platform.
-
-Netlify supports not only [Streaming SSR](https://docs.astro.build/en/guides/server-side-rendering/#html-streaming) and fast [Edge Middleware](https://docs.astro.build/en/guides/middleware/), but also [on-demand revalidation](https://www.netlify.com/blog/cache-tags-and-purge-api-on-netlify/) and [stale-while-revalidate](https://www.netlify.com/blog/swr-and-fine-grained-cache-control/). 
-Any page or data can be rebuilt only when needed, without site visitors ever getting a performance hit.
-`;
+const FORMSPREE_ACTION = "https://formspree.io/f/xzznjkvd";
+const site = {
+  name: "AmicBridge",
+  tagline: "A bridge between people who need capital and those who want to grow it.",
+};
 ---
 
-<Layout title="Welcome to Astro.">
-    <h1 class="mb-10">Netlify Platform Starter for Astro</h1>
-    <Markdown content={explainer} class="mb-10 text-lg" />
-    <p>
-        <a href="https://docs.netlify.com/frameworks/astro/" class="btn btn-lg sm:min-w-64">Read the Docs</a>
-    </p>
-</Layout>
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{site.name} — {site.tagline}</title>
+    <meta
+      name="description"
+      content="AmicBridge connects borrowers and lenders, and helps long-term investors grow wealth with tailored strategies. Request a loan, lend capital, or get an investment strategy."
+    />
+    <meta name="theme-color" content="#0b1220" />
+
+    <style>
+      :root{
+        --bg: #070b14;
+        --card: rgba(255,255,255,.06);
+        --card2: rgba(255,255,255,.09);
+        --stroke: rgba(255,255,255,.12);
+        --text: rgba(255,255,255,.88);
+        --muted: rgba(255,255,255,.65);
+        --muted2: rgba(255,255,255,.52);
+        --brand: #7c3aed; /* violet */
+        --brand2: #22c55e; /* green */
+        --accent: #38bdf8; /* sky */
+        --danger: #fb7185;
+        --shadow: 0 20px 70px rgba(0,0,0,.55);
+        --radius: 18px;
+        --radius2: 26px;
+        --max: 1120px;
+        --font: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      }
+
+      *{ box-sizing: border-box; }
+      html,body{ height: 100%; }
+      body{
+        margin: 0;
+        font-family: var(--font);
+        color: var(--text);
+        background:
+          radial-gradient(1200px 600px at 20% -10%, rgba(124,58,237,.35), transparent 60%),
+          radial-gradient(900px 500px at 90% 0%, rgba(56,189,248,.22), transparent 55%),
+          radial-gradient(900px 700px at 50% 110%, rgba(34,197,94,.18), transparent 60%),
+          linear-gradient(180deg, #050713, #070b14 40%, #050713);
+        overflow-x: hidden;
+      }
+
+      a{ color: inherit; text-decoration: none; }
+      .wrap{ max-width: var(--max); margin: 0 auto; padding: 24px; }
+      .nav{
+        position: sticky; top: 0; z-index: 50;
+        backdrop-filter: blur(14px);
+        background: rgba(7,11,20,.65);
+        border-bottom: 1px solid rgba(255,255,255,.08);
+      }
+      .nav-inner{
+        display:flex; align-items:center; justify-content:space-between;
+        gap: 14px;
+        padding: 14px 24px;
+        max-width: var(--max); margin: 0 auto;
+      }
+      .brand{
+        display:flex; align-items:center; gap: 10px;
+        font-weight: 800;
+        letter-spacing: .2px;
+      }
+      .logo{
+        width: 34px; height: 34px; border-radius: 12px;
+        background:
+          radial-gradient(circle at 30% 30%, rgba(255,255,255,.35), transparent 45%),
+          linear-gradient(135deg, rgba(124,58,237,1), rgba(56,189,248,1));
+        box-shadow: 0 14px 30px rgba(124,58,237,.28);
+        position: relative;
+        overflow: hidden;
+      }
+      .logo:after{
+        content:"";
+        position:absolute; inset:-30%;
+        background: linear-gradient(90deg, transparent, rgba(255,255,255,.35), transparent);
+        transform: rotate(25deg);
+        animation: shimmer 5s linear infinite;
+      }
+      @keyframes shimmer{
+        0%{ transform: translateX(-40%) rotate(25deg); opacity: .0; }
+        10%{ opacity: .45; }
+        55%{ opacity: .18; }
+        100%{ transform: translateX(40%) rotate(25deg); opacity: 0; }
+      }
+
+      .nav-links{
+        display:flex; align-items:center; gap: 18px;
+        color: var(--muted);
+        font-weight: 600;
+        font-size: 14px;
+      }
+      .nav-links a{ padding: 8px 10px; border-radius: 12px; }
+      .nav-links a:hover{ background: rgba(255,255,255,.06); color: rgba(255,255,255,.85); }
+
+      .cta{
+        display:flex; align-items:center; gap: 10px;
+      }
+      .btn{
+        display:inline-flex; align-items:center; justify-content:center;
+        gap: 10px;
+        padding: 10px 14px;
+        border-radius: 14px;
+        border: 1px solid rgba(255,255,255,.12);
+        background: rgba(255,255,255,.06);
+        color: rgba(255,255,255,.9);
+        font-weight: 700;
+        font-size: 14px;
+        cursor:pointer;
+        transition: transform .12s ease, background .12s ease, border-color .12s ease;
+        user-select: none;
+      }
+      .btn:hover{
+        background: rgba(255,255,255,.09);
+        border-color: rgba(255,255,255,.18);
+        transform: translateY(-1px);
+      }
+      .btn-primary{
+        background: linear-gradient(135deg, rgba(124,58,237,1), rgba(56,189,248,1));
+        border-color: rgba(255,255,255,.18);
+        box-shadow: 0 16px 40px rgba(124,58,237,.22);
+      }
+      .btn-primary:hover{ transform: translateY(-2px); }
+      .btn-ghost{
+        background: transparent;
+      }
+
+      .hero{
+        padding: 36px 0 6px;
+      }
+      .hero-grid{
+        display:grid;
+        grid-template-columns: 1.1fr .9fr;
+        gap: 22px;
+        align-items: start;
+      }
+      @media (max-width: 940px){
+        .hero-grid{ grid-template-columns: 1fr; }
+        .nav-links{ display:none; }
+      }
+
+      .kicker{
+        display:inline-flex; align-items:center; gap:10px;
+        padding: 8px 12px;
+        border-radius: 999px;
+        border: 1px solid rgba(255,255,255,.12);
+        background: rgba(255,255,255,.05);
+        color: rgba(255,255,255,.8);
+        font-weight: 650;
+        font-size: 13px;
+      }
+      .dot{
+        width: 9px; height: 9px; border-radius: 999px;
+        background: radial-gradient(circle at 30% 30%, rgba(255,255,255,.8), rgba(34,197,94,.95));
+        box-shadow: 0 0 0 5px rgba(34,197,94,.12);
+      }
+      h1{
+        margin: 14px 0 12px;
+        font-size: clamp(34px, 4.3vw, 54px);
+        line-height: 1.05;
+        letter-spacing: -0.8px;
+      }
+      .lead{
+        color: var(--muted);
+        font-size: 16.5px;
+        line-height: 1.6;
+        max-width: 62ch;
+      }
+      .hero-actions{
+        display:flex; flex-wrap:wrap;
+        gap: 12px;
+        margin-top: 18px;
+      }
+      .trust-row{
+        display:flex; flex-wrap:wrap;
+        gap: 10px;
+        margin-top: 16px;
+        color: var(--muted2);
+        font-size: 13px;
+      }
+      .pill{
+        display:inline-flex; align-items:center; gap:8px;
+        padding: 8px 10px;
+        border-radius: 999px;
+        border: 1px solid rgba(255,255,255,.10);
+        background: rgba(255,255,255,.04);
+      }
+      .pill svg{ opacity: .85; }
+
+      .panel{
+        background: rgba(255,255,255,.04);
+        border: 1px solid rgba(255,255,255,.10);
+        border-radius: var(--radius2);
+        box-shadow: var(--shadow);
+        overflow:hidden;
+      }
+      .panel-head{
+        padding: 18px 18px 14px;
+        background:
+          radial-gradient(700px 320px at 20% 0%, rgba(124,58,237,.25), transparent 55%),
+          radial-gradient(520px 300px at 100% 0%, rgba(56,189,248,.18), transparent 55%),
+          linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+        border-bottom: 1px solid rgba(255,255,255,.08);
+      }
+      .panel-title{
+        margin: 0;
+        font-size: 16px;
+        letter-spacing: -.2px;
+      }
+      .panel-sub{
+        margin: 8px 0 0;
+        font-size: 13px;
+        color: var(--muted);
+        line-height: 1.45;
+      }
+      .panel-body{ padding: 18px; }
+
+      .grid-3{
+        display:grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 14px;
+      }
+      @media (max-width: 940px){
+        .grid-3{ grid-template-columns: 1fr; }
+      }
+
+      .card{
+        border-radius: var(--radius);
+        background: rgba(255,255,255,.04);
+        border: 1px solid rgba(255,255,255,.09);
+        padding: 14px;
+      }
+      .card h3{
+        margin: 8px 0 6px;
+        font-size: 15px;
+        letter-spacing: -.2px;
+      }
+      .card p{ margin: 0; color: var(--muted); font-size: 13.5px; line-height: 1.55; }
+      .icon{
+        width: 40px; height: 40px;
+        display:grid; place-items:center;
+        border-radius: 14px;
+        border: 1px solid rgba(255,255,255,.12);
+        background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.03));
+      }
+
+      form{
+        display:grid;
+        gap: 12px;
+      }
+      .row{
+        display:grid;
+        gap: 12px;
+        grid-template-columns: 1fr 1fr;
+      }
+      @media (max-width: 640px){
+        .row{ grid-template-columns: 1fr; }
+      }
+
+      label{
+        display:block;
+        font-weight: 700;
+        font-size: 13px;
+        margin-bottom: 7px;
+        color: rgba(255,255,255,.82);
+      }
+      input, select, textarea{
+        width: 100%;
+        padding: 11px 12px;
+        border-radius: 14px;
+        border: 1px solid rgba(255,255,255,.12);
+        background: rgba(0,0,0,.20);
+        color: rgba(255,255,255,.92);
+        outline: none;
+        transition: border-color .12s ease, transform .12s ease, background .12s ease;
+        font-size: 14px;
+      }
+      textarea{ min-height: 120px; resize: vertical; }
+      input:focus, select:focus, textarea:focus{
+        border-color: rgba(56,189,248,.45);
+        background: rgba(0,0,0,.28);
+      }
+      .help{
+        color: var(--muted2);
+        font-size: 12.5px;
+        line-height: 1.45;
+        margin-top: 8px;
+      }
+
+      .radio-grid{
+        display:grid;
+        gap: 10px;
+        grid-template-columns: repeat(3, 1fr);
+      }
+      @media (max-width: 940px){
+        .radio-grid{ grid-template-columns: 1fr; }
+      }
+      .radio{
+        display:flex; gap: 10px;
+        align-items:flex-start;
+        padding: 12px;
+        border-radius: 16px;
+        border: 1px solid rgba(255,255,255,.10);
+        background: rgba(255,255,255,.03);
+        cursor:pointer;
+        transition: transform .12s ease, background .12s ease, border-color .12s ease;
+      }
+      .radio:hover{
+        transform: translateY(-1px);
+        background: rgba(255,255,255,.05);
+        border-color: rgba(255,255,255,.16);
+      }
+      .radio input{ width: 18px; height: 18px; margin-top: 2px; }
+      .radio b{ display:block; font-size: 13.5px; margin-bottom: 3px; }
+      .radio span{ display:block; font-size: 12.5px; color: var(--muted); line-height: 1.35; }
+
+      .divider{
+        height: 1px;
+        background: rgba(255,255,255,.08);
+        margin: 18px 0;
+      }
+
+      .section{
+        padding: 20px 0 0;
+      }
+      .section h2{
+        margin: 0 0 8px;
+        font-size: 22px;
+        letter-spacing: -.4px;
+      }
+      .section p{ margin: 0; color: var(--muted); line-height: 1.6; }
+
+      details{
+        border: 1px solid rgba(255,255,255,.10);
+        background: rgba(255,255,255,.03);
+        border-radius: 16px;
+        padding: 12px 12px;
+      }
+      summary{
+        cursor:pointer;
+        font-weight: 750;
+        color: rgba(255,255,255,.86);
+      }
+      details p{ margin: 10px 0 0; color: var(--muted); font-size: 13.5px; line-height: 1.6; }
+
+      .footer{
+        margin-top: 34px;
+        border-top: 1px solid rgba(255,255,255,.08);
+        padding: 22px 0 34px;
+        color: var(--muted2);
+        font-size: 12.5px;
+        line-height: 1.55;
+      }
+      .fineprint{
+        border: 1px solid rgba(255,255,255,.10);
+        background: rgba(255,255,255,.03);
+        border-radius: 16px;
+        padding: 12px;
+      }
+
+      .toast{
+        display:none;
+        margin: 12px 0 0;
+        padding: 10px 12px;
+        border-radius: 14px;
+        border: 1px solid rgba(34,197,94,.35);
+        background: rgba(34,197,94,.10);
+        color: rgba(255,255,255,.9);
+        font-size: 13px;
+        line-height: 1.45;
+      }
+      .toast.error{
+        border-color: rgba(251,113,133,.35);
+        background: rgba(251,113,133,.10);
+      }
+    </style>
+  </head>
+
+  <body>
+    <header class="nav">
+      <div class="nav-inner">
+        <a class="brand" href="#top" aria-label="AmicBridge home">
+          <span class="logo" aria-hidden="true"></span>
+          <span>{site.name}</span>
+        </a>
+
+        <nav class="nav-links" aria-label="Primary navigation">
+          <a href="#services">Services</a>
+          <a href="#request">Request</a>
+          <a href="#faq">FAQ</a>
+          <a href="#contact">Contact</a>
+        </nav>
+
+        <div class="cta">
+          <a class="btn btn-ghost" href="#request">Start a request</a>
+          <a class="btn btn-primary" href="#request">Get matched</a>
+        </div>
+      </div>
+    </header>
+
+    <main id="top" class="wrap">
+      <section class="hero">
+        <div class="hero-grid">
+          <div>
+            <span class="kicker">
+              <span class="dot" aria-hidden="true"></span>
+              Bridge capital. Build futures.
+            </span>
+
+            <h1>
+              {site.name} is the bridge between people who need a loan,
+              those who want to lend, and investors thinking long-term.
+            </h1>
+
+            <p class="lead">
+              Submit a request in minutes. We help structure deals, match counterparties,
+              and outline investment strategies. Choose your currency (EUR, NOK, BTC, USDC, USD)
+              and tell us what you’re trying to achieve.
+            </p>
+
+            <div class="hero-actions">
+              <a class="btn btn-primary" href="#request">
+                <span>Open Request Form</span>
+                <span aria-hidden="true">→</span>
+              </a>
+              <a class="btn" href="#services">See services</a>
+            </div>
+
+            <div class="trust-row" aria-label="Trust indicators">
+              <span class="pill">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M12 2l7 4v6c0 5-3 9-7 10C8 21 5 17 5 12V6l7-4z" stroke="currentColor" stroke-width="2"/>
+                  <path d="M9 12l2 2 4-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                Structured requests
+              </span>
+              <span class="pill">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M3 12h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                  <path d="M7 8l-4 4 4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M17 8l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                Multi-currency
+              </span>
+              <span class="pill">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M20 7l-8 8-4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M4 7h6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+                Clear next steps
+              </span>
+            </div>
+          </div>
+
+          <aside class="panel" id="request" aria-label="Request panel">
+            <div class="panel-head">
+              <p class="panel-title"><strong>Request a match</strong> — we’ll review and respond</p>
+              <p class="panel-sub">
+                Choose a request type and give the essentials. The more detail you provide,
+                the faster we can structure a path forward.
+              </p>
+              <div id="toast" class="toast" role="status" aria-live="polite"></div>
+            </div>
+
+            <div class="panel-body">
+              <form
+                id="amicbridge-form"
+                action={FORMSPREE_ACTION}
+                method="POST"
+              >
+                <!-- Helps you recognize form submissions in email -->
+                <input type="hidden" name="_subject" value="New AmicBridge Request" />
+                <input type="hidden" name="source" value="amicbridge.com" />
+
+                <div>
+                  <label>Request type</label>
+                  <div class="radio-grid">
+                    <label class="radio">
+                      <input type="radio" name="request_type" value="Loan Request" required />
+                      <div>
+                        <b>Loan Request</b>
+                        <span>I need funding and want help structuring terms.</span>
+                      </div>
+                    </label>
+
+                    <label class="radio">
+                      <input type="radio" name="request_type" value="Borrowing / Lending Request" required />
+                      <div>
+                        <b>Borrowing / Lending</b>
+                        <span>I want to lend capital or connect with borrowers.</span>
+                      </div>
+                    </label>
+
+                    <label class="radio">
+                      <input type="radio" name="request_type" value="Investment Strategy Request" required />
+                      <div>
+                        <b>Investment Strategy</b>
+                        <span>I want a long-term plan to grow money responsibly.</span>
+                      </div>
+                    </label>
+                  </div>
+                </div>
+
+                <div class="divider"></div>
+
+                <div class="row">
+                  <div>
+                    <label for="full_name">Full name</label>
+                    <input id="full_name" name="full_name" placeholder="Your name" autocomplete="name" required />
+                  </div>
+                  <div>
+                    <label for="email">Email</label>
+                    <input id="email" name="email" type="email" placeholder="you@email.com" autocomplete="email" required />
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div>
+                    <label for="phone">Phone (optional)</label>
+                    <input id="phone" name="phone" placeholder="+47 ..." autocomplete="tel" />
+                  </div>
+                  <div>
+                    <label for="country">Country (optional)</label>
+                    <input id="country" name="country" placeholder="Norway" autocomplete="country-name" />
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div>
+                    <label for="currency">Currency</label>
+                    <select id="currency" name="currency" required>
+                      <option value="" selected disabled>Choose currency</option>
+                      <option value="EUR">EUR (Euro)</option>
+                      <option value="NOK">NOK (Norwegian Krone)</option>
+                      <option value="BTC">BTC (Bitcoin)</option>
+                      <option value="USDC">USDC (USD Coin)</option>
+                      <option value="USD">USD (Dollar)</option>
+                    </select>
+                  </div>
+
+                  <div>
+                    <label for="amount">Amount (approx.)</label>
+                    <input
+                      id="amount"
+                      name="amount"
+                      type="number"
+                      inputmode="decimal"
+                      min="0"
+                      step="any"
+                      placeholder="e.g. 25000"
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div>
+                    <label for="timeline">Timeline</label>
+                    <select id="timeline" name="timeline" required>
+                      <option value="" selected disabled>Choose timeline</option>
+                      <option value="ASAP (0–7 days)">ASAP (0–7 days)</option>
+                      <option value="Soon (1–4 weeks)">Soon (1–4 weeks)</option>
+                      <option value="Planned (1–3 months)">Planned (1–3 months)</option>
+                      <option value="Long-term (3+ months)">Long-term (3+ months)</option>
+                    </select>
+                  </div>
+
+                  <div>
+                    <label for="risk_profile">Risk preference</label>
+                    <select id="risk_profile" name="risk_profile" required>
+                      <option value="" selected disabled>Choose risk level</option>
+                      <option value="Low">Low</option>
+                      <option value="Balanced">Balanced</option>
+                      <option value="High">High</option>
+                      <option value="Not sure">Not sure</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div>
+                  <label for="details">Details</label>
+                  <textarea
+                    id="details"
+                    name="details"
+                    placeholder="Tell us what you want to achieve, preferred terms (if any), collateral (if relevant), and any important context."
+                    required
+                  ></textarea>
+                  <div class="help">
+                    Tip: include purpose, desired term length, repayment idea (if borrowing), and what you consider acceptable return (if lending).
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div>
+                    <label for="preferred_contact">Preferred contact</label>
+                    <select id="preferred_contact" name="preferred_contact" required>
+                      <option value="" selected disabled>Select</option>
+                      <option value="Email">Email</option>
+                      <option value="Phone">Phone</option>
+                      <option value="WhatsApp / Messaging">WhatsApp / Messaging</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label for="privacy_ack">Consent</label>
+                    <select id="privacy_ack" name="privacy_ack" required>
+                      <option value="" selected disabled>Select</option>
+                      <option value="I consent to be contacted about this request.">I consent to be contacted</option>
+                      <option value="I want information only (no calls).">Info only (no calls)</option>
+                    </select>
+                  </div>
+                </div>
+
+                <button class="btn btn-primary" type="submit">
+                  Submit request
+                  <span aria-hidden="true">↗</span>
+                </button>
+
+                <div class="help">
+                  By submitting, you confirm the information is accurate to the best of your knowledge.
+                  We may request additional verification depending on the request type.
+                </div>
+              </form>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <section id="services" class="section">
+        <h2>What AmicBridge does</h2>
+        <p>
+          We’re a bridge. That means we focus on clarity, structure, and alignment:
+          matching the right people and setting expectations early.
+        </p>
+
+        <div style="margin-top:14px" class="grid-3">
+          <div class="card">
+            <div class="icon" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                <path d="M12 1v22" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7H14a3.5 3.5 0 0 1 0 7H6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <h3>Borrower requests</h3>
+            <p>
+              Need a loan? We collect the essentials, help you present the request professionally,
+              and connect you with potential lenders or capital partners.
+            </p>
+          </div>
+
+          <div class="card">
+            <div class="icon" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                <path d="M3 11l9-9 9 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M5 10v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <h3>Lender / capital placement</h3>
+            <p>
+              Want to lend? Tell us your preferred terms, risk tolerance, and currency.
+              We focus on fit, documentation expectations, and clear deal flow.
+            </p>
+          </div>
+
+          <div class="card">
+            <div class="icon" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                <path d="M4 19V5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                <path d="M4 19h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                <path d="M7 15l4-4 3 3 5-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <h3>Investment strategy (long-term)</h3>
+            <p>
+              Prefer compounding over chaos? We can outline an investment strategy request:
+              goals, time horizon, risk profile, and a plan you can iterate over.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section id="faq" class="section" style="margin-top:22px">
+        <h2>FAQ</h2>
+        <p>Clear answers beat hype. Here’s what people usually ask first.</p>
+
+        <div style="margin-top:14px; display:grid; gap:12px;">
+          <details>
+            <summary>Is AmicBridge a bank?</summary>
+            <p>
+              No. We’re a bridge — we help structure requests, match parties, and support a clear process.
+              Any agreement is ultimately between the participating parties (and their advisors).
+            </p>
+          </details>
+
+          <details>
+            <summary>How fast do you respond?</summary>
+            <p>
+              Typically after reviewing your request and the details provided. More complete requests
+              usually move faster because we can evaluate fit immediately.
+            </p>
+          </details>
+
+          <details>
+            <summary>Do you support crypto and stablecoins?</summary>
+            <p>
+              Yes — you can request in EUR, NOK, BTC, USDC, or USD. The currency selection helps
+              us understand settlement preference from the start.
+            </p>
+          </details>
+
+          <details>
+            <summary>What makes a request “strong”?</summary>
+            <p>
+              Specific numbers, a realistic timeline, clear purpose, and a sensible risk profile.
+              If lending: desired yield/terms. If borrowing: repayment approach and any collateral context.
+            </p>
+          </details>
+        </div>
+      </section>
+
+      <section id="contact" class="section" style="margin-top:22px">
+        <h2>Contact</h2>
+        <p>
+          The fastest route is the request form above. If you have a general question,
+          include it in the details field and choose “Info only (no calls)”.
+        </p>
+
+        <div style="margin-top:14px" class="fineprint">
+          <strong>Important note:</strong>
+          <div style="margin-top:8px;">
+            AmicBridge does not provide legal, tax, or regulated financial advice via this page.
+            Any strategy or deal structure should be reviewed with qualified professionals where applicable.
+            Requests may require verification or additional information.
+          </div>
+        </div>
+      </section>
+
+      <footer class="footer">
+        <div style="display:flex; flex-wrap:wrap; gap:10px; justify-content:space-between; align-items:center;">
+          <div><strong>{site.name}</strong> — bridging borrowers, lenders, and long-term investors.</div>
+          <div>© {new Date().getFullYear()} {site.name}. All rights reserved.</div>
+        </div>
+      </footer>
+    </main>
+
+    <script is:inline>
+      (function () {
+        const form = document.getElementById("amicbridge-form");
+        const toast = document.getElementById("toast");
+
+        function showToast(message, type) {
+          toast.textContent = message;
+          toast.classList.toggle("error", type === "error");
+          toast.style.display = "block";
+        }
+
+        // Optional: AJAX submit for a smoother UX (still uses Formspree)
+        form.addEventListener("submit", async (e) => {
+          e.preventDefault();
+
+          const fd = new FormData(form);
+
+          // Basic sanity checks (HTML required already handles most)
+          const currency = fd.get("currency");
+          const amount = Number(fd.get("amount"));
+          if (!currency) return showToast("Please choose a currency.", "error");
+          if (!Number.isFinite(amount) || amount <= 0) return showToast("Please enter a valid amount.", "error");
+
+          try {
+            const res = await fetch(form.action, {
+              method: "POST",
+              headers: { "Accept": "application/json" },
+              body: fd,
+            });
+
+            if (res.ok) {
+              form.reset();
+              showToast("Request submitted. We’ll review it and get back to you.", "success");
+            } else {
+              showToast("Submission failed. Please try again or refresh the page.", "error");
+            }
+          } catch (err) {
+            showToast("Network error. Please try again.", "error");
+          }
+        });
+      })();
+    </script>
+  </body>
+</html>
