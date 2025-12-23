@@ -1,248 +1,324 @@
 ---
 // src/pages/index.astro
-const siteName = "AmicBridge";
-const tagline = "A simple matching platform for lenders, borrowers, and profit-sharing collaborations.";
-const formspreeAction = "https://formspree.io/f/xzznjkvd";
+const site = {
+  name: "AmicBridge",
+  domain: "amicbridge.com",
+  tagline: "A simple matching platform for private lending, borrowing, and profit-sharing collaborations.",
+  formspreeAction: "https://formspree.io/f/xzznjkvd",
+  contact: {
+    ceo: "Habbitx",
+    email: "Robertamicolsen@gmail.com",
+    phone: "92928373",
+  },
+};
 ---
 
 <html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>{siteName} — Matching platform</title>
+    <title>{site.name} — Matching platform</title>
+
     <meta
       name="description"
-      content="AmicBridge is a simple matching platform where lenders, borrowers, and co-investors can find each other, discuss terms, and create private agreements."
+      content="AmicBridge is a simple matching platform for private lending, borrowing, and profit-sharing collaborations. We provide clarity, structured requests, and introductions — not custody or guarantees."
     />
+
+    <!-- Open Graph -->
+    <meta property="og:title" content={`${site.name} — Matching platform`} />
+    <meta
+      property="og:description"
+      content="Define your terms. Match with others seeking the same structure. No custody. No guarantees."
+    />
+    <meta property="og:type" content="website" />
+
+    <!-- Basic hardening -->
+    <meta name="referrer" content="no-referrer-when-downgrade" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
     <style>
-      :root{
-        --bg:#ffffff;
-        --text:#0f172a;
-        --muted:#475569;
-        --border:#e2e8f0;
-        --soft:#f8fafc;
-        --accent:#0f172a;
-        --shadow: 0 1px 2px rgba(0,0,0,.06), 0 6px 18px rgba(0,0,0,.06);
-        --radius: 14px;
-        --max: 980px;
+      :root {
+        --bg: #ffffff;
+        --panel: #ffffff;
+        --soft: #f8fafc;
+        --text: #0b1220;
+        --muted: #44546a;
+        --border: #e2e8f0;
+        --accent: #0b1220;
+        --accent2: #0f172a;
+        --ring: rgba(15, 23, 42, 0.22);
+
+        --radius: 16px;
+        --radius-sm: 12px;
+
+        --max: 1040px;
+        --shadow: 0 1px 2px rgba(0, 0, 0, 0.06), 0 10px 28px rgba(0, 0, 0, 0.08);
+
+        --h1: clamp(34px, 4.5vw, 56px);
+        --h2: clamp(22px, 2.4vw, 30px);
+        --p: 16px;
+        --lead: clamp(16px, 1.4vw, 18px);
+
+        --lh: 1.55;
       }
 
-      *{box-sizing:border-box}
-      html,body{margin:0;padding:0}
-      body{
-        font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      * { box-sizing: border-box; }
+      html, body { margin: 0; padding: 0; }
+      body {
+        font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji",
+          "Segoe UI Emoji";
         background: var(--bg);
         color: var(--text);
-        line-height: 1.55;
+        line-height: var(--lh);
       }
 
-      a{color:inherit; text-decoration:none}
-      a:hover{text-decoration:underline}
-      .container{max-width: var(--max); margin: 0 auto; padding: 0 18px}
-      .row{display:flex; align-items:center; gap:14px}
-      .spacer{height:26px}
+      a { color: inherit; text-decoration: none; }
+      a:hover { text-decoration: underline; }
 
-      header{
+      .container { max-width: var(--max); margin: 0 auto; padding: 0 18px; }
+      .muted { color: var(--muted); }
+      .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0,0,0,0);
+        white-space: nowrap;
+        border: 0;
+      }
+
+      /* Header */
+      header {
         position: sticky;
-        top:0;
-        z-index:10;
-        background: rgba(255,255,255,.92);
-        backdrop-filter: blur(8px);
+        top: 0;
+        z-index: 20;
+        background: rgba(255,255,255,0.9);
+        backdrop-filter: blur(10px);
         border-bottom: 1px solid var(--border);
       }
-      .nav{
-        display:flex;
-        align-items:center;
-        justify-content:space-between;
-        padding: 16px 0;
+      .nav {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        padding: 14px 0;
       }
-      .brand{
-        display:flex;
-        flex-direction:column;
-        gap:2px;
+      .brand {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+        min-width: 180px;
       }
-      .brand strong{font-size:18px; letter-spacing:.2px}
-      .brand span{font-size:13px; color: var(--muted)}
-      nav ul{
-        list-style:none;
-        display:flex;
-        gap:18px;
-        margin:0;
-        padding:0;
-        flex-wrap:wrap;
+      .brand strong { font-size: 18px; letter-spacing: -0.2px; }
+      .brand span { font-size: 13px; color: var(--muted); }
+
+      nav ul {
+        list-style: none;
+        display: flex;
+        gap: 8px;
+        margin: 0;
+        padding: 0;
+        flex-wrap: wrap;
+        justify-content: flex-end;
       }
-      nav a{
-        font-size:14px;
+      nav a {
+        display: inline-flex;
+        align-items: center;
+        padding: 8px 10px;
+        border-radius: 12px;
+        font-size: 14px;
         color: var(--muted);
-        padding: 6px 8px;
-        border-radius: 10px;
       }
-      nav a:hover{
-        background: var(--soft);
-        color: var(--text);
-        text-decoration:none;
-      }
-
-      main{padding: 44px 0 70px}
-
-      h1{
-        font-size: clamp(34px, 4vw, 52px);
-        margin: 0 0 10px 0;
-        letter-spacing: -0.6px;
-      }
-      p.lead{
-        font-size: 18px;
-        color: var(--muted);
-        max-width: 70ch;
-        margin: 0 0 18px 0;
-      }
-
-      .callout{
+      nav a:hover { background: var(--soft); color: var(--text); text-decoration: none; }
+      .skip {
+        position: absolute;
+        left: 10px;
+        top: -60px;
+        padding: 10px 12px;
         border: 1px solid var(--border);
-        background: var(--soft);
+        border-radius: 12px;
+        background: var(--panel);
+        box-shadow: var(--shadow);
+        color: var(--text);
+      }
+      .skip:focus { top: 10px; outline: none; }
+
+      /* Layout */
+      main { padding: 42px 0 72px; }
+      section { padding-top: 10px; margin-top: 44px; }
+      .anchor { scroll-margin-top: 86px; }
+
+      /* Hero */
+      .hero {
+        margin-top: 10px;
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 16px;
+      }
+      .hero h1 {
+        font-size: var(--h1);
+        letter-spacing: -0.9px;
+        margin: 0 0 10px 0;
+      }
+      .hero p.lead {
+        font-size: var(--lead);
+        color: var(--muted);
+        max-width: 80ch;
+        margin: 0 0 14px 0;
+      }
+
+      .callout {
+        border: 1px solid var(--border);
+        background: linear-gradient(180deg, var(--soft), #ffffff);
         border-radius: var(--radius);
-        padding: 16px 16px;
+        padding: 14px 14px;
         color: var(--muted);
       }
-      .callout strong{color: var(--text)}
+      .callout strong { color: var(--text); }
 
-      .actions{
-        display:flex;
-        gap:12px;
-        flex-wrap:wrap;
-        margin: 18px 0 12px 0;
+      .actions {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+        margin: 16px 0 10px;
       }
-      .btn{
-        display:inline-flex;
-        align-items:center;
-        justify-content:center;
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
         border-radius: 14px;
         padding: 12px 16px;
         border: 1px solid var(--border);
         background: #fff;
         color: var(--text);
-        font-weight: 600;
+        font-weight: 650;
         font-size: 14px;
+        cursor: pointer;
+        user-select: none;
       }
-      .btn.primary{
+      .btn.primary {
         background: var(--accent);
         border-color: var(--accent);
-        color:#fff;
+        color: #fff;
         box-shadow: var(--shadow);
       }
-      .btn:hover{
-        text-decoration:none;
-        filter: brightness(.98);
-      }
+      .btn:hover { text-decoration: none; filter: brightness(0.985); }
+      .btn:focus { outline: 3px solid var(--ring); outline-offset: 2px; }
 
-      .bullets{
-        margin: 14px 0 0 0;
+      .bullets {
+        margin: 12px 0 0;
         padding: 0 0 0 18px;
         color: var(--muted);
       }
-      .bullets li{margin: 6px 0}
-      .bullets b{color: var(--text)}
+      .bullets li { margin: 6px 0; }
+      .bullets b { color: var(--text); }
 
-      section{
-        margin-top: 48px;
-        padding-top: 6px;
-      }
-      section h2{
-        font-size: 26px;
+      /* Sections */
+      h2 {
+        font-size: var(--h2);
         margin: 0 0 10px 0;
-        letter-spacing: -0.3px;
+        letter-spacing: -0.35px;
       }
-      section p{
-        color: var(--muted);
-        max-width: 80ch;
-        margin: 0 0 12px 0;
-      }
+      p { font-size: var(--p); margin: 0 0 12px 0; color: var(--muted); max-width: 90ch; }
 
-      .grid{
-        display:grid;
+      .grid {
+        display: grid;
         grid-template-columns: 1fr;
         gap: 14px;
       }
-      @media (min-width: 860px){
-        .grid{grid-template-columns: 1.15fr .85fr}
+      @media (min-width: 920px) {
+        .grid { grid-template-columns: 1.15fr 0.85fr; }
       }
 
-      .card{
+      .card {
         border: 1px solid var(--border);
+        background: var(--panel);
         border-radius: var(--radius);
         padding: 16px;
-        background: #fff;
+        box-shadow: 0 0 0 rgba(0,0,0,0);
       }
 
-      .steps{
-        display:grid;
-        grid-template-columns: 1fr;
-        gap: 10px;
-        margin-top: 10px;
-      }
-      .step{
-        border: 1px solid var(--border);
-        border-radius: 12px;
-        padding: 12px 12px;
-        background: #fff;
-      }
-      .step .kicker{
+      .kicker {
         font-size: 12px;
         color: var(--muted);
         text-transform: uppercase;
-        letter-spacing: .08em;
-        margin-bottom: 6px;
+        letter-spacing: 0.08em;
+        margin: 0 0 8px;
       }
-      .step strong{display:block; margin-bottom: 4px}
 
-      form{
-        display:grid;
-        gap: 10px;
+      .steps { display: grid; gap: 10px; margin-top: 10px; }
+      .step {
+        border: 1px solid var(--border);
+        border-radius: var(--radius-sm);
+        padding: 12px;
+        background: #fff;
       }
-      label{
-        font-size: 13px;
-        color: var(--muted);
-        display:block;
-        margin-bottom: 4px;
-      }
-      input, textarea, select{
-        width:100%;
+      .step strong { display: block; margin: 2px 0 4px; }
+
+      /* Form */
+      form { display: grid; gap: 12px; }
+      label { display: block; font-size: 13px; color: var(--muted); margin-bottom: 5px; }
+      input, textarea, select {
+        width: 100%;
         border: 1px solid var(--border);
         border-radius: 12px;
         padding: 10px 12px;
         font-size: 14px;
-        background:#fff;
+        background: #fff;
         color: var(--text);
       }
-      textarea{min-height: 120px; resize: vertical}
-      .form-row{
-        display:grid;
-        grid-template-columns: 1fr;
-        gap: 10px;
+      textarea { min-height: 130px; resize: vertical; }
+      input:focus, textarea:focus, select:focus {
+        outline: 3px solid var(--ring);
+        outline-offset: 2px;
+        border-color: #cbd5e1;
       }
-      @media (min-width: 640px){
-        .form-row{grid-template-columns: 1fr 1fr}
-      }
+      .help { font-size: 13px; color: var(--muted); margin-top: -6px; }
+      .row2 { display: grid; grid-template-columns: 1fr; gap: 12px; }
+      @media (min-width: 680px) { .row2 { grid-template-columns: 1fr 1fr; } }
 
-      footer{
+      .divider { height: 1px; background: var(--border); margin: 10px 0; }
+
+      /* Footer */
+      footer {
         border-top: 1px solid var(--border);
         padding: 22px 0;
         color: var(--muted);
         font-size: 13px;
       }
-      .fineprint{max-width: 95ch}
-      .anchor{scroll-margin-top: 84px}
+      footer p { margin: 0 0 10px 0; max-width: 110ch; }
+
+      /* Small polish */
+      .pill {
+        display: inline-flex;
+        align-items: center;
+        padding: 6px 10px;
+        border-radius: 999px;
+        background: var(--soft);
+        border: 1px solid var(--border);
+        color: var(--muted);
+        font-size: 13px;
+        gap: 8px;
+        width: fit-content;
+      }
+      .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; }
     </style>
   </head>
 
   <body>
+    <a class="skip" href="#content">Skip to content</a>
+
     <header>
       <div class="container">
         <div class="nav">
-          <div class="brand">
-            <strong>{siteName}</strong>
-            <span>amicbridge.com</span>
+          <div class="brand" aria-label="Site identity">
+            <strong>{site.name}</strong>
+            <span>{site.domain}</span>
           </div>
+
           <nav aria-label="Primary navigation">
             <ul>
               <li><a href="#about">About</a></li>
@@ -255,147 +331,178 @@ const formspreeAction = "https://formspree.io/f/xzznjkvd";
       </div>
     </header>
 
-    <main class="container">
-      <section class="anchor" id="top">
+    <main id="content" class="container">
+      <!-- HERO -->
+      <section class="hero anchor" id="top" aria-label="Introduction">
+        <div class="pill" aria-label="Positioning">
+          <span>Matching layer</span>
+          <span aria-hidden="true">•</span>
+          <span class="mono">No custody</span>
+          <span aria-hidden="true">•</span>
+          <span class="mono">No guarantees</span>
+        </div>
+
         <h1>Matching requests</h1>
+
         <p class="lead">
-          {siteName} helps people describe what they want — lending, borrowing, or profit-sharing collaboration — and then
-          connect with others who match the same terms and risk comfort. This service provides <strong>general educational guidance</strong>
-          and introductions — not regulated financial advice.
+          {site.name} helps people describe what they want — <strong>lend</strong>, <strong>borrow</strong>, or
+          <strong>profit-sharing collaboration</strong> — then connect with others who match the same structure, timeline,
+          and risk comfort. We provide general educational guidance and introductions, not regulated financial advice.
         </p>
 
         <div class="callout" role="note" aria-label="Important notice">
-          <strong>Important:</strong> AmicBridge does not manage money, hold funds, execute trades, or guarantee returns.
-          Any agreement happens privately between participants. Lending and investing involve risk. Consider professional advice where appropriate.
+          <strong>Important:</strong> {site.name} does not manage money, hold funds, execute trades, or guarantee returns.
+          Any agreement happens privately between participants. Lending and investing involve risk, including loss of capital.
         </div>
 
         <div class="actions">
-          <a class="btn primary" href="#request">Send a request</a>
-          <a class="btn" href="#how">How it works</a>
+          <a class="btn primary" href="#request" aria-label="Send a request">Send a request</a>
+          <a class="btn" href="#how" aria-label="Learn how it works">How it works</a>
         </div>
 
         <ul class="bullets">
           <li><b>Simple:</b> goal, timeline, and risk comfort</li>
           <li><b>Private:</b> share only what is needed</li>
-          <li><b>Clear:</b> structured next steps and introductions</li>
+          <li><b>Clear:</b> structured requests and next steps</li>
         </ul>
       </section>
 
-      <section class="anchor" id="about">
+      <!-- ABOUT -->
+      <section class="anchor" id="about" aria-label="About AmicBridge">
         <h2>About</h2>
         <p>
-          Many people want to lend, borrow, or collaborate on investments, but get overwhelmed by noise, hype, and unclear information.
-          AmicBridge is built to make the first step boring-in-a-good-way: define what you want, define what you accept,
+          Many people want to lend, borrow, or collaborate on investments, but get overwhelmed by noise, hype, and unclear terms.
+          {site.name} is built to make the first step boring in the best way: define what you want, define what you accept,
           and connect with people looking for the same kind of deal.
         </p>
         <p>
           We focus on being a <strong>bridge</strong>: coordination, matching, and clarity. We do not take custody of funds.
-          We do not promise outcomes. We help people find each other and document terms clearly so participants can make their own decisions.
+          We do not promise outcomes. We help people find each other and communicate terms clearly so participants can make
+          their own decisions.
         </p>
       </section>
 
-      <section class="anchor" id="how">
+      <!-- HOW IT WORKS -->
+      <section class="anchor" id="how" aria-label="How it works">
         <h2>How it works</h2>
 
         <div class="grid">
           <div class="card">
+            <div class="kicker">Process</div>
             <p>
-              AmicBridge is a matching layer. You submit a request describing your intent and terms. If there’s a match,
-              you can communicate directly and decide whether to proceed.
+              {site.name} is a matching layer. You submit a request with terms. If there’s a match, you can communicate directly
+              and decide whether to proceed. {site.name} stays out of custody and out of your money flow.
             </p>
 
-            <div class="steps">
-              <div class="step">
+            <div class="steps" role="list" aria-label="Steps">
+              <div class="step" role="listitem">
                 <div class="kicker">Step 1</div>
-                <strong>Describe your request</strong>
-                <div class="muted">Choose lending, borrowing, or profit-sharing, then specify amount, timeline, and risk comfort.</div>
+                <strong>Describe your intent</strong>
+                <div class="muted">Choose lending, borrowing, or profit-sharing and specify amount, timeline, and constraints.</div>
               </div>
-              <div class="step">
+              <div class="step" role="listitem">
                 <div class="kicker">Step 2</div>
-                <strong>We match by terms</strong>
-                <div class="muted">We look for compatibility on structure, expectations, and basic fit — not hype.</div>
+                <strong>Match by terms</strong>
+                <div class="muted">We focus on structure and fit: time horizon, expectations, and risk comfort.</div>
               </div>
-              <div class="step">
+              <div class="step" role="listitem">
                 <div class="kicker">Step 3</div>
-                <strong>You decide privately</strong>
-                <div class="muted">If you choose to proceed, you do it directly with the other party. AmicBridge does not hold funds.</div>
+                <strong>Decide privately</strong>
+                <div class="muted">If you proceed, you do it directly with the other party. No holding funds on AmicBridge.</div>
               </div>
-              <div class="step">
+              <div class="step" role="listitem">
                 <div class="kicker">Step 4</div>
-                <strong>Clear documentation</strong>
-                <div class="muted">Use simple written terms (and professional help if needed). Clarity reduces drama.</div>
+                <strong>Document clearly</strong>
+                <div class="muted">Use written terms and professional help when appropriate. Clarity reduces disputes.</div>
               </div>
             </div>
           </div>
 
           <div class="card">
-            <h3 style="margin:0 0 10px 0; font-size:18px;">Supported request types</h3>
+            <div class="kicker">Supported request types</div>
             <ul class="bullets" style="margin-top:0;">
-              <li><b>Lend:</b> fixed terms (amount, duration, repayment structure)</li>
-              <li><b>Borrow:</b> timeline, purpose, and repayment plan</li>
+              <li><b>Lend:</b> private lending with agreed terms</li>
+              <li><b>Borrow:</b> amount, timeline, and repayment plan</li>
               <li><b>Profit-sharing:</b> collaboration where returns vary and risk is explicit</li>
             </ul>
 
-            <div class="spacer"></div>
+            <div class="divider" role="separator" aria-hidden="true"></div>
 
-            <h3 style="margin:0 0 10px 0; font-size:18px;">What we do not do</h3>
+            <div class="kicker">What we do not do</div>
             <ul class="bullets" style="margin-top:0;">
-              <li>We don’t hold or move money</li>
-              <li>We don’t guarantee results or returns</li>
-              <li>We don’t provide personal financial advice</li>
+              <li>No custody or money movement</li>
+              <li>No guarantees, no “fixed profits” promises</li>
+              <li>No personalized financial advice</li>
             </ul>
+
+            <div class="divider" role="separator" aria-hidden="true"></div>
+
+            <div class="callout">
+              <strong>Practical note:</strong> Profit-sharing deals are risk-bearing by design. Make sure both sides understand the downside,
+              not just the upside.
+            </div>
           </div>
         </div>
       </section>
 
-      <section class="anchor" id="request">
+      <!-- REQUEST FORM -->
+      <section class="anchor" id="request" aria-label="Send a request">
         <h2>Send a request</h2>
         <p>
-          Fill in the form below. This goes to AmicBridge via Formspree. Share only what is necessary.
+          Fill in the form below. This sends your request to AmicBridge via Formspree. Share only what is necessary.
         </p>
 
         <div class="grid">
           <div class="card">
-            <form action={formspreeAction} method="POST">
-              <div class="form-row">
+            <form action={site.formspreeAction} method="POST" autocomplete="on">
+              <div class="row2">
                 <div>
                   <label for="name">Your name</label>
-                  <input id="name" name="name" autocomplete="name" required />
+                  <input id="name" name="name" required autocomplete="name" placeholder="Your full name" />
                 </div>
                 <div>
                   <label for="email">Email</label>
-                  <input id="email" name="email" type="email" autocomplete="email" required />
+                  <input id="email" name="email" type="email" required autocomplete="email" placeholder="you@example.com" />
                 </div>
               </div>
 
-              <div class="form-row">
+              <div class="row2">
                 <div>
                   <label for="type">Request type</label>
                   <select id="type" name="request_type" required>
-                    <option value="">Select…</option>
+                    <option value="" selected disabled>Select…</option>
                     <option value="lend">I want to lend</option>
                     <option value="borrow">I want to borrow</option>
                     <option value="profit-sharing">I want profit-sharing collaboration</option>
                   </select>
+                  <div class="help">Pick the structure first — it changes everything.</div>
                 </div>
+
                 <div>
                   <label for="amount">Amount (optional)</label>
-                  <input id="amount" name="amount" placeholder="e.g., 10,000 NOK" />
+                  <input id="amount" name="amount" placeholder="e.g., 10,000 NOK" inputmode="text" />
+                  <div class="help">You can leave this blank if you prefer.</div>
                 </div>
               </div>
 
-              <div class="form-row">
+              <div class="row2">
                 <div>
                   <label for="timeline">Timeline</label>
-                  <input id="timeline" name="timeline" placeholder="e.g., 3–6 months" required />
+                  <input
+                    id="timeline"
+                    name="timeline"
+                    required
+                    placeholder="e.g., 3–6 months"
+                    autocomplete="off"
+                  />
                 </div>
                 <div>
                   <label for="risk">Risk comfort</label>
                   <select id="risk" name="risk_comfort" required>
-                    <option value="">Select…</option>
-                    <option value="low">Low</option>
-                    <option value="medium">Medium</option>
-                    <option value="high">High</option>
+                    <option value="" selected disabled>Select…</option>
+                    <option value="low">Low (capital preservation)</option>
+                    <option value="medium">Medium (balanced)</option>
+                    <option value="high">High (higher volatility)</option>
                   </select>
                 </div>
               </div>
@@ -405,63 +512,76 @@ const formspreeAction = "https://formspree.io/f/xzznjkvd";
                 <textarea
                   id="details"
                   name="details"
-                  placeholder="Describe your request: terms, expectations, repayment plan (if borrowing), or collaboration idea (if profit-sharing)."
                   required
+                  placeholder="Describe the terms and expectations. If borrowing: repayment plan. If profit-sharing: how profits/losses are split, what the project is, and what risks exist."
                 ></textarea>
+                <div class="help">Avoid sensitive IDs or passwords. Keep it practical.</div>
               </div>
 
-              <!-- helpful metadata -->
-              <input type="hidden" name="_subject" value="AmicBridge — New request" />
+              <!-- Formspree helpers -->
+              <input type="hidden" name="_subject" value="AmicBridge — New matching request" />
+              <input type="hidden" name="_format" value="plain" />
+              <input type="hidden" name="_next" value="/#request" />
+
+              <!-- Honeypot (anti-spam). Humans should not fill this. -->
+              <div class="sr-only" aria-hidden="true">
+                <label for="website">Website</label>
+                <input id="website" name="website" tabindex="-1" autocomplete="off" />
+              </div>
 
               <button class="btn primary" type="submit">Submit request</button>
 
-              <p style="margin:8px 0 0 0; color: var(--muted); font-size: 13px;">
-                By submitting, you confirm you understand AmicBridge does not hold funds, provide advice, or guarantee outcomes.
+              <p class="help" style="margin: 2px 0 0;">
+                By submitting, you confirm you understand AmicBridge does not hold funds, provide personal advice, or guarantee outcomes.
               </p>
             </form>
           </div>
 
           <div class="card">
-            <h3 style="margin:0 0 10px 0; font-size:18px;">Tips for a good request</h3>
+            <div class="kicker">Tips for a strong request</div>
             <ul class="bullets" style="margin-top:0;">
-              <li><b>Be specific:</b> amount, timeline, and what “success” looks like</li>
-              <li><b>Be realistic:</b> higher returns usually mean higher risk</li>
-              <li><b>Be safe:</b> don’t share sensitive IDs or passwords</li>
-              <li><b>Be clear:</b> written terms beat misunderstandings</li>
+              <li><b>State the structure:</b> loan terms or profit-sharing terms</li>
+              <li><b>State the time:</b> start date, duration, and key milestones</li>
+              <li><b>State the downside:</b> what happens if things go wrong</li>
+              <li><b>State the rules:</b> communication, documentation, and exit conditions</li>
             </ul>
 
-            <div class="spacer"></div>
+            <div class="divider" role="separator" aria-hidden="true"></div>
 
             <div class="callout">
-              <strong>Note:</strong> Profit-sharing arrangements are risk-bearing and returns are not guaranteed.
-              Make sure both sides understand the downside, not just the upside.
+              <strong>Safety:</strong> Meet cautiously, verify identity, and use written agreements. Consider professional help for larger amounts.
             </div>
           </div>
         </div>
       </section>
 
-      <section class="anchor" id="contact">
+      <!-- CONTACT -->
+      <section class="anchor" id="contact" aria-label="Contact information">
         <h2>Contact</h2>
         <p>For questions, partnership inquiries, or support:</p>
 
         <div class="card">
-          <p style="margin:0 0 8px 0;"><strong>CEO:</strong> Habbitx</p>
+          <p style="margin:0 0 8px 0;"><strong>CEO:</strong> {site.contact.ceo}</p>
           <p style="margin:0 0 8px 0;">
-            <strong>Email:</strong> <a href="mailto:Robertamicolsen@gmail.com">Robertamicolsen@gmail.com</a>
+            <strong>Email:</strong>
+            <a href={`mailto:${site.contact.email}`}>{site.contact.email}</a>
           </p>
-          <p style="margin:0;"><strong>Phone:</strong> <a href="tel:92928373">92928373</a></p>
+          <p style="margin:0;">
+            <strong>Phone:</strong>
+            <a href={`tel:${site.contact.phone}`}>{site.contact.phone}</a>
+          </p>
         </div>
       </section>
     </main>
 
     <footer>
       <div class="container">
-        <p class="fineprint">
+        <p>
           <strong>Disclaimer:</strong> AmicBridge is an introduction and information platform. We do not hold custody of funds,
           execute payments, or provide personalized financial advice. Any decisions and agreements are made independently by the parties involved.
           Lending and investing carry risk, including potential loss of capital.
         </p>
-        <p style="margin:10px 0 0 0;">© {new Date().getFullYear()} {siteName}. All rights reserved.</p>
+        <p>© {new Date().getFullYear()} {site.name}. All rights reserved.</p>
       </div>
     </footer>
   </body>
