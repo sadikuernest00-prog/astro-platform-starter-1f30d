@@ -1,0 +1,171 @@
+---
+import { store } from "../../lib/store";
+import { monthlyPayment, formatMoney } from "../../lib/finance";
+
+const { id } = Astro.params;
+const req = store.requests.find((r) => r.id === id);
+if (!req) throw new Error("Request not found");
+const offers = store.offers.filter((o) => o.requestId === id);
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Request {req.id} — AmicBridge</title>
+    <style>
+      body { font-family: system-ui; margin: 0; padding: 24px; max-width: 980px; margin-inline: auto; }
+      .card { border: 1px solid #ddd; border-radius: 14px; padding: 16px; margin-top: 12px; }
+      .row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+      input, select, button { width: 100%; padding: 10px; margin-top: 6px; }
+      label { display: block; margin-top: 12px; font-weight: 700; }
+      .muted { color: #555; }
+      .ok { color: #0a7; }
+      .err { color: #c22; }
+    </style>
+  </head>
+  <body>
+    <p><a href="/lend">← Back to all requests</a></p>
+    <h1>Loan request</h1>
+
+    <div class="card">
+      <strong>{req.amount} {req.currency}</strong> — {req.termMonths} months
+      <div class="muted">{req.purpose}</div>
+      <div class="muted">Borrower: {req.borrowerName} ({req.borrowerEmail})</div>
+    </div>
+
+    <div class="card">
+      <h2>Make an offer</h2>
+      <form id="offerForm">
+        <div class="row">
+          <div>
+            <label>Lender name</label>
+            <input name="lenderName" required placeholder="Lender Inc." />
+          </div>
+          <div>
+            <label>Lender email</label>
+            <input name="lenderEmail" type="email" required placeholder="lender@email.com" />
+          </div>
+        </div>
+
+        <div class="row">
+          <div>
+            <label>APR (%)</label>
+            <input name="apr" type="number" min="0" step="0.01" required placeholder="12.5" />
+          </div>
+          <div>
+            <label>Origination fee ({req.currency})</label>
+            <input name="originationFee" type="number" min="0" step="0.01" required placeholder="0" />
+          </div>
+        </div>
+
+        <label>Repayment schedule</label>
+        <select name="schedule">
+          <option value="monthly">Monthly</option>
+          <option value="biweekly">Biweekly</option>
+        </select>
+
+        <button type="submit">Submit offer</button>
+        <p id="offerMsg"></p>
+      </form>
+    </div>
+
+    <div class="card">
+      <h2>Offers</h2>
+      {offers.length === 0 ? (
+        <p class="muted">No offers yet.</p>
+      ) : (
+        offers.map((o) => {
+          const pay = monthlyPayment(req.amount, o.apr, req.termMonths);
+          return (
+            <div class="card">
+              <strong>{o.apr}% APR</strong> — fee {o.originationFee} {req.currency} — {o.schedule}
+              <div class="muted">Estimated monthly payment: {formatMoney(pay, req.currency)}</div>
+              <div class="muted">From: {o.lenderName} ({o.lenderEmail})</div>
+
+              <hr />
+
+              <form class="acceptForm">
+                <input type="hidden" name="offerId" value={o.id} />
+                <label>Governing law (country/region)</label>
+                <input name="governingLaw" required placeholder="e.g. Norway" />
+                <button type="submit">Accept offer & generate contract</button>
+                <p class="acceptMsg"></p>
+              </form>
+            </div>
+          );
+        })
+      )}
+    </div>
+
+    <script>
+      const offerForm = document.getElementById("offerForm");
+      const offerMsg = document.getElementById("offerMsg");
+
+      offerForm.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        offerMsg.textContent = "Sending...";
+        offerMsg.className = "";
+
+        const fd = new FormData(offerForm);
+        const payload = {
+          requestId: "{req.id}",
+          lenderName: fd.get("lenderName"),
+          lenderEmail: fd.get("lenderEmail"),
+          apr: Number(fd.get("apr")),
+          originationFee: Number(fd.get("originationFee")),
+          schedule: fd.get("schedule"),
+        };
+
+        const res = await fetch("/api/offers/create", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        });
+
+        if (!res.ok) {
+          offerMsg.textContent = "Error creating offer.";
+          offerMsg.className = "err";
+          return;
+        }
+
+        offerMsg.textContent = "Offer created! Refreshing...";
+        offerMsg.className = "ok";
+        location.reload();
+      });
+
+      document.querySelectorAll(".acceptForm").forEach((form) => {
+        const msg = form.querySelector(".acceptMsg");
+        form.addEventListener("submit", async (e) => {
+          e.preventDefault();
+          msg.textContent = "Creating deal...";
+          msg.className = "";
+
+          const fd = new FormData(form);
+          const payload = {
+            requestId: "{req.id}",
+            offerId: fd.get("offerId"),
+            governingLaw: fd.get("governingLaw"),
+          };
+
+          const res = await fetch("/api/deals/accept", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload),
+          });
+
+          if (!res.ok) {
+            msg.textContent = "Error accepting offer.";
+            msg.className = "err";
+            return;
+          }
+
+          const data = await res.json();
+          msg.textContent = "Deal created! Opening contract...";
+          msg.className = "ok";
+          window.location.href = `/contract/${data.deal.id}`;
+        });
+      });
+    </script>
+  </body>
+</html>
