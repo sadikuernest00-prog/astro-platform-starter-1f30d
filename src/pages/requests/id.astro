@@ -1,19 +1,14 @@
 ---
 import type { LoanRequest, Offer } from "../../lib/store";
-import { monthlyPayment, formatMoney } from "../../lib/finance";
 import { getJSON } from "../../lib/db";
+import { monthlyPayment, formatMoney } from "../../lib/finance";
 
 const { id } = Astro.params;
 
-// Load from Netlify Blobs
 const requests = await getJSON<LoanRequest[]>("requests", []);
 const offersAll = await getJSON<Offer[]>("offers", []);
 
 const req = requests.find((r) => r.id === id);
-if (!req) {
-  // Render a simple not-found page instead of crashing
-  // (Crashing can look like "nothing shows up" on deploy)
-}
 const offers = offersAll.filter((o) => o.requestId === id);
 ---
 
@@ -33,8 +28,9 @@ const offers = offersAll.filter((o) => o.requestId === id);
       .err { color: #c22; }
     </style>
   </head>
+
   <body>
-    <p><a href="/lend">← Back to all requests</a></p>
+    <p><a href="/lend">← Back</a></p>
 
     {req ? (
       <>
@@ -52,22 +48,22 @@ const offers = offersAll.filter((o) => o.requestId === id);
             <div class="row">
               <div>
                 <label>Lender name</label>
-                <input name="lenderName" required placeholder="Lender Inc." />
+                <input name="lenderName" required />
               </div>
               <div>
                 <label>Lender email</label>
-                <input name="lenderEmail" type="email" required placeholder="lender@email.com" />
+                <input name="lenderEmail" type="email" required />
               </div>
             </div>
 
             <div class="row">
               <div>
                 <label>APR (%)</label>
-                <input name="apr" type="number" min="0" step="0.01" required placeholder="12.5" />
+                <input name="apr" type="number" min="0" step="0.01" required />
               </div>
               <div>
                 <label>Origination fee ({req.currency})</label>
-                <input name="originationFee" type="number" min="0" step="0.01" required placeholder="0" />
+                <input name="originationFee" type="number" min="0" step="0.01" required />
               </div>
             </div>
 
@@ -84,6 +80,7 @@ const offers = offersAll.filter((o) => o.requestId === id);
 
         <div class="card">
           <h2>Offers</h2>
+
           {offers.length === 0 ? (
             <p class="muted">No offers yet.</p>
           ) : (
@@ -99,8 +96,8 @@ const offers = offersAll.filter((o) => o.requestId === id);
 
                   <form class="acceptForm">
                     <input type="hidden" name="offerId" value={o.id} />
-                    <label>Governing law (country/region)</label>
-                    <input name="governingLaw" required placeholder="e.g. Norway" />
+                    <label>Governing law</label>
+                    <input name="governingLaw" required placeholder="e.g. England and Wales" />
                     <button type="submit">Accept offer & generate contract</button>
                     <p class="acceptMsg"></p>
                   </form>
@@ -148,6 +145,7 @@ const offers = offersAll.filter((o) => o.requestId === id);
 
           document.querySelectorAll(".acceptForm").forEach((form) => {
             const msg = form.querySelector(".acceptMsg");
+
             form.addEventListener("submit", async (e) => {
               e.preventDefault();
               msg.textContent = "Creating deal...";
@@ -181,10 +179,7 @@ const offers = offersAll.filter((o) => o.requestId === id);
     ) : (
       <div class="card">
         <h1>Request not found</h1>
-        <p class="muted">
-          This usually happens if the request was not persisted or the ID is wrong.
-          Go back to <a href="/lend">/lend</a> and try again.
-        </p>
+        <p class="muted">Go back to <a href="/lend">/lend</a> and open a valid request.</p>
       </div>
     )}
   </body>
