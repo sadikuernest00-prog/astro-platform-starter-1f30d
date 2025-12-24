@@ -1,0 +1,112 @@
+---
+import { store } from "../../lib/store";
+import { monthlyPayment, formatMoney } from "../../lib/finance";
+
+const { dealId } = Astro.params;
+const deal = store.deals.find((d) => d.id === dealId);
+if (!deal) throw new Error("Deal not found");
+
+const payment = monthlyPayment(deal.principal, deal.apr, deal.termMonths);
+const today = new Date(deal.acceptedAt).toLocaleDateString();
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Loan Agreement — {deal.id}</title>
+    <style>
+      body { font-family: ui-serif, Georgia, "Times New Roman", Times, serif; margin: 0; padding: 28px; max-width: 900px; margin-inline: auto; }
+      h1, h2 { font-family: system-ui; }
+      .box { border: 1px solid #ddd; border-radius: 12px; padding: 14px; background: #fafafa; }
+      .muted { color: #444; font-family: system-ui; }
+      ul { margin-top: 6px; }
+      .siggrid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-top: 18px; }
+      .sig { border-top: 1px solid #333; padding-top: 10px; }
+      @media print {
+        .noprint { display: none; }
+        body { padding: 0; }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="noprint muted">
+      <p><a href={`/requests/${deal.requestId}`}>← Back to request</a></p>
+      <button onclick="window.print()">Print / Save as PDF</button>
+      <p><strong>Note:</strong> This is a generated template. Have a qualified lawyer review it for your jurisdiction.</p>
+    </div>
+
+    <h1>Loan Agreement</h1>
+    <p class="muted">Agreement Date: {today} • Deal ID: {deal.id}</p>
+
+    <div class="box">
+      <h2>Parties</h2>
+      <p><strong>Lender:</strong> {deal.lender.name} ({deal.lender.email})</p>
+      <p><strong>Borrower:</strong> {deal.borrower.name} ({deal.borrower.email})</p>
+    </div>
+
+    <h2>1. Loan Terms</h2>
+    <ul>
+      <li><strong>Principal:</strong> {formatMoney(deal.principal, deal.currency)}</li>
+      <li><strong>APR:</strong> {deal.apr}% (annual)</li>
+      <li><strong>Term:</strong> {deal.termMonths} months</li>
+      <li><strong>Origination fee:</strong> {formatMoney(deal.originationFee, deal.currency)} (deducted at funding unless otherwise agreed)</li>
+      <li><strong>Repayment schedule:</strong> {deal.schedule}</li>
+      <li><strong>Estimated monthly payment:</strong> {formatMoney(payment, deal.currency)} (estimate; final schedule governs)</li>
+    </ul>
+
+    <h2>2. Funding & Disbursement</h2>
+    <p>
+      The Lender agrees to fund the Principal to the Borrower through the platform’s designated payment/escrow method.
+      The Borrower acknowledges that any fees may be withheld from disbursement where applicable.
+    </p>
+
+    <h2>3. Repayment</h2>
+    <p>
+      Borrower shall repay the Loan according to the agreed schedule. Payments apply first to fees and accrued interest,
+      then to principal, unless prohibited by law.
+    </p>
+
+    <h2>4. Late Payment & Default</h2>
+    <p>
+      If a payment is late beyond any grace period required by law, the Borrower may be charged a late fee as permitted.
+      Default occurs if Borrower fails to pay, becomes insolvent, or otherwise materially breaches this Agreement.
+      Upon default, Lender may accelerate the balance where lawful.
+    </p>
+
+    <h2>5. Representations</h2>
+    <p>
+      Each party represents they have the authority to enter this Agreement and will comply with all applicable laws,
+      including consumer lending, interest rate caps, and disclosure rules in their jurisdiction.
+    </p>
+
+    <h2>6. Platform Role</h2>
+    <p>
+      AmicBridge provides marketplace and document-generation services and is not a party to this Agreement unless explicitly stated.
+      AmicBridge does not provide legal advice. Parties are responsible for verifying identity, credit risk, and legality of terms.
+    </p>
+
+    <h2>7. Governing Law</h2>
+    <p>
+      This Agreement is governed by the laws of <strong>{deal.governingLaw}</strong>, without regard to conflict of laws rules.
+    </p>
+
+    <h2>8. Signatures</h2>
+    <p>
+      The parties intend to sign electronically where permitted. A typed name or digital signature is treated as a signature.
+    </p>
+
+    <div class="siggrid">
+      <div>
+        <div class="sig"><strong>Lender Signature</strong></div>
+        <div>Name: {deal.lender.name}</div>
+        <div>Date: ____________________</div>
+      </div>
+      <div>
+        <div class="sig"><strong>Borrower Signature</strong></div>
+        <div>Name: {deal.borrower.name}</div>
+        <div>Date: ____________________</div>
+      </div>
+    </div>
+  </body>
+</html>
