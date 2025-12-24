@@ -1,0 +1,40 @@
+---
+import { store } from "../lib/store";
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Lend — AmicBridge</title>
+    <style>
+      body { font-family: system-ui; margin: 0; padding: 24px; max-width: 960px; margin-inline: auto; }
+      .grid { display: grid; gap: 12px; }
+      .card { border: 1px solid #ddd; border-radius: 14px; padding: 16px; }
+      .muted { color: #555; }
+      a { color: inherit; }
+    </style>
+  </head>
+  <body>
+    <p><a href="/">← Home</a></p>
+    <h1>Loan requests</h1>
+    <p class="muted">Pick a request and make an offer.</p>
+
+    <div class="grid">
+      {store.requests.length === 0 ? (
+        <div class="card">
+          No requests yet. Submit one at <a href="/borrow">/borrow</a>.
+        </div>
+      ) : (
+        store.requests.map((r) => (
+          <div class="card">
+            <strong>{r.amount} {r.currency}</strong> — {r.termMonths} months
+            <div class="muted">{r.purpose}</div>
+            <div class="muted">Created: {new Date(r.createdAt).toLocaleString()}</div>
+            <p><a href={`/requests/${r.id}`}>View & offer →</a></p>
+          </div>
+        ))
+      )}
+    </div>
+  </body>
+</html>
