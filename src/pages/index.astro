@@ -1,641 +1,421 @@
----
-// src/pages/index.astro
-// AmicBridge — clean, professional single-page marketing + request form (Formspree)
 
+---
 const site = {
   name: "AmicBridge",
   domain: "amicbridge.com",
-  tagline:
-    "A matching platform for private lending, borrowing, and profit-sharing collaborations — built for clarity, not hype.",
-  formspreeAction: "https://formspree.io/f/xzznjkvd",
-  contact: {
-    ceo: "Habbitx",
-    email: "Robertamicolsen@gmail.com",
-    phone: "92928373",
-  },
+  tagline: "We connect people, teams, and technology—so good work can happen faster.",
+  ctaPrimary: "Book a call",
+  ctaPrimaryHref: "#contact",
+  ctaSecondary: "See services",
+  ctaSecondaryHref: "#services",
+  email: "hello@amicbridge.com",
 };
 
-// Show a friendly banner when returning from Formspree redirect (optional).
-// If you use _next="/?sent=1#request" this will display.
-// (We set _next below.)
-const sent = Astro.url.searchParams.get("sent") === "1";
+const services = [
+  {
+    title: "IT & Network Support",
+    desc: "Reliable setup, troubleshooting, monitoring, and documentation for small teams.",
+  },
+  {
+    title: "Cloud & Platform Setup",
+    desc: "Domains, email, hosting, deployments, backups, and security fundamentals.",
+  },
+  {
+    title: "Automation & Integrations",
+    desc: "Connect tools and workflows to save time and reduce manual work.",
+  },
+  {
+    title: "Consulting & Roadmaps",
+    desc: "Clear priorities, realistic plans, and practical delivery—not buzzwords.",
+  },
+];
+
+const steps = [
+  { title: "Discovery", desc: "We learn your goals, constraints, and current setup." },
+  { title: "Plan", desc: "You get a clear scope, timeline, and what success looks like." },
+  { title: "Build & Support", desc: "We implement, document, and keep things running." },
+];
+
+const faqs = [
+  {
+    q: "What does AmicBridge actually do?",
+    a: "We help you bridge gaps—between teams, tools, and outcomes. This landing page is written to fit IT services, consulting, partnerships, and community projects. Swap the copy to match your exact niche.",
+  },
+  {
+    q: "Do you work with small businesses?",
+    a: "Yes. The site is designed for small teams who want speed, clarity, and dependable delivery.",
+  },
+  {
+    q: "How do we start?",
+    a: "Send a short message with what you’re trying to achieve. We’ll reply with next steps and options.",
+  },
+];
+
+const year = new Date().getFullYear();
 ---
 
 <html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>{site.name} — Matching platform</title>
+
+    <title>{site.name} — {site.tagline}</title>
     <meta name="description" content={site.tagline} />
 
-    <!-- Open Graph -->
-    <meta property="og:title" content={`${site.name} — Matching platform`} />
+    <!-- OpenGraph -->
+    <meta property="og:title" content={`${site.name} — ${site.tagline}`} />
     <meta property="og:description" content={site.tagline} />
     <meta property="og:type" content="website" />
-
-    <!-- Small hardening defaults -->
-    <meta name="referrer" content="strict-origin-when-cross-origin" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-
-    <!-- JSON-LD for basic org/contact -->
-    <script type="application/ld+json">
-      {JSON.stringify({
-        "@context": "https://schema.org",
-        "@type": "Organization",
-        name: site.name,
-        url: `https://${site.domain}`,
-        contactPoint: [
-          {
-            "@type": "ContactPoint",
-            contactType: "customer support",
-            email: site.contact.email,
-            telephone: site.contact.phone,
-          },
-        ],
-      })}
-    </script>
+    <meta property="og:url" content={`https://${site.domain}/`} />
 
     <style>
       :root {
-        --bg: #ffffff;
-        --surface: #ffffff;
-        --soft: #f8fafc;
-        --soft2: #f1f5f9;
-        --text: #0b1220;
-        --muted: #475569;
-        --muted2: #64748b;
-        --border: #e2e8f0;
-        --accent: #0b1220;
-        --ring: rgba(15, 23, 42, 0.25);
-
-        --radius: 16px;
-        --radius-sm: 12px;
-
-        --max: 1040px;
-
-        --shadow: 0 1px 2px rgba(0, 0, 0, 0.06), 0 12px 30px rgba(0, 0, 0, 0.08);
-
-        --h1: clamp(36px, 4.8vw, 60px);
-        --h2: clamp(22px, 2.6vw, 32px);
-        --lead: clamp(16px, 1.5vw, 18px);
-        --p: 16px;
-        --lh: 1.58;
+        --bg: #0b1220;
+        --panel: rgba(255,255,255,.06);
+        --text: rgba(255,255,255,.92);
+        --muted: rgba(255,255,255,.70);
+        --line: rgba(255,255,255,.12);
+        --brand: #7c3aed;
+        --brand2: #22c55e;
+        --shadow: 0 12px 40px rgba(0,0,0,.35);
+        --radius: 18px;
       }
-
       * { box-sizing: border-box; }
-      html, body { margin: 0; padding: 0; }
-      html { scroll-behavior: smooth; }
       body {
-        font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji",
-          "Segoe UI Emoji";
-        background: radial-gradient(1000px 600px at 20% -10%, var(--soft2), transparent 60%),
-          radial-gradient(900px 540px at 90% 10%, #eef2ff, transparent 55%),
-          var(--bg);
+        margin: 0;
+        font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Apple Color Emoji", "Segoe UI Emoji";
         color: var(--text);
-        line-height: var(--lh);
+        background:
+          radial-gradient(1000px 600px at 20% 10%, rgba(124,58,237,.30), transparent 60%),
+          radial-gradient(900px 600px at 90% 20%, rgba(34,197,94,.18), transparent 55%),
+          radial-gradient(900px 700px at 50% 100%, rgba(59,130,246,.12), transparent 60%),
+          var(--bg);
       }
-
       a { color: inherit; text-decoration: none; }
-      a:hover { text-decoration: underline; }
-
-      .container { max-width: var(--max); margin: 0 auto; padding: 0 18px; }
-      .muted { color: var(--muted); }
-      .muted2 { color: var(--muted2); }
-
-      .sr-only {
-        position: absolute;
-        width: 1px;
-        height: 1px;
-        padding: 0;
-        margin: -1px;
-        overflow: hidden;
-        clip: rect(0, 0, 0, 0);
-        white-space: nowrap;
-        border: 0;
-      }
-
-      /* Header */
+      .container { width: min(1100px, calc(100% - 40px)); margin: 0 auto; }
       header {
-        position: sticky;
-        top: 0;
-        z-index: 30;
-        background: rgba(255, 255, 255, 0.82);
-        backdrop-filter: blur(12px);
-        border-bottom: 1px solid var(--border);
+        position: sticky; top: 0; z-index: 50;
+        backdrop-filter: blur(10px);
+        background: rgba(11,18,32,.65);
+        border-bottom: 1px solid var(--line);
       }
-
-      .skip {
-        position: absolute;
-        left: 14px;
-        top: -60px;
-        padding: 10px 12px;
-        border-radius: 12px;
-        background: var(--surface);
-        border: 1px solid var(--border);
-        box-shadow: var(--shadow);
-      }
-      .skip:focus { top: 10px; outline: none; }
-
       .nav {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 16px;
+        display: flex; align-items: center; justify-content: space-between;
         padding: 14px 0;
       }
-
       .brand {
-        display: flex;
-        flex-direction: column;
-        gap: 2px;
-        min-width: 180px;
+        display: flex; align-items: center; gap: 12px; font-weight: 700; letter-spacing: .2px;
       }
-      .brand strong { font-size: 18px; letter-spacing: -0.2px; }
-      .brand span { font-size: 13px; color: var(--muted); }
-
-      nav ul {
-        list-style: none;
-        display: flex;
-        gap: 8px;
-        margin: 0;
-        padding: 0;
-        flex-wrap: wrap;
-        justify-content: flex-end;
-      }
-      nav a {
-        display: inline-flex;
-        align-items: center;
-        padding: 8px 10px;
-        border-radius: 12px;
-        font-size: 14px;
-        color: var(--muted);
-      }
-      nav a:hover { background: var(--soft); color: var(--text); text-decoration: none; }
-
-      /* Main */
-      main { padding: 46px 0 74px; }
-      section { margin-top: 48px; padding-top: 8px; }
-      .anchor { scroll-margin-top: 92px; }
-
-      /* Hero */
-      .hero {
-        margin-top: 12px;
-        display: grid;
-        grid-template-columns: 1fr;
-        gap: 16px;
-      }
-
-      .badge {
-        display: inline-flex;
-        align-items: center;
-        gap: 10px;
-        padding: 7px 12px;
-        border-radius: 999px;
-        border: 1px solid var(--border);
-        background: rgba(255, 255, 255, 0.8);
-        width: fit-content;
-        color: var(--muted);
-        font-size: 13px;
-      }
-      .dot { width: 6px; height: 6px; border-radius: 999px; background: #16a34a; }
-      .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; }
-
-      h1 {
-        font-size: var(--h1);
-        letter-spacing: -0.9px;
-        margin: 0;
-      }
-      .lead {
-        font-size: var(--lead);
-        color: var(--muted);
-        max-width: 84ch;
-        margin: 0;
-      }
-
-      .card {
-        border: 1px solid var(--border);
-        background: rgba(255, 255, 255, 0.88);
-        border-radius: var(--radius);
-        padding: 16px;
-      }
-
-      .callout {
-        border: 1px solid var(--border);
-        background: linear-gradient(180deg, var(--soft), rgba(255, 255, 255, 0.9));
-        border-radius: var(--radius);
-        padding: 14px;
-        color: var(--muted);
-      }
-      .callout strong { color: var(--text); }
-
-      .alert-success {
-        border: 1px solid rgba(34, 197, 94, 0.35);
-        background: rgba(34, 197, 94, 0.08);
-        color: #14532d;
-        border-radius: var(--radius);
-        padding: 12px 14px;
-      }
-
-      .actions {
-        display: flex;
-        gap: 12px;
-        flex-wrap: wrap;
-        margin-top: 10px;
-      }
-
-      .btn {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        gap: 10px;
-        border-radius: 14px;
-        padding: 12px 16px;
-        border: 1px solid var(--border);
-        background: #fff;
-        color: var(--text);
-        font-weight: 650;
-        font-size: 14px;
-        cursor: pointer;
-        user-select: none;
-      }
-      .btn.primary {
-        background: var(--accent);
-        border-color: var(--accent);
-        color: #fff;
+      .logo {
+        width: 34px; height: 34px; border-radius: 12px;
+        background: linear-gradient(135deg, rgba(124,58,237,1), rgba(34,197,94,1));
         box-shadow: var(--shadow);
       }
-      .btn:hover { text-decoration: none; filter: brightness(0.985); }
-      .btn:focus { outline: 3px solid var(--ring); outline-offset: 2px; }
+      .navlinks { display: flex; gap: 16px; align-items: center; }
+      .navlinks a { color: var(--muted); font-weight: 600; font-size: 14px; }
+      .navlinks a:hover { color: var(--text); }
 
-      .bullets {
-        margin: 12px 0 0;
-        padding: 0 0 0 18px;
-        color: var(--muted);
+      .btn {
+        display: inline-flex; align-items: center; justify-content: center;
+        padding: 10px 14px; border-radius: 12px;
+        border: 1px solid var(--line);
+        background: rgba(255,255,255,.06);
+        color: var(--text);
+        font-weight: 700;
       }
-      .bullets li { margin: 6px 0; }
-      .bullets b { color: var(--text); }
+      .btn:hover { background: rgba(255,255,255,.10); }
+      .btn.primary {
+        border: 0;
+        background: linear-gradient(135deg, rgba(124,58,237,1), rgba(34,197,94,1));
+      }
+      .btn.primary:hover { filter: brightness(1.05); }
 
-      /* Section headings */
-      h2 {
-        font-size: var(--h2);
-        margin: 0 0 10px 0;
-        letter-spacing: -0.35px;
+      main { padding: 58px 0 70px; }
+      .hero {
+        display: grid; gap: 24px;
+        grid-template-columns: 1.15fr .85fr;
+        align-items: start;
       }
-      p {
-        font-size: var(--p);
-        margin: 0 0 12px 0;
+      @media (max-width: 900px) {
+        .hero { grid-template-columns: 1fr; }
+        .navlinks { display: none; }
+      }
+      .card {
+        border: 1px solid var(--line);
+        background: var(--panel);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+      }
+      .hero .left h1 {
+        margin: 0;
+        font-size: clamp(34px, 4vw, 54px);
+        line-height: 1.05;
+        letter-spacing: -0.5px;
+      }
+      .hero .left p {
+        margin: 14px 0 0;
         color: var(--muted);
-        max-width: 92ch;
+        font-size: 16px;
+        line-height: 1.6;
+        max-width: 62ch;
       }
+      .hero .actions { margin-top: 18px; display: flex; gap: 12px; flex-wrap: wrap; }
+      .pillrow { margin-top: 18px; display: flex; flex-wrap: wrap; gap: 10px; }
+      .pill {
+        padding: 8px 12px;
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        background: rgba(255,255,255,.05);
+        color: rgba(255,255,255,.78);
+        font-weight: 650;
+        font-size: 13px;
+      }
+
+      .hero .right { padding: 18px; }
+      .hero .right .box { padding: 18px; border-radius: 16px; border: 1px solid var(--line); background: rgba(0,0,0,.18); }
+      .metricgrid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 12px; }
+      .metric { padding: 14px; border-radius: 14px; border: 1px solid var(--line); background: rgba(255,255,255,.04); }
+      .metric strong { display: block; font-size: 18px; }
+      .metric span { color: var(--muted); font-size: 13px; }
+
+      section { margin-top: 40px; }
+      .section-head {
+        display: flex; align-items: baseline; justify-content: space-between; gap: 18px;
+        margin-bottom: 14px;
+      }
+      .section-head h2 { margin: 0; font-size: 22px; letter-spacing: -0.2px; }
+      .section-head p { margin: 0; color: var(--muted); }
 
       .grid {
-        display: grid;
-        grid-template-columns: 1fr;
-        gap: 14px;
+        display: grid; gap: 14px;
+        grid-template-columns: repeat(4, 1fr);
       }
-      @media (min-width: 940px) {
-        .grid { grid-template-columns: 1.15fr 0.85fr; }
+      @media (max-width: 980px) { .grid { grid-template-columns: repeat(2, 1fr); } }
+      @media (max-width: 560px) { .grid { grid-template-columns: 1fr; } }
+
+      .service { padding: 16px; }
+      .service h3 { margin: 0 0 8px; font-size: 16px; }
+      .service p { margin: 0; color: var(--muted); line-height: 1.55; font-size: 14px; }
+
+      .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+      @media (max-width: 860px) { .steps { grid-template-columns: 1fr; } }
+      .step { padding: 16px; }
+      .step .num {
+        width: 32px; height: 32px; border-radius: 12px;
+        display: inline-flex; align-items: center; justify-content: center;
+        background: rgba(124,58,237,.20);
+        border: 1px solid rgba(124,58,237,.35);
+        margin-bottom: 10px;
+        font-weight: 800;
       }
+      .step h3 { margin: 0 0 8px; }
+      .step p { margin: 0; color: var(--muted); line-height: 1.55; }
 
-      .kicker {
-        font-size: 12px;
-        color: var(--muted2);
-        text-transform: uppercase;
-        letter-spacing: 0.1em;
-        margin: 0 0 8px;
+      .two {
+        display: grid; grid-template-columns: 1fr 1fr; gap: 14px;
       }
+      @media (max-width: 900px) { .two { grid-template-columns: 1fr; } }
 
-      .steps { display: grid; gap: 10px; margin-top: 10px; }
-      .step {
-        border: 1px solid var(--border);
-        border-radius: var(--radius-sm);
-        padding: 12px;
-        background: #fff;
-      }
-      .step strong { display: block; margin: 2px 0 4px; }
-      .step .muted { margin: 0; }
+      .quote { padding: 18px; }
+      .quote p { margin: 0; color: rgba(255,255,255,.82); line-height: 1.6; }
+      .quote footer { margin-top: 10px; color: var(--muted); font-size: 14px; }
 
-      .divider { height: 1px; background: var(--border); margin: 12px 0; }
+      .faq { padding: 18px; }
+      details { border: 1px solid var(--line); background: rgba(255,255,255,.04); border-radius: 14px; padding: 12px 14px; }
+      details + details { margin-top: 10px; }
+      summary { cursor: pointer; font-weight: 750; }
+      details p { margin: 10px 0 0; color: var(--muted); line-height: 1.6; }
 
-      /* Form */
-      form { display: grid; gap: 12px; }
-      label { display: block; font-size: 13px; color: var(--muted2); margin-bottom: 5px; }
-      input, textarea, select {
+      .contact { padding: 18px; }
+      form { display: grid; gap: 10px; }
+      input, textarea {
         width: 100%;
-        border: 1px solid var(--border);
+        padding: 11px 12px;
         border-radius: 12px;
-        padding: 10px 12px;
-        font-size: 14px;
-        background: #fff;
+        border: 1px solid var(--line);
+        background: rgba(0,0,0,.18);
         color: var(--text);
+        outline: none;
       }
-      textarea { min-height: 140px; resize: vertical; }
-      input:focus, textarea:focus, select:focus {
-        outline: 3px solid var(--ring);
-        outline-offset: 2px;
-        border-color: #cbd5e1;
-      }
-      .help { font-size: 13px; color: var(--muted); margin-top: -6px; }
-      .row2 { display: grid; grid-template-columns: 1fr; gap: 12px; }
-      @media (min-width: 700px) { .row2 { grid-template-columns: 1fr 1fr; } }
+      textarea { min-height: 120px; resize: vertical; }
+      label { font-size: 13px; color: var(--muted); font-weight: 650; }
 
-      /* Footer */
-      footer {
-        border-top: 1px solid var(--border);
+      footer.site {
+        border-top: 1px solid var(--line);
         padding: 22px 0;
         color: var(--muted);
-        font-size: 13px;
-        background: rgba(255,255,255,0.65);
-        backdrop-filter: blur(10px);
       }
-      footer p { margin: 0 0 10px 0; max-width: 110ch; }
-
-      /* Respect reduced motion */
-      @media (prefers-reduced-motion: reduce) {
-        html { scroll-behavior: auto; }
-      }
+      .footrow { display: flex; justify-content: space-between; gap: 14px; flex-wrap: wrap; }
+      .tiny { font-size: 13px; }
     </style>
   </head>
 
   <body>
-    <a class="skip" href="#content">Skip to content</a>
-
     <header>
-      <div class="container">
-        <div class="nav">
-          <div class="brand" aria-label="Site identity">
-            <strong>{site.name}</strong>
-            <span>{site.domain}</span>
-          </div>
+      <div class="container nav">
+        <a class="brand" href="/">
+          <span class="logo" aria-hidden="true"></span>
+          <span>{site.name}</span>
+        </a>
 
-          <nav aria-label="Primary navigation">
-            <ul>
-              <li><a href="#about">About</a></li>
-              <li><a href="#how">How it works</a></li>
-              <li><a href="#request">Send request</a></li>
-              <li><a href="#contact">Contact</a></li>
-            </ul>
-          </nav>
-        </div>
+        <nav class="navlinks" aria-label="Primary">
+          <a href="#services">Services</a>
+          <a href="#how">How it works</a>
+          <a href="#faq">FAQ</a>
+          <a href="#contact">Contact</a>
+        </nav>
+
+        <a class="btn primary" href={site.ctaPrimaryHref}>{site.ctaPrimary}</a>
       </div>
     </header>
 
-    <main id="content" class="container">
-      <!-- HERO -->
-      <section class="hero anchor" id="top" aria-label="Introduction">
-        <div class="badge" aria-label="Positioning">
-          <span class="dot" aria-hidden="true"></span>
-          <span>Matching layer</span>
-          <span aria-hidden="true">•</span>
-          <span class="mono">No custody</span>
-          <span aria-hidden="true">•</span>
-          <span class="mono">No guarantees</span>
+    <main class="container">
+      <section class="hero" aria-label="Hero">
+        <div class="left">
+          <h1>Build better connections.<br />Ship better outcomes.</h1>
+          <p>{site.tagline}</p>
+
+          <div class="actions">
+            <a class="btn primary" href={site.ctaPrimaryHref}>{site.ctaPrimary}</a>
+            <a class="btn" href={site.ctaSecondaryHref}>{site.ctaSecondary}</a>
+            <a class="btn" href={`mailto:${site.email}`}>Email us</a>
+          </div>
+
+          <div class="pillrow" aria-label="Highlights">
+            <span class="pill">Fast, modern website</span>
+            <span class="pill">SEO-ready</span>
+            <span class="pill">Mobile-first</span>
+            <span class="pill">Easy to expand</span>
+          </div>
         </div>
 
-        <h1>Match by terms, not hype.</h1>
-
-        <p class="lead">
-          {site.name} helps people describe what they want — <strong>lend</strong>, <strong>borrow</strong>, or
-          <strong>profit-sharing collaboration</strong> — then connect with others who match the same structure, timeline,
-          and risk comfort. We provide general educational guidance and introductions, not regulated financial advice.
-        </p>
-
-        <div class="callout" role="note" aria-label="Important notice">
-          <strong>Important:</strong> {site.name} does not manage money, hold funds, execute trades, or guarantee returns.
-          Any agreement happens privately between participants. Lending and investing involve risk, including loss of capital.
-        </div>
-
-        <div class="actions">
-          <a class="btn primary" href="#request" aria-label="Go to send request section">
-            Send a request
-            <span aria-hidden="true">→</span>
-          </a>
-          <a class="btn" href="#how" aria-label="Go to how it works section">How it works</a>
-        </div>
-
-        <ul class="bullets" aria-label="Key benefits">
-          <li><b>Simple:</b> goal, timeline, and risk comfort</li>
-          <li><b>Private:</b> share only what’s needed</li>
-          <li><b>Clear:</b> structured requests and next steps</li>
-        </ul>
-      </section>
-
-      <!-- ABOUT -->
-      <section class="anchor" id="about" aria-label="About AmicBridge">
-        <h2>About</h2>
-        <p>
-          Finance gets loud. People want to lend, borrow, or collaborate on investments — but the internet turns it into noise,
-          hype, and unclear terms. {site.name} is built to make the first step boring (in the best way):
-          define what you want, define what you accept, and connect with people looking for the same kind of deal.
-        </p>
-        <p>
-          We focus on being a <strong>bridge</strong>: coordination, matching, and clarity.
-          We do not take custody of funds, and we do not promise outcomes. Participants make their own decisions.
-        </p>
-      </section>
-
-      <!-- HOW IT WORKS -->
-      <section class="anchor" id="how" aria-label="How it works">
-        <h2>How it works</h2>
-
-        <div class="grid">
-          <div class="card">
-            <div class="kicker">Process</div>
-            <p>
-              You submit a request with your terms. If there’s a match, you can communicate directly and decide whether to proceed.
-              {site.name} stays out of custody and out of the money flow.
+        <aside class="right card" aria-label="Overview">
+          <div class="box">
+            <strong style="font-size:16px;">What is AmicBridge?</strong>
+            <p style="margin:10px 0 0; color: var(--muted); line-height:1.6;">
+              A simple base site you can tailor: consulting, IT services, partnerships, community, education—
+              anything where you “bridge” a gap. Replace the text and you’re live.
             </p>
 
-            <div class="steps" role="list" aria-label="Steps">
-              <div class="step" role="listitem">
-                <div class="kicker">Step 1</div>
-                <strong>Describe your intent</strong>
-                <p class="muted">Choose lending, borrowing, or profit-sharing, then specify timeline and constraints.</p>
+            <div class="metricgrid" role="list" aria-label="Example value props">
+              <div class="metric" role="listitem">
+                <strong>Clarity</strong>
+                <span>Simple message + next step</span>
               </div>
-              <div class="step" role="listitem">
-                <div class="kicker">Step 2</div>
-                <strong>Match by structure</strong>
-                <p class="muted">We look for compatibility: time horizon, expectations, and risk comfort.</p>
+              <div class="metric" role="listitem">
+                <strong>Trust</strong>
+                <span>Process + proof + FAQ</span>
               </div>
-              <div class="step" role="listitem">
-                <div class="kicker">Step 3</div>
-                <strong>You decide privately</strong>
-                <p class="muted">If you proceed, you do it directly with the other party. No holding funds on {site.name}.</p>
+              <div class="metric" role="listitem">
+                <strong>Speed</strong>
+                <span>Astro ships fast pages</span>
               </div>
-              <div class="step" role="listitem">
-                <div class="kicker">Step 4</div>
-                <strong>Document clearly</strong>
-                <p class="muted">Use written terms and professional help where appropriate. Clarity reduces disputes.</p>
+              <div class="metric" role="listitem">
+                <strong>Control</strong>
+                <span>Easy edits, no lock-in</span>
               </div>
             </div>
           </div>
-
-          <div class="card">
-            <div class="kicker">Supported request types</div>
-            <ul class="bullets" style="margin-top: 0;">
-              <li><b>Lend:</b> private lending with agreed terms</li>
-              <li><b>Borrow:</b> amount, timeline, and repayment plan</li>
-              <li><b>Profit-sharing:</b> collaboration where returns vary and risk is explicit</li>
-            </ul>
-
-            <div class="divider" role="separator" aria-hidden="true"></div>
-
-            <div class="kicker">What we do not do</div>
-            <ul class="bullets" style="margin-top: 0;">
-              <li>No custody or money movement</li>
-              <li>No guaranteed returns</li>
-              <li>No personalized financial advice</li>
-            </ul>
-
-            <div class="divider" role="separator" aria-hidden="true"></div>
-
-            <div class="callout">
-              <strong>Practical note:</strong> Profit-sharing deals are risk-bearing by design. Make sure both sides understand the downside,
-              not just the upside.
-            </div>
-          </div>
-        </div>
+        </aside>
       </section>
 
-      <!-- REQUEST -->
-      <section class="anchor" id="request" aria-label="Send a request">
-        <h2>Send a request</h2>
-        <p>
-          Fill in the form below. This sends your request to AmicBridge via Formspree. Share only what is necessary.
-        </p>
-
-        {sent && (
-          <div class="alert-success" role="status" aria-live="polite">
-            <strong>Request sent.</strong> Thanks — we received your message and will respond by email.
-          </div>
-        )}
+      <section id="services" aria-label="Services">
+        <div class="section-head">
+          <h2>Services</h2>
+          <p>Clear, practical help—no mystical jargon rituals.</p>
+        </div>
 
         <div class="grid">
-          <div class="card">
-            <form action={site.formspreeAction} method="POST" autocomplete="on">
-              <div class="row2">
-                <div>
-                  <label for="name">Your name</label>
-                  <input id="name" name="name" required autocomplete="name" placeholder="Your full name" />
-                </div>
-                <div>
-                  <label for="email">Email</label>
-                  <input id="email" name="email" type="email" required autocomplete="email" placeholder="you@example.com" />
-                </div>
-              </div>
-
-              <div class="row2">
-                <div>
-                  <label for="type">Request type</label>
-                  <select id="type" name="request_type" required>
-                    <option value="" selected disabled>Select…</option>
-                    <option value="lend">I want to lend</option>
-                    <option value="borrow">I want to borrow</option>
-                    <option value="profit-sharing">I want profit-sharing collaboration</option>
-                  </select>
-                  <div class="help">Pick the structure first — it changes everything.</div>
-                </div>
-
-                <div>
-                  <label for="amount">Amount (optional)</label>
-                  <input id="amount" name="amount" placeholder="e.g., 10,000 NOK" inputmode="text" />
-                  <div class="help">You can leave this blank if you prefer.</div>
-                </div>
-              </div>
-
-              <div class="row2">
-                <div>
-                  <label for="timeline">Timeline</label>
-                  <input id="timeline" name="timeline" required placeholder="e.g., 3–6 months" autocomplete="off" />
-                </div>
-                <div>
-                  <label for="risk">Risk comfort</label>
-                  <select id="risk" name="risk_comfort" required>
-                    <option value="" selected disabled>Select…</option>
-                    <option value="low">Low (preservation)</option>
-                    <option value="medium">Medium (balanced)</option>
-                    <option value="high">High (higher volatility)</option>
-                  </select>
-                </div>
-              </div>
-
-              <div>
-                <label for="details">Details</label>
-                <textarea
-                  id="details"
-                  name="details"
-                  required
-                  placeholder="Describe terms and expectations. If borrowing: repayment plan. If profit-sharing: how profits/losses are split, what the project is, and key risks."
-                ></textarea>
-                <div class="help">Avoid sensitive IDs or passwords. Keep it practical.</div>
-              </div>
-
-              <!-- Formspree helpers -->
-              <input type="hidden" name="_subject" value="AmicBridge — New matching request" />
-              <input type="hidden" name="_format" value="plain" />
-              <input type="hidden" name="_next" value="/?sent=1#request" />
-
-              <!-- Honeypot anti-spam -->
-              <div class="sr-only" aria-hidden="true">
-                <label for="website">Website</label>
-                <input id="website" name="website" tabindex="-1" autocomplete="off" />
-              </div>
-
-              <button class="btn primary" type="submit">
-                Submit request <span aria-hidden="true">→</span>
-              </button>
-
-              <p class="help" style="margin: 2px 0 0;">
-                By submitting, you confirm you understand {site.name} does not hold funds, provide personal advice, or guarantee outcomes.
-              </p>
-            </form>
-          </div>
-
-          <div class="card">
-            <div class="kicker">Tips for a strong request</div>
-            <ul class="bullets" style="margin-top: 0;">
-              <li><b>State the structure:</b> loan terms or profit-sharing terms</li>
-              <li><b>State the time:</b> start date, duration, and milestones</li>
-              <li><b>State the downside:</b> what happens if things go wrong</li>
-              <li><b>State the rules:</b> documentation and exit conditions</li>
-            </ul>
-
-            <div class="divider" role="separator" aria-hidden="true"></div>
-
-            <div class="callout">
-              <strong>Safety:</strong> Verify identity, use written agreements, and consider professional help for larger amounts.
-            </div>
-          </div>
+          {services.map((s) => (
+            <article class="card service">
+              <h3>{s.title}</h3>
+              <p>{s.desc}</p>
+            </article>
+          ))}
         </div>
       </section>
 
-      <!-- CONTACT -->
-      <section class="anchor" id="contact" aria-label="Contact information">
-        <h2>Contact</h2>
-        <p>For questions, partnership inquiries, or support:</p>
+      <section id="how" aria-label="How it works">
+        <div class="section-head">
+          <h2>How it works</h2>
+          <p>A simple path from “messy” to “managed”.</p>
+        </div>
 
-        <div class="card">
-          <p style="margin: 0 0 8px 0;"><strong>CEO:</strong> {site.contact.ceo}</p>
-          <p style="margin: 0 0 8px 0;">
-            <strong>Email:</strong>
-            <a href={`mailto:${site.contact.email}`}>{site.contact.email}</a>
-          </p>
-          <p style="margin: 0;">
-            <strong>Phone:</strong>
-            <a href={`tel:${site.contact.phone}`}>{site.contact.phone}</a>
-          </p>
+        <div class="steps">
+          {steps.map((st, i) => (
+            <article class="card step">
+              <div class="num">{i + 1}</div>
+              <h3>{st.title}</h3>
+              <p>{st.desc}</p>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section aria-label="Social proof and FAQ">
+        <div class="two">
+          <article class="card quote" aria-label="Testimonial">
+            <p>
+              “AmicBridge helped us untangle our setup, document everything, and get back to actually doing work.”
+              <br /><br />
+              Swap this with a real testimonial when you have one—proof is rocket fuel.
+            </p>
+            <footer>— Example Client, Operations Lead</footer>
+          </article>
+
+          <article id="faq" class="card faq" aria-label="FAQ">
+            <h2 style="margin:0 0 12px;">FAQ</h2>
+            {faqs.map((f) => (
+              <details>
+                <summary>{f.q}</summary>
+                <p>{f.a}</p>
+              </details>
+            ))}
+          </article>
+        </div>
+      </section>
+
+      <section id="contact" aria-label="Contact">
+        <div class="section-head">
+          <h2>Contact</h2>
+          <p>Short message → quick reply.</p>
+        </div>
+
+        <div class="card contact">
+          <!-- Static form (works with Netlify/Vercel forms, Formspree, etc.) -->
+          <form method="post" action="#">
+            <div>
+              <label for="name">Name</label>
+              <input id="name" name="name" autocomplete="name" placeholder="Your name" />
+            </div>
+
+            <div>
+              <label for="email">Email</label>
+              <input id="email" name="email" type="email" autocomplete="email" placeholder="you@company.com" />
+            </div>
+
+            <div>
+              <label for="message">Message</label>
+              <textarea id="message" name="message" placeholder="What are you trying to build or fix?"></textarea>
+            </div>
+
+            <div style="display:flex; gap:10px; flex-wrap: wrap;">
+              <button class="btn primary" type="submit">Send message</button>
+              <a class="btn" href={`mailto:${site.email}`}>Or email {site.email}</a>
+            </div>
+
+            <p class="tiny" style="margin:10px 0 0;">
+              Tip: If you deploy on Netlify, you can enable form handling easily. Or use Formspree for quick form-to-email.
+            </p>
+          </form>
         </div>
       </section>
     </main>
 
-    <footer>
-      <div class="container">
-        <p>
-          <strong>Disclaimer:</strong> {site.name} is an introduction and information platform. We do not hold custody of funds,
-          execute payments, or provide personalized financial advice. Decisions and agreements are made independently by the parties involved.
-          Lending and investing carry risk, including potential loss of capital.
-        </p>
-        <p>© {new Date().getFullYear()} {site.name}. All rights reserved.</p>
+    <footer class="site">
+      <div class="container footrow">
+        <span class="tiny">© {year} {site.name}. All rights reserved.</span>
+        <span class="tiny">Built with Astro • {site.domain}</span>
       </div>
     </footer>
   </body>
