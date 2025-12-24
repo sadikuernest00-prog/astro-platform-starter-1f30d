@@ -1,5 +1,6 @@
 import type { APIRoute } from "astro";
-import { store, uid, type Offer } from "../../../lib/store";
+import { uid, type Offer, type LoanRequest } from "../../../lib/store";
+import { getJSON, setJSON } from "../../../lib/db";
 
 export const POST: APIRoute = async ({ request }) => {
   const body = await request.json().catch(() => null);
@@ -18,7 +19,8 @@ export const POST: APIRoute = async ({ request }) => {
     return new Response("Invalid fields", { status: 400 });
   }
 
-  const exists = store.requests.find((r) => r.id === requestId);
+  const requests = await getJSON<LoanRequest[]>("requests", []);
+  const exists = requests.find((r) => r.id === requestId);
   if (!exists) return new Response("Request not found", { status: 404 });
 
   const offer: Offer = {
@@ -32,7 +34,9 @@ export const POST: APIRoute = async ({ request }) => {
     createdAt: new Date().toISOString(),
   };
 
-  store.offers.unshift(offer);
+  const offers = await getJSON<Offer[]>("offers", []);
+  offers.unshift(offer);
+  await setJSON("offers", offers);
 
   return new Response(JSON.stringify({ ok: true, offer }), {
     headers: { "Content-Type": "application/json" },
