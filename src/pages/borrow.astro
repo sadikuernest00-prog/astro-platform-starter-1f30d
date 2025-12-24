@@ -1,0 +1,100 @@
+---
+const currencies = ["USD", "EUR", "GBP", "NOK"];
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Borrow — AmicBridge</title>
+    <style>
+      body { font-family: system-ui; margin: 0; padding: 24px; max-width: 860px; margin-inline: auto; }
+      input, textarea, select, button { width: 100%; padding: 10px; margin-top: 6px; }
+      label { display: block; margin-top: 14px; font-weight: 700; }
+      .row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+      .card { border: 1px solid #ddd; border-radius: 14px; padding: 16px; }
+      .ok { color: #0a7; }
+      .err { color: #c22; }
+    </style>
+  </head>
+  <body>
+    <p><a href="/">← Home</a></p>
+    <h1>Create a loan request</h1>
+
+    <div class="card">
+      <form id="f">
+        <div class="row">
+          <div>
+            <label>Name</label>
+            <input name="borrowerName" required placeholder="Jane Borrower" />
+          </div>
+          <div>
+            <label>Email</label>
+            <input name="borrowerEmail" type="email" required placeholder="jane@email.com" />
+          </div>
+        </div>
+
+        <div class="row">
+          <div>
+            <label>Amount</label>
+            <input name="amount" type="number" min="1" step="1" required placeholder="5000" />
+          </div>
+          <div>
+            <label>Currency</label>
+            <select name="currency">
+              {currencies.map((c) => <option value={c}>{c}</option>)}
+            </select>
+          </div>
+        </div>
+
+        <label>Term (months)</label>
+        <input name="termMonths" type="number" min="1" step="1" required placeholder="12" />
+
+        <label>Purpose</label>
+        <textarea name="purpose" required placeholder="What is the loan for?"></textarea>
+
+        <button type="submit">Submit request</button>
+        <p id="msg"></p>
+      </form>
+    </div>
+
+    <p><a href="/lend">Go to lender view →</a></p>
+
+    <script>
+      const f = document.getElementById("f");
+      const msg = document.getElementById("msg");
+
+      f.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        msg.textContent = "Sending...";
+        msg.className = "";
+
+        const fd = new FormData(f);
+        const payload = {
+          borrowerName: fd.get("borrowerName"),
+          borrowerEmail: fd.get("borrowerEmail"),
+          amount: Number(fd.get("amount")),
+          currency: fd.get("currency"),
+          termMonths: Number(fd.get("termMonths")),
+          purpose: fd.get("purpose"),
+        };
+
+        const res = await fetch("/api/requests/create", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        });
+
+        if (!res.ok) {
+          msg.textContent = "Error creating request.";
+          msg.className = "err";
+          return;
+        }
+
+        msg.textContent = "Created! Go to Lend page to view it.";
+        msg.className = "ok";
+        f.reset();
+      });
+    </script>
+  </body>
+</html>
