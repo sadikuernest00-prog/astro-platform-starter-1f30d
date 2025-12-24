@@ -1,9 +1,12 @@
 ---
 // src/pages/index.astro
+// AmicBridge — clean, professional single-page marketing + request form (Formspree)
+
 const site = {
   name: "AmicBridge",
   domain: "amicbridge.com",
-  tagline: "A simple matching platform for private lending, borrowing, and profit-sharing collaborations.",
+  tagline:
+    "A matching platform for private lending, borrowing, and profit-sharing collaborations — built for clarity, not hype.",
   formspreeAction: "https://formspree.io/f/xzznjkvd",
   contact: {
     ceo: "Habbitx",
@@ -11,6 +14,11 @@ const site = {
     phone: "92928373",
   },
 };
+
+// Show a friendly banner when returning from Formspree redirect (optional).
+// If you use _next="/?sent=1#request" this will display.
+// (We set _next below.)
+const sent = Astro.url.searchParams.get("sent") === "1";
 ---
 
 <html lang="en">
@@ -18,56 +26,71 @@ const site = {
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{site.name} — Matching platform</title>
-
-    <meta
-      name="description"
-      content="AmicBridge is a simple matching platform for private lending, borrowing, and profit-sharing collaborations. We provide clarity, structured requests, and introductions — not custody or guarantees."
-    />
+    <meta name="description" content={site.tagline} />
 
     <!-- Open Graph -->
     <meta property="og:title" content={`${site.name} — Matching platform`} />
-    <meta
-      property="og:description"
-      content="Define your terms. Match with others seeking the same structure. No custody. No guarantees."
-    />
+    <meta property="og:description" content={site.tagline} />
     <meta property="og:type" content="website" />
 
-    <!-- Basic hardening -->
-    <meta name="referrer" content="no-referrer-when-downgrade" />
+    <!-- Small hardening defaults -->
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <!-- JSON-LD for basic org/contact -->
+    <script type="application/ld+json">
+      {JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        name: site.name,
+        url: `https://${site.domain}`,
+        contactPoint: [
+          {
+            "@type": "ContactPoint",
+            contactType: "customer support",
+            email: site.contact.email,
+            telephone: site.contact.phone,
+          },
+        ],
+      })}
+    </script>
 
     <style>
       :root {
         --bg: #ffffff;
-        --panel: #ffffff;
+        --surface: #ffffff;
         --soft: #f8fafc;
+        --soft2: #f1f5f9;
         --text: #0b1220;
-        --muted: #44546a;
+        --muted: #475569;
+        --muted2: #64748b;
         --border: #e2e8f0;
         --accent: #0b1220;
-        --accent2: #0f172a;
-        --ring: rgba(15, 23, 42, 0.22);
+        --ring: rgba(15, 23, 42, 0.25);
 
         --radius: 16px;
         --radius-sm: 12px;
 
         --max: 1040px;
-        --shadow: 0 1px 2px rgba(0, 0, 0, 0.06), 0 10px 28px rgba(0, 0, 0, 0.08);
 
-        --h1: clamp(34px, 4.5vw, 56px);
-        --h2: clamp(22px, 2.4vw, 30px);
+        --shadow: 0 1px 2px rgba(0, 0, 0, 0.06), 0 12px 30px rgba(0, 0, 0, 0.08);
+
+        --h1: clamp(36px, 4.8vw, 60px);
+        --h2: clamp(22px, 2.6vw, 32px);
+        --lead: clamp(16px, 1.5vw, 18px);
         --p: 16px;
-        --lead: clamp(16px, 1.4vw, 18px);
-
-        --lh: 1.55;
+        --lh: 1.58;
       }
 
       * { box-sizing: border-box; }
       html, body { margin: 0; padding: 0; }
+      html { scroll-behavior: smooth; }
       body {
         font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji",
           "Segoe UI Emoji";
-        background: var(--bg);
+        background: radial-gradient(1000px 600px at 20% -10%, var(--soft2), transparent 60%),
+          radial-gradient(900px 540px at 90% 10%, #eef2ff, transparent 55%),
+          var(--bg);
         color: var(--text);
         line-height: var(--lh);
       }
@@ -77,6 +100,8 @@ const site = {
 
       .container { max-width: var(--max); margin: 0 auto; padding: 0 18px; }
       .muted { color: var(--muted); }
+      .muted2 { color: var(--muted2); }
+
       .sr-only {
         position: absolute;
         width: 1px;
@@ -84,7 +109,7 @@ const site = {
         padding: 0;
         margin: -1px;
         overflow: hidden;
-        clip: rect(0,0,0,0);
+        clip: rect(0, 0, 0, 0);
         white-space: nowrap;
         border: 0;
       }
@@ -93,11 +118,24 @@ const site = {
       header {
         position: sticky;
         top: 0;
-        z-index: 20;
-        background: rgba(255,255,255,0.9);
-        backdrop-filter: blur(10px);
+        z-index: 30;
+        background: rgba(255, 255, 255, 0.82);
+        backdrop-filter: blur(12px);
         border-bottom: 1px solid var(--border);
       }
+
+      .skip {
+        position: absolute;
+        left: 14px;
+        top: -60px;
+        padding: 10px 12px;
+        border-radius: 12px;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        box-shadow: var(--shadow);
+      }
+      .skip:focus { top: 10px; outline: none; }
+
       .nav {
         display: flex;
         align-items: center;
@@ -105,6 +143,7 @@ const site = {
         gap: 16px;
         padding: 14px 0;
       }
+
       .brand {
         display: flex;
         flex-direction: column;
@@ -132,63 +171,83 @@ const site = {
         color: var(--muted);
       }
       nav a:hover { background: var(--soft); color: var(--text); text-decoration: none; }
-      .skip {
-        position: absolute;
-        left: 10px;
-        top: -60px;
-        padding: 10px 12px;
-        border: 1px solid var(--border);
-        border-radius: 12px;
-        background: var(--panel);
-        box-shadow: var(--shadow);
-        color: var(--text);
-      }
-      .skip:focus { top: 10px; outline: none; }
 
-      /* Layout */
-      main { padding: 42px 0 72px; }
-      section { padding-top: 10px; margin-top: 44px; }
-      .anchor { scroll-margin-top: 86px; }
+      /* Main */
+      main { padding: 46px 0 74px; }
+      section { margin-top: 48px; padding-top: 8px; }
+      .anchor { scroll-margin-top: 92px; }
 
       /* Hero */
       .hero {
-        margin-top: 10px;
+        margin-top: 12px;
         display: grid;
         grid-template-columns: 1fr;
         gap: 16px;
       }
-      .hero h1 {
+
+      .badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 7px 12px;
+        border-radius: 999px;
+        border: 1px solid var(--border);
+        background: rgba(255, 255, 255, 0.8);
+        width: fit-content;
+        color: var(--muted);
+        font-size: 13px;
+      }
+      .dot { width: 6px; height: 6px; border-radius: 999px; background: #16a34a; }
+      .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; }
+
+      h1 {
         font-size: var(--h1);
         letter-spacing: -0.9px;
-        margin: 0 0 10px 0;
+        margin: 0;
       }
-      .hero p.lead {
+      .lead {
         font-size: var(--lead);
         color: var(--muted);
-        max-width: 80ch;
-        margin: 0 0 14px 0;
+        max-width: 84ch;
+        margin: 0;
+      }
+
+      .card {
+        border: 1px solid var(--border);
+        background: rgba(255, 255, 255, 0.88);
+        border-radius: var(--radius);
+        padding: 16px;
       }
 
       .callout {
         border: 1px solid var(--border);
-        background: linear-gradient(180deg, var(--soft), #ffffff);
+        background: linear-gradient(180deg, var(--soft), rgba(255, 255, 255, 0.9));
         border-radius: var(--radius);
-        padding: 14px 14px;
+        padding: 14px;
         color: var(--muted);
       }
       .callout strong { color: var(--text); }
+
+      .alert-success {
+        border: 1px solid rgba(34, 197, 94, 0.35);
+        background: rgba(34, 197, 94, 0.08);
+        color: #14532d;
+        border-radius: var(--radius);
+        padding: 12px 14px;
+      }
 
       .actions {
         display: flex;
         gap: 12px;
         flex-wrap: wrap;
-        margin: 16px 0 10px;
+        margin-top: 10px;
       }
+
       .btn {
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        gap: 8px;
+        gap: 10px;
         border-radius: 14px;
         padding: 12px 16px;
         border: 1px solid var(--border);
@@ -216,36 +275,33 @@ const site = {
       .bullets li { margin: 6px 0; }
       .bullets b { color: var(--text); }
 
-      /* Sections */
+      /* Section headings */
       h2 {
         font-size: var(--h2);
         margin: 0 0 10px 0;
         letter-spacing: -0.35px;
       }
-      p { font-size: var(--p); margin: 0 0 12px 0; color: var(--muted); max-width: 90ch; }
+      p {
+        font-size: var(--p);
+        margin: 0 0 12px 0;
+        color: var(--muted);
+        max-width: 92ch;
+      }
 
       .grid {
         display: grid;
         grid-template-columns: 1fr;
         gap: 14px;
       }
-      @media (min-width: 920px) {
+      @media (min-width: 940px) {
         .grid { grid-template-columns: 1.15fr 0.85fr; }
-      }
-
-      .card {
-        border: 1px solid var(--border);
-        background: var(--panel);
-        border-radius: var(--radius);
-        padding: 16px;
-        box-shadow: 0 0 0 rgba(0,0,0,0);
       }
 
       .kicker {
         font-size: 12px;
-        color: var(--muted);
+        color: var(--muted2);
         text-transform: uppercase;
-        letter-spacing: 0.08em;
+        letter-spacing: 0.1em;
         margin: 0 0 8px;
       }
 
@@ -257,10 +313,13 @@ const site = {
         background: #fff;
       }
       .step strong { display: block; margin: 2px 0 4px; }
+      .step .muted { margin: 0; }
+
+      .divider { height: 1px; background: var(--border); margin: 12px 0; }
 
       /* Form */
       form { display: grid; gap: 12px; }
-      label { display: block; font-size: 13px; color: var(--muted); margin-bottom: 5px; }
+      label { display: block; font-size: 13px; color: var(--muted2); margin-bottom: 5px; }
       input, textarea, select {
         width: 100%;
         border: 1px solid var(--border);
@@ -270,7 +329,7 @@ const site = {
         background: #fff;
         color: var(--text);
       }
-      textarea { min-height: 130px; resize: vertical; }
+      textarea { min-height: 140px; resize: vertical; }
       input:focus, textarea:focus, select:focus {
         outline: 3px solid var(--ring);
         outline-offset: 2px;
@@ -278,9 +337,7 @@ const site = {
       }
       .help { font-size: 13px; color: var(--muted); margin-top: -6px; }
       .row2 { display: grid; grid-template-columns: 1fr; gap: 12px; }
-      @media (min-width: 680px) { .row2 { grid-template-columns: 1fr 1fr; } }
-
-      .divider { height: 1px; background: var(--border); margin: 10px 0; }
+      @media (min-width: 700px) { .row2 { grid-template-columns: 1fr 1fr; } }
 
       /* Footer */
       footer {
@@ -288,23 +345,15 @@ const site = {
         padding: 22px 0;
         color: var(--muted);
         font-size: 13px;
+        background: rgba(255,255,255,0.65);
+        backdrop-filter: blur(10px);
       }
       footer p { margin: 0 0 10px 0; max-width: 110ch; }
 
-      /* Small polish */
-      .pill {
-        display: inline-flex;
-        align-items: center;
-        padding: 6px 10px;
-        border-radius: 999px;
-        background: var(--soft);
-        border: 1px solid var(--border);
-        color: var(--muted);
-        font-size: 13px;
-        gap: 8px;
-        width: fit-content;
+      /* Respect reduced motion */
+      @media (prefers-reduced-motion: reduce) {
+        html { scroll-behavior: auto; }
       }
-      .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; }
     </style>
   </head>
 
@@ -334,7 +383,8 @@ const site = {
     <main id="content" class="container">
       <!-- HERO -->
       <section class="hero anchor" id="top" aria-label="Introduction">
-        <div class="pill" aria-label="Positioning">
+        <div class="badge" aria-label="Positioning">
+          <span class="dot" aria-hidden="true"></span>
           <span>Matching layer</span>
           <span aria-hidden="true">•</span>
           <span class="mono">No custody</span>
@@ -342,7 +392,7 @@ const site = {
           <span class="mono">No guarantees</span>
         </div>
 
-        <h1>Matching requests</h1>
+        <h1>Match by terms, not hype.</h1>
 
         <p class="lead">
           {site.name} helps people describe what they want — <strong>lend</strong>, <strong>borrow</strong>, or
@@ -356,13 +406,16 @@ const site = {
         </div>
 
         <div class="actions">
-          <a class="btn primary" href="#request" aria-label="Send a request">Send a request</a>
-          <a class="btn" href="#how" aria-label="Learn how it works">How it works</a>
+          <a class="btn primary" href="#request" aria-label="Go to send request section">
+            Send a request
+            <span aria-hidden="true">→</span>
+          </a>
+          <a class="btn" href="#how" aria-label="Go to how it works section">How it works</a>
         </div>
 
-        <ul class="bullets">
+        <ul class="bullets" aria-label="Key benefits">
           <li><b>Simple:</b> goal, timeline, and risk comfort</li>
-          <li><b>Private:</b> share only what is needed</li>
+          <li><b>Private:</b> share only what’s needed</li>
           <li><b>Clear:</b> structured requests and next steps</li>
         </ul>
       </section>
@@ -371,14 +424,13 @@ const site = {
       <section class="anchor" id="about" aria-label="About AmicBridge">
         <h2>About</h2>
         <p>
-          Many people want to lend, borrow, or collaborate on investments, but get overwhelmed by noise, hype, and unclear terms.
-          {site.name} is built to make the first step boring in the best way: define what you want, define what you accept,
-          and connect with people looking for the same kind of deal.
+          Finance gets loud. People want to lend, borrow, or collaborate on investments — but the internet turns it into noise,
+          hype, and unclear terms. {site.name} is built to make the first step boring (in the best way):
+          define what you want, define what you accept, and connect with people looking for the same kind of deal.
         </p>
         <p>
-          We focus on being a <strong>bridge</strong>: coordination, matching, and clarity. We do not take custody of funds.
-          We do not promise outcomes. We help people find each other and communicate terms clearly so participants can make
-          their own decisions.
+          We focus on being a <strong>bridge</strong>: coordination, matching, and clarity.
+          We do not take custody of funds, and we do not promise outcomes. Participants make their own decisions.
         </p>
       </section>
 
@@ -390,37 +442,37 @@ const site = {
           <div class="card">
             <div class="kicker">Process</div>
             <p>
-              {site.name} is a matching layer. You submit a request with terms. If there’s a match, you can communicate directly
-              and decide whether to proceed. {site.name} stays out of custody and out of your money flow.
+              You submit a request with your terms. If there’s a match, you can communicate directly and decide whether to proceed.
+              {site.name} stays out of custody and out of the money flow.
             </p>
 
             <div class="steps" role="list" aria-label="Steps">
               <div class="step" role="listitem">
                 <div class="kicker">Step 1</div>
                 <strong>Describe your intent</strong>
-                <div class="muted">Choose lending, borrowing, or profit-sharing and specify amount, timeline, and constraints.</div>
+                <p class="muted">Choose lending, borrowing, or profit-sharing, then specify timeline and constraints.</p>
               </div>
               <div class="step" role="listitem">
                 <div class="kicker">Step 2</div>
-                <strong>Match by terms</strong>
-                <div class="muted">We focus on structure and fit: time horizon, expectations, and risk comfort.</div>
+                <strong>Match by structure</strong>
+                <p class="muted">We look for compatibility: time horizon, expectations, and risk comfort.</p>
               </div>
               <div class="step" role="listitem">
                 <div class="kicker">Step 3</div>
-                <strong>Decide privately</strong>
-                <div class="muted">If you proceed, you do it directly with the other party. No holding funds on AmicBridge.</div>
+                <strong>You decide privately</strong>
+                <p class="muted">If you proceed, you do it directly with the other party. No holding funds on {site.name}.</p>
               </div>
               <div class="step" role="listitem">
                 <div class="kicker">Step 4</div>
                 <strong>Document clearly</strong>
-                <div class="muted">Use written terms and professional help when appropriate. Clarity reduces disputes.</div>
+                <p class="muted">Use written terms and professional help where appropriate. Clarity reduces disputes.</p>
               </div>
             </div>
           </div>
 
           <div class="card">
             <div class="kicker">Supported request types</div>
-            <ul class="bullets" style="margin-top:0;">
+            <ul class="bullets" style="margin-top: 0;">
               <li><b>Lend:</b> private lending with agreed terms</li>
               <li><b>Borrow:</b> amount, timeline, and repayment plan</li>
               <li><b>Profit-sharing:</b> collaboration where returns vary and risk is explicit</li>
@@ -429,9 +481,9 @@ const site = {
             <div class="divider" role="separator" aria-hidden="true"></div>
 
             <div class="kicker">What we do not do</div>
-            <ul class="bullets" style="margin-top:0;">
+            <ul class="bullets" style="margin-top: 0;">
               <li>No custody or money movement</li>
-              <li>No guarantees, no “fixed profits” promises</li>
+              <li>No guaranteed returns</li>
               <li>No personalized financial advice</li>
             </ul>
 
@@ -445,12 +497,18 @@ const site = {
         </div>
       </section>
 
-      <!-- REQUEST FORM -->
+      <!-- REQUEST -->
       <section class="anchor" id="request" aria-label="Send a request">
         <h2>Send a request</h2>
         <p>
           Fill in the form below. This sends your request to AmicBridge via Formspree. Share only what is necessary.
         </p>
+
+        {sent && (
+          <div class="alert-success" role="status" aria-live="polite">
+            <strong>Request sent.</strong> Thanks — we received your message and will respond by email.
+          </div>
+        )}
 
         <div class="grid">
           <div class="card">
@@ -488,19 +546,13 @@ const site = {
               <div class="row2">
                 <div>
                   <label for="timeline">Timeline</label>
-                  <input
-                    id="timeline"
-                    name="timeline"
-                    required
-                    placeholder="e.g., 3–6 months"
-                    autocomplete="off"
-                  />
+                  <input id="timeline" name="timeline" required placeholder="e.g., 3–6 months" autocomplete="off" />
                 </div>
                 <div>
                   <label for="risk">Risk comfort</label>
                   <select id="risk" name="risk_comfort" required>
                     <option value="" selected disabled>Select…</option>
-                    <option value="low">Low (capital preservation)</option>
+                    <option value="low">Low (preservation)</option>
                     <option value="medium">Medium (balanced)</option>
                     <option value="high">High (higher volatility)</option>
                   </select>
@@ -513,7 +565,7 @@ const site = {
                   id="details"
                   name="details"
                   required
-                  placeholder="Describe the terms and expectations. If borrowing: repayment plan. If profit-sharing: how profits/losses are split, what the project is, and what risks exist."
+                  placeholder="Describe terms and expectations. If borrowing: repayment plan. If profit-sharing: how profits/losses are split, what the project is, and key risks."
                 ></textarea>
                 <div class="help">Avoid sensitive IDs or passwords. Keep it practical.</div>
               </div>
@@ -521,35 +573,37 @@ const site = {
               <!-- Formspree helpers -->
               <input type="hidden" name="_subject" value="AmicBridge — New matching request" />
               <input type="hidden" name="_format" value="plain" />
-              <input type="hidden" name="_next" value="/#request" />
+              <input type="hidden" name="_next" value="/?sent=1#request" />
 
-              <!-- Honeypot (anti-spam). Humans should not fill this. -->
+              <!-- Honeypot anti-spam -->
               <div class="sr-only" aria-hidden="true">
                 <label for="website">Website</label>
                 <input id="website" name="website" tabindex="-1" autocomplete="off" />
               </div>
 
-              <button class="btn primary" type="submit">Submit request</button>
+              <button class="btn primary" type="submit">
+                Submit request <span aria-hidden="true">→</span>
+              </button>
 
               <p class="help" style="margin: 2px 0 0;">
-                By submitting, you confirm you understand AmicBridge does not hold funds, provide personal advice, or guarantee outcomes.
+                By submitting, you confirm you understand {site.name} does not hold funds, provide personal advice, or guarantee outcomes.
               </p>
             </form>
           </div>
 
           <div class="card">
             <div class="kicker">Tips for a strong request</div>
-            <ul class="bullets" style="margin-top:0;">
+            <ul class="bullets" style="margin-top: 0;">
               <li><b>State the structure:</b> loan terms or profit-sharing terms</li>
-              <li><b>State the time:</b> start date, duration, and key milestones</li>
+              <li><b>State the time:</b> start date, duration, and milestones</li>
               <li><b>State the downside:</b> what happens if things go wrong</li>
-              <li><b>State the rules:</b> communication, documentation, and exit conditions</li>
+              <li><b>State the rules:</b> documentation and exit conditions</li>
             </ul>
 
             <div class="divider" role="separator" aria-hidden="true"></div>
 
             <div class="callout">
-              <strong>Safety:</strong> Meet cautiously, verify identity, and use written agreements. Consider professional help for larger amounts.
+              <strong>Safety:</strong> Verify identity, use written agreements, and consider professional help for larger amounts.
             </div>
           </div>
         </div>
@@ -561,12 +615,12 @@ const site = {
         <p>For questions, partnership inquiries, or support:</p>
 
         <div class="card">
-          <p style="margin:0 0 8px 0;"><strong>CEO:</strong> {site.contact.ceo}</p>
-          <p style="margin:0 0 8px 0;">
+          <p style="margin: 0 0 8px 0;"><strong>CEO:</strong> {site.contact.ceo}</p>
+          <p style="margin: 0 0 8px 0;">
             <strong>Email:</strong>
             <a href={`mailto:${site.contact.email}`}>{site.contact.email}</a>
           </p>
-          <p style="margin:0;">
+          <p style="margin: 0;">
             <strong>Phone:</strong>
             <a href={`tel:${site.contact.phone}`}>{site.contact.phone}</a>
           </p>
@@ -577,8 +631,8 @@ const site = {
     <footer>
       <div class="container">
         <p>
-          <strong>Disclaimer:</strong> AmicBridge is an introduction and information platform. We do not hold custody of funds,
-          execute payments, or provide personalized financial advice. Any decisions and agreements are made independently by the parties involved.
+          <strong>Disclaimer:</strong> {site.name} is an introduction and information platform. We do not hold custody of funds,
+          execute payments, or provide personalized financial advice. Decisions and agreements are made independently by the parties involved.
           Lending and investing carry risk, including potential loss of capital.
         </p>
         <p>© {new Date().getFullYear()} {site.name}. All rights reserved.</p>
