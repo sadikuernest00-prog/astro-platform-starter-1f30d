@@ -1,41 +1,294 @@
-
+<!doctype html>
 <html lang="en">
   <head>
-    <meta charset="utf-8" />
+    <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>AmicBridge — Borrow & Lend Marketplace</title>
-    <style>
-      body { font-family: system-ui; margin: 0; padding: 28px; max-width: 960px; margin-inline: auto; }
-      .card { border: 1px solid #ddd; border-radius: 16px; padding: 18px; margin-top: 14px; }
-      .btnrow { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 12px; }
-      a.btn { display: inline-block; padding: 10px 14px; border-radius: 12px; border: 1px solid #ddd; text-decoration: none; }
-      a.primary { background: #111; color: #fff; border-color: #111; }
-      .muted { color: #555; }
-    </style>
+    <title>AmicBridge</title>
   </head>
+
   <body>
-    <h1>AmicBridge</h1>
-    <p class="muted">A simple platform where borrowers request loans, lenders make offers, and a contract is generated when a deal is accepted.</p>
+    <!-- HEADER -->
+    <header class="header">
+      <div class="container nav">
+        <div>
+          <h2 class="logo">
+            <span>AMIC</span><span class="blue">BRIDGE</span>
+          </h2>
+          <p class="tag">Private lending & investing network</p>
+        </div>
 
-    <div class="card">
-      <h2>Start</h2>
-      <div class="btnrow">
-        <a class="btn primary" href="/borrow">I want to borrow</a>
-        <a class="btn" href="/lend">I want to lend</a>
+        <nav class="menu">
+          <a href="#">How it works</a>
+          <a href="#">Who it is for</a>
+          <a href="#">Trust & agreements</a>
+          <a href="#contact">Contact</a>
+        </nav>
       </div>
-      <p class="muted" style="margin-top:12px;">
-        MVP note: No login, no payments, no KYC yet. This is the workflow skeleton.
-      </p>
-    </div>
+    </header>
 
-    <div class="card">
-      <h2>How it works</h2>
-      <ol>
-        <li>Borrower submits a loan request.</li>
-        <li>Lenders send offers (APR, fees, schedule).</li>
-        <li>Borrower accepts an offer → deal is created.</li>
-        <li>Contract page is generated (print / save as PDF).</li>
-      </ol>
-    </div>
+    <!-- HERO -->
+    <section class="hero">
+      <div class="container hero-grid">
+
+        <!-- LEFT -->
+        <div class="left">
+          <div class="badge">✔ TRUST BEFORE MONEY</div>
+
+          <h1>
+            Invest your money. Let it work smarter for you.
+          </h1>
+
+          <p>
+            Put your money to work with us. We provide earnings. Start with a small amount or a big amount.
+          </p>
+
+          <div class="buttons">
+            <a href="mailto:sadikuernest00@gmail.com" class="btn primary">Email CEO</a>
+            <a href="#" class="btn secondary">Learn how it works</a>
+          </div>
+        </div>
+
+        <!-- RIGHT -->
+        <div class="right">
+          <div class="money-card">
+            <h2>
+              Start with whatever amount you are comfortable with — big or small.
+              We provide structure, insights, and opportunities to help your
+              money work more effectively over time.
+            </h2>
+
+            <p>
+              We work for you and let your money grow.
+            </p>
+
+            <a
+              href="https://wa.me/4792928373"
+              target="_blank"
+              class="whatsapp-btn"
+            >
+              💬 Contact on WhatsApp to get started
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- WHO -->
+    <section class="section">
+      <div class="container">
+        <h2>Who AmicBridge is for</h2>
+
+        <div class="grid">
+          <div class="card">
+            <h3>Private lenders</h3>
+            <p>Individuals who want professional structure.</p>
+          </div>
+
+          <div class="card">
+            <h3>Projects & builders</h3>
+            <p>People with concrete plans that need funding.</p>
+          </div>
+
+          <div class="card">
+            <h3>Long-term investors</h3>
+            <p>Those who prefer agreements over hype.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="section">
+      <div class="container">
+        <h2>Contact</h2>
+        <p>If you are interested in working with us, reach out directly:</p>
+
+        <div class="card">
+          <p><strong>Email:</strong> 
+            <a href="mailto:sadikuernest00@gmail.com">
+              sadikuernest00@gmail.com
+            </a>
+          </p>
+
+          <p><strong>WhatsApp:</strong> 
+            <a href="https://wa.me/4792928373" target="_blank">
+              Chat on WhatsApp
+            </a>
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+      <div class="container">
+        <p>
+          AmicBridge provides structure, agreements, and opportunities.
+        </p>
+      </div>
+    </footer>
+
   </body>
 </html>
+
+<style>
+  body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f4f6fb;
+    color: #111;
+  }
+
+  .container {
+    width: 90%;
+    max-width: 1200px;
+    margin: auto;
+  }
+
+  /* HEADER */
+  .header {
+    background: white;
+    border-bottom: 1px solid #ddd;
+    padding: 15px 0;
+  }
+
+  .nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .logo {
+    margin: 0;
+  }
+
+  .logo .blue {
+    color: #2d4bb3;
+  }
+
+  .tag {
+    font-size: 12px;
+    color: gray;
+  }
+
+  .menu a {
+    margin-left: 15px;
+    text-decoration: none;
+    color: #333;
+    font-weight: 500;
+  }
+
+  /* HERO */
+  .hero {
+    padding: 60px 0;
+  }
+
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    align-items: center;
+  }
+
+  .badge {
+    background: #dbeafe;
+    color: #1e40af;
+    padding: 6px 12px;
+    border-radius: 20px;
+    display: inline-block;
+    margin-bottom: 15px;
+  }
+
+  h1 {
+    font-size: 36px;
+    margin-bottom: 20px;
+  }
+
+  .buttons {
+    margin-top: 20px;
+  }
+
+  .btn {
+    padding: 12px 18px;
+    border-radius: 8px;
+    text-decoration: none;
+    margin-right: 10px;
+  }
+
+  .primary {
+    background: #2d4bb3;
+    color: white;
+  }
+
+  .secondary {
+    background: #eee;
+  }
+
+  /* RIGHT CARD */
+  .money-card {
+    background: white;
+    padding: 25px;
+    border-radius: 15px;
+    border: 1px solid #ddd;
+  }
+
+  .money-card h2 {
+    margin-bottom: 15px;
+  }
+
+  .money-card p {
+    color: #555;
+    line-height: 1.6;
+  }
+
+  .whatsapp-btn {
+    display: inline-block;
+    margin-top: 15px;
+    background: #25D366;
+    color: white;
+    padding: 12px 18px;
+    border-radius: 10px;
+    text-decoration: none;
+    font-weight: bold;
+  }
+
+  /* SECTION */
+  .section {
+    padding: 50px 0;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+
+  .card {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    border: 1px solid #ddd;
+  }
+
+  /* FOOTER */
+  .footer {
+    background: white;
+    padding: 20px;
+    border-top: 1px solid #ddd;
+    text-align: center;
+    font-size: 14px;
+    color: gray;
+  }
+
+  /* MOBILE */
+  @media (max-width: 800px) {
+    .hero-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
