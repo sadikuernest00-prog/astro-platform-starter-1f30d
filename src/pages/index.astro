@@ -10,7 +10,7 @@ const matches = [
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>AmicFormula</title>
+    <title>AmicFormula Crypto Bet</title>
 
     <style>
       body {
@@ -21,10 +21,20 @@ const matches = [
       }
 
       header {
-        background: #1e293b;
+        background: #020617;
         padding: 15px;
-        text-align: center;
-        font-size: 20px;
+        border-bottom: 1px solid #1e293b;
+      }
+
+      .logo {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        justify-content: center;
+      }
+
+      .logo span {
+        font-size: 22px;
         font-weight: bold;
       }
 
@@ -48,14 +58,14 @@ const matches = [
         margin: 5px;
         padding: 10px;
         border: none;
-        background: #22c55e;
+        background: #f97316;
         color: white;
         border-radius: 5px;
         cursor: pointer;
       }
 
       .odds button:hover {
-        background: #16a34a;
+        background: #ea580c;
       }
 
       .betslip {
@@ -69,22 +79,40 @@ const matches = [
         width: 100%;
         padding: 8px;
         margin-top: 10px;
+        background: #0f172a;
+        border: 1px solid #334155;
+        color: white;
       }
 
       button.place {
         margin-top: 10px;
         width: 100%;
         padding: 10px;
-        background: #3b82f6;
+        background: #22c55e;
         border: none;
         color: white;
         cursor: pointer;
+      }
+
+      .crypto {
+        color: #f97316;
+        font-weight: bold;
       }
     </style>
   </head>
 
   <body>
-    <header>AmicFormula Demo Betting</header>
+    <header>
+      <div class="logo">
+        <!-- Crypto Logo -->
+        <svg width="45" height="45" viewBox="0 0 100 100">
+          <circle cx="50" cy="50" r="50" fill="#FF6B00"/>
+          <path d="M25 70 L50 30 L75 70 L65 70 L50 45 L35 70 Z" fill="white"/>
+          <rect x="0" y="60" width="100" height="40" fill="#020617"/>
+        </svg>
+        <span>AmicFormula</span>
+      </div>
+    </header>
 
     <div class="container">
       <div class="matches">
@@ -107,10 +135,10 @@ const matches = [
       </div>
 
       <div class="betslip">
-        <h3>Bet Slip</h3>
-        <p>Balance: €<span id="balance">1000</span></p>
+        <h3>Crypto Bet Slip</h3>
+        <p>Balance: <span class="crypto">AF 1000</span></p>
         <p id="selection">No bet selected</p>
-        <input type="number" id="stake" placeholder="Enter stake" />
+        <input type="number" id="stake" placeholder="Enter AF stake" />
         <button class="place" onclick="placeBet()">Place Bet</button>
       </div>
     </div>
@@ -145,12 +173,13 @@ const matches = [
         if (win) {
           const winnings = stake * selectedBet.odds;
           balance += winnings;
-          alert("You won €" + winnings.toFixed(2));
+          alert("You won AF " + winnings.toFixed(2));
         } else {
           alert("You lost");
         }
 
-        document.getElementById("balance").innerText = balance.toFixed(2);
+        document.querySelector(".crypto").innerText =
+          "AF " + balance.toFixed(2);
       }
     </script>
   </body>
