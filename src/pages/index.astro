@@ -1,186 +1,196 @@
 ---
 const matches = [
-  { teams: "Ajax vs PSV", odds: [1.8, 3.2, 2.4] },
-  { teams: "Barcelona vs Real Madrid", odds: [2.1, 3.5, 2.0] },
-  { teams: "Man City vs Liverpool", odds: [1.9, 3.3, 2.2] }
+  { league: "Champions League", teams: "Barcelona vs Real Madrid", odds: [2.1, 3.5, 2.0] },
+  { league: "Premier League", teams: "Man City vs Liverpool", odds: [1.9, 3.3, 2.2] },
+  { league: "Eredivisie", teams: "Ajax vs PSV", odds: [1.8, 3.2, 2.4] }
 ];
 ---
 
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>AmicFormula Crypto Bet</title>
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>AmicFormula</title>
 
-    <style>
-      body {
-        margin: 0;
-        font-family: Arial, sans-serif;
-        background: #0f172a;
-        color: white;
-      }
+<style>
+body {
+  margin: 0;
+  font-family: Inter, Arial;
+  background: #0b1220;
+  color: white;
+}
 
-      header {
-        background: #020617;
-        padding: 15px;
-        border-bottom: 1px solid #1e293b;
-      }
+/* NAVBAR */
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 25px;
+  background: #020617;
+  border-bottom: 1px solid #1e293b;
+}
 
-      .logo {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        justify-content: center;
-      }
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
 
-      .logo span {
-        font-size: 22px;
-        font-weight: bold;
-      }
+.logo span {
+  font-weight: bold;
+  font-size: 20px;
+}
 
-      .container {
-        display: flex;
-      }
+.wallet {
+  background: #f97316;
+  padding: 8px 15px;
+  border-radius: 6px;
+  cursor: pointer;
+}
 
-      .matches {
-        flex: 3;
-        padding: 20px;
-      }
+/* LAYOUT */
+.container {
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+}
 
-      .match {
-        background: #1e293b;
-        margin-bottom: 12px;
-        padding: 15px;
-        border-radius: 8px;
-      }
+/* MATCHES */
+.match {
+  background: #111827;
+  margin: 15px;
+  padding: 15px;
+  border-radius: 10px;
+  transition: 0.2s;
+}
 
-      .odds button {
-        margin: 5px;
-        padding: 10px;
-        border: none;
-        background: #f97316;
-        color: white;
-        border-radius: 5px;
-        cursor: pointer;
-      }
+.match:hover {
+  background: #1f2937;
+}
 
-      .odds button:hover {
-        background: #ea580c;
-      }
+.league {
+  font-size: 12px;
+  color: #94a3b8;
+}
 
-      .betslip {
-        flex: 1;
-        background: #020617;
-        padding: 20px;
-        border-left: 2px solid #1e293b;
-      }
+.odds {
+  margin-top: 10px;
+}
 
-      input {
-        width: 100%;
-        padding: 8px;
-        margin-top: 10px;
-        background: #0f172a;
-        border: 1px solid #334155;
-        color: white;
-      }
+.odds button {
+  margin-right: 10px;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 6px;
+  background: #1e293b;
+  color: white;
+  cursor: pointer;
+}
 
-      button.place {
-        margin-top: 10px;
-        width: 100%;
-        padding: 10px;
-        background: #22c55e;
-        border: none;
-        color: white;
-        cursor: pointer;
-      }
+.odds button:hover {
+  background: #f97316;
+}
 
-      .crypto {
-        color: #f97316;
-        font-weight: bold;
-      }
-    </style>
-  </head>
+/* BET SLIP */
+.betslip {
+  background: #020617;
+  padding: 20px;
+  border-left: 1px solid #1e293b;
+}
 
-  <body>
-    <header>
-      <div class="logo">
-        <!-- Crypto Logo -->
-        <svg width="45" height="45" viewBox="0 0 100 100">
-          <circle cx="50" cy="50" r="50" fill="#FF6B00"/>
-          <path d="M25 70 L50 30 L75 70 L65 70 L50 45 L35 70 Z" fill="white"/>
-          <rect x="0" y="60" width="100" height="40" fill="#020617"/>
-        </svg>
-        <span>AmicFormula</span>
+input {
+  width: 100%;
+  padding: 10px;
+  margin-top: 10px;
+  background: #0f172a;
+  border: 1px solid #334155;
+  color: white;
+}
+
+.place {
+  margin-top: 10px;
+  width: 100%;
+  padding: 10px;
+  background: #22c55e;
+  border: none;
+  cursor: pointer;
+}
+</style>
+</head>
+
+<body>
+
+<nav>
+  <div class="logo">
+    <svg width="35" height="35" viewBox="0 0 100 100">
+      <circle cx="50" cy="50" r="50" fill="#FF6B00"/>
+      <path d="M25 70 L50 30 L75 70 L65 70 L50 45 L35 70 Z" fill="white"/>
+    </svg>
+    <span>AmicFormula</span>
+  </div>
+
+  <div class="wallet" onclick="connectWallet()">
+    Connect Wallet
+  </div>
+</nav>
+
+<div class="container">
+  <div>
+    {matches.map(m => (
+      <div class="match">
+        <div class="league">{m.league}</div>
+        <h3>{m.teams}</h3>
+        <div class="odds">
+          <button onclick={`selectBet("${m.teams}", ${m.odds[0]})`}>1 {m.odds[0]}</button>
+          <button onclick={`selectBet("${m.teams}", ${m.odds[1]})`}>X {m.odds[1]}</button>
+          <button onclick={`selectBet("${m.teams}", ${m.odds[2]})`}>2 {m.odds[2]}</button>
+        </div>
       </div>
-    </header>
+    ))}
+  </div>
 
-    <div class="container">
-      <div class="matches">
-        {matches.map((match) => (
-          <div class="match">
-            <h3>{match.teams}</h3>
-            <div class="odds">
-              <button onclick={`selectBet("${match.teams}", ${match.odds[0]})`}>
-                Home {match.odds[0]}
-              </button>
-              <button onclick={`selectBet("${match.teams}", ${match.odds[1]})`}>
-                Draw {match.odds[1]}
-              </button>
-              <button onclick={`selectBet("${match.teams}", ${match.odds[2]})`}>
-                Away {match.odds[2]}
-              </button>
-            </div>
-          </div>
-        ))}
-      </div>
+  <div class="betslip">
+    <h3>Bet Slip</h3>
+    <p id="walletStatus">Wallet: Not connected</p>
+    <p id="selection">No bet selected</p>
+    <input id="stake" type="number" placeholder="Stake" />
+    <button class="place" onclick="placeBet()">Place Bet</button>
+  </div>
+</div>
 
-      <div class="betslip">
-        <h3>Crypto Bet Slip</h3>
-        <p>Balance: <span class="crypto">AF 1000</span></p>
-        <p id="selection">No bet selected</p>
-        <input type="number" id="stake" placeholder="Enter AF stake" />
-        <button class="place" onclick="placeBet()">Place Bet</button>
-      </div>
-    </div>
+<script>
+let selectedBet = null;
 
-    <script>
-      let balance = 1000;
-      let selectedBet = null;
+/* DEMO WALLET */
+async function connectWallet() {
+  if (window.ethereum) {
+    try {
+      const accounts = await window.ethereum.request({
+        method: "eth_requestAccounts"
+      });
+      document.getElementById("walletStatus").innerText =
+        "Wallet: " + accounts[0].slice(0,6) + "...";
+    } catch {
+      alert("Connection rejected");
+    }
+  } else {
+    alert("Install MetaMask");
+  }
+}
 
-      function selectBet(teams, odds) {
-        selectedBet = { teams, odds };
-        document.getElementById("selection").innerText =
-          teams + " @ " + odds;
-      }
+function selectBet(teams, odds) {
+  selectedBet = { teams, odds };
+  document.getElementById("selection").innerText =
+    teams + " @ " + odds;
+}
 
-      function placeBet() {
-        const stake = parseFloat(document.getElementById("stake").value);
+function placeBet() {
+  if (!selectedBet) {
+    alert("Select a bet first");
+    return;
+  }
+  alert("Demo bet placed (no real crypto used)");
+}
+</script>
 
-        if (!selectedBet || !stake || stake <= 0) {
-          alert("Select a bet and enter stake");
-          return;
-        }
-
-        if (stake > balance) {
-          alert("Not enough balance");
-          return;
-        }
-
-        balance -= stake;
-
-        const win = Math.random() > 0.5;
-
-        if (win) {
-          const winnings = stake * selectedBet.odds;
-          balance += winnings;
-          alert("You won AF " + winnings.toFixed(2));
-        } else {
-          alert("You lost");
-        }
-
-        document.querySelector(".crypto").innerText =
-          "AF " + balance.toFixed(2);
-      }
-    </script>
-  </body>
+</body>
 </html>
