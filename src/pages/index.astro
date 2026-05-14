@@ -1,212 +1,458 @@
+
+
+```astro
 ---
-const matches = [
-  { league: "Champions League", teams: "Barcelona vs Real Madrid", odds: [2, 3, 2] },
-  { league: "Premier League", teams: "paris vs Arsenal", odds: [1, 3, 2] },
-  { league: "Eredivisie", teams: "Ajax vs PSV", odds: [1, 2, 2] }
+const products = [
+  {
+    name: "Silk Comfort Set",
+    price: "$39",
+    image:
+      "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?q=80&w=1200&auto=format&fit=crop",
+  },
+  {
+    name: "Lace Essential Collection",
+    price: "$29",
+    image:
+      "https://images.unsplash.com/photo-1483985988355-763728e1935b?q=80&w=1200&auto=format&fit=crop",
+  },
+  {
+    name: "Everyday Soft Fit",
+    price: "$24",
+    image:
+      "https://images.unsplash.com/photo-1496747611176-843222e1e57c?q=80&w=1200&auto=format&fit=crop",
+  },
 ];
 ---
 
 <html lang="en">
-<head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Amicbridge Web3</title>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Amicbridge | Premium Women's Underwear</title>
 
-<style>
-body {
-  margin: 0;
-  font-family: Arial;
-  background: #0b1220;
-  color: white;
-}
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
 
-nav {
-  display:flex;
-  justify-content:space-between;
-  padding:15px 25px;
-  background:#020617;
-  border-bottom:1px solid #1e293b;
-}
+    <style>
+      :root {
+        --bg: #fffaf7;
+        --text: #1e1e1e;
+        --muted: #6b6b6b;
+        --primary: #d96b86;
+        --dark: #111111;
+        --card: #ffffff;
+        --border: #ece7e4;
+      }
 
-.logo {
-  display:flex;
-  align-items:center;
-  gap:10px;
-  font-weight:bold;
-}
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
 
-.wallet {
-  background:#f97316;
-  padding:8px 12px;
-  border-radius:6px;
-  cursor:pointer;
-}
+      body {
+        font-family: 'Inter', sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        line-height: 1.6;
+      }
 
-.container {
-  display:grid;
-  grid-template-columns:3fr 1fr;
-}
+      a {
+        text-decoration: none;
+        color: inherit;
+      }
 
-.match {
-  background:#111827;
-  margin:15px;
-  padding:15px;
-  border-radius:10px;
-}
+      .container {
+        width: min(1200px, 92%);
+        margin: auto;
+      }
 
-.odds button {
-  margin-right:8px;
-  padding:10px;
-  border:none;
-  border-radius:6px;
-  background:#1e293b;
-  color:white;
-  cursor:pointer;
-}
+      header {
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        background: rgba(255, 250, 247, 0.95);
+        backdrop-filter: blur(10px);
+        border-bottom: 1px solid var(--border);
+      }
 
-.odds button:hover {
-  background:#f97316;
-}
+      nav {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 1rem 0;
+      }
 
-.betslip {
-  background:#020617;
-  padding:20px;
-  border-left:1px solid #1e293b;
-}
+      .logo {
+        font-size: 1.6rem;
+        font-weight: 800;
+        letter-spacing: -1px;
+      }
 
-input {
-  width:100%;
-  padding:10px;
-  margin-top:10px;
-  background:#0f172a;
-  border:1px solid #334155;
-  color:white;
-}
+      .logo span {
+        color: var(--primary);
+      }
 
-.place {
-  margin-top:10px;
-  width:100%;
-  padding:10px;
-  background:#22c55e;
-  border:none;
-  cursor:pointer;
-}
-</style>
-</head>
+      .nav-links {
+        display: flex;
+        gap: 2rem;
+        color: var(--muted);
+        font-weight: 500;
+      }
 
-<body>
+      .hero {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 4rem;
+        align-items: center;
+        min-height: 90vh;
+        padding: 4rem 0;
+      }
 
-<nav>
-  <div class="logo">
-    <span>🟠 Amicbridge</span>
-  </div>
+      .hero-text h1 {
+        font-size: 4.5rem;
+        line-height: 1;
+        margin-bottom: 1.5rem;
+        letter-spacing: -3px;
+      }
 
-  <div class="wallet" onclick="connectWallet()">
-    Connect Wallet
-  </div>
-</nav>
+      .hero-text p {
+        color: var(--muted);
+        font-size: 1.1rem;
+        margin-bottom: 2rem;
+        max-width: 500px;
+      }
 
-<div class="container">
+      .hero-buttons {
+        display: flex;
+        gap: 1rem;
+      }
 
-  <div>
-    {matches.map(m => (
-      <div class="match">
-        <div style="color:#94a3b8;font-size:12px">{m.league}</div>
-        <h3>{m.teams}</h3>
+      .btn {
+        padding: 1rem 1.8rem;
+        border-radius: 999px;
+        font-weight: 600;
+        transition: 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+      }
 
-        <div class="odds">
-          <button onclick={`selectBet("${m.teams}", ${m.odds[0]})`}>1 {m.odds[0]}</button>
-          <button onclick={`selectBet("${m.teams}", ${m.odds[1]})`}>X {m.odds[1]}</button>
-          <button onclick={`selectBet("${m.teams}", ${m.odds[2]})`}>2 {m.odds[2]}</button>
-        </div>
+      .btn-primary {
+        background: var(--dark);
+        color: white;
+      }
+
+      .btn-primary:hover {
+        opacity: 0.9;
+        transform: translateY(-2px);
+      }
+
+      .btn-secondary {
+        border: 1px solid var(--border);
+        background: white;
+      }
+
+      .hero-image img {
+        width: 100%;
+        height: 720px;
+        object-fit: cover;
+        border-radius: 32px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
+      }
+
+      .section-title {
+        text-align: center;
+        margin-bottom: 3rem;
+      }
+
+      .section-title h2 {
+        font-size: 2.8rem;
+        margin-bottom: 0.8rem;
+      }
+
+      .section-title p {
+        color: var(--muted);
+      }
+
+      .products {
+        padding: 6rem 0;
+      }
+
+      .product-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 2rem;
+      }
+
+      .product-card {
+        background: var(--card);
+        border-radius: 24px;
+        overflow: hidden;
+        border: 1px solid var(--border);
+        transition: 0.3s ease;
+      }
+
+      .product-card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 16px 40px rgba(0, 0, 0, 0.08);
+      }
+
+      .product-card img {
+        width: 100%;
+        height: 360px;
+        object-fit: cover;
+      }
+
+      .product-info {
+        padding: 1.5rem;
+      }
+
+      .product-info h3 {
+        font-size: 1.2rem;
+        margin-bottom: 0.4rem;
+      }
+
+      .price {
+        color: var(--primary);
+        font-weight: 700;
+        margin-bottom: 1rem;
+      }
+
+      .features {
+        padding: 6rem 0;
+      }
+
+      .feature-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 2rem;
+      }
+
+      .feature-box {
+        background: white;
+        padding: 2rem;
+        border-radius: 24px;
+        border: 1px solid var(--border);
+      }
+
+      .feature-box h3 {
+        margin-bottom: 1rem;
+      }
+
+      .feature-box p {
+        color: var(--muted);
+      }
+
+      .newsletter {
+        padding: 6rem 0;
+      }
+
+      .newsletter-box {
+        background: var(--dark);
+        color: white;
+        border-radius: 32px;
+        padding: 4rem;
+        text-align: center;
+      }
+
+      .newsletter-box h2 {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+      }
+
+      .newsletter-box p {
+        color: rgba(255,255,255,0.7);
+        margin-bottom: 2rem;
+      }
+
+      .newsletter-form {
+        display: flex;
+        justify-content: center;
+        gap: 1rem;
+        flex-wrap: wrap;
+      }
+
+      .newsletter-form input {
+        width: 320px;
+        padding: 1rem 1.2rem;
+        border-radius: 999px;
+        border: none;
+        outline: none;
+      }
+
+      footer {
+        padding: 2rem 0 3rem;
+        text-align: center;
+        color: var(--muted);
+      }
+
+      @media (max-width: 900px) {
+        .hero,
+        .product-grid,
+        .feature-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .hero-text h1 {
+          font-size: 3rem;
+        }
+
+        .hero-image img {
+          height: 500px;
+        }
+
+        .nav-links {
+          display: none;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <header>
+      <div class="container">
+        <nav>
+          <div class="logo">Amic<span>bridge</span></div>
+
+          <div class="nav-links">
+            <a href="#shop">Shop</a>
+            <a href="#features">Why Us</a>
+            <a href="#newsletter">Newsletter</a>
+          </div>
+        </nav>
       </div>
-    ))}
-  </div>
+    </header>
 
-  <div class="betslip">
-    <h3>Web3 Bet Slip</h3>
+    <main>
+      <section class="hero container">
+        <div class="hero-text">
+          <p>Luxury Comfort • Elegant Design</p>
 
-    <p id="walletStatus">Wallet: Not connected</p>
-    <p id="selection">No bet selected</p>
+          <h1>
+            Premium underwear made for confidence.
+          </h1>
 
-    <input id="stake" type="number" placeholder="Stake (ETH)" />
+          <p>
+            Discover modern essentials designed for comfort, softness, and confidence. Elegant collections made for everyday wear.
+          </p>
 
-    <button class="place" onclick="placeBet()">
-      Place On-Chain Bet
-    </button>
-  </div>
+          <div class="hero-buttons">
+            <a href="#shop" class="btn btn-primary">Shop Collection</a>
+            <a href="#features" class="btn btn-secondary">Learn More</a>
+          </div>
+        </div>
 
-</div>
+        <div class="hero-image">
+          <img
+            src="https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?q=80&w=1400&auto=format&fit=crop"
+            alt="Women's fashion"
+          />
+        </div>
+      </section>
 
-<script>
-import { ethers } from "https://cdn.jsdelivr.net/npm/ethers@6.13.4/+esm";
+      <section class="products container" id="shop">
+        <div class="section-title">
+          <h2>Best Sellers</h2>
+          <p>Comfort-focused styles women love.</p>
+        </div>
 
-let selectedBet = null;
-let signer;
-let contract;
+        <div class="product-grid">
+          {
+            products.map((product) => (
+              <div class="product-card">
+                <img src={product.image} alt={product.name} />
 
-// 🔴 PUT YOUR CONTRACT ADDRESS HERE
-const contractAddress = "PASTE_YOUR_CONTRACT_ADDRESS";
+                <div class="product-info">
+                  <h3>{product.name}</h3>
+                  <div class="price">{product.price}</div>
 
-// ABI from your Solidity contract
-const abi = [
-  "function placeBet(uint256 odds) payable"
-];
+                  <a href="#" class="btn btn-primary">
+                    Add to Cart
+                  </a>
+                </div>
+              </div>
+            ))
+          }
+        </div>
+      </section>
 
-async function connectWallet() {
-  if (!window.ethereum) {
-    alert("Install MetaMask");
-    return;
-  }
+      <section class="features container" id="features">
+        <div class="section-title">
+          <h2>Why Customers Love Amicbridge</h2>
+          <p>Built with quality, comfort, and elegance in mind.</p>
+        </div>
 
-  const provider = new ethers.BrowserProvider(window.ethereum);
-  await provider.send("eth_requestAccounts", []);
-  signer = await provider.getSigner();
+        <div class="feature-grid">
+          <div class="feature-box">
+            <h3>Soft Premium Fabrics</h3>
+            <p>
+              Designed with breathable materials for all-day comfort and support.
+            </p>
+          </div>
 
-  const address = await signer.getAddress();
-  document.getElementById("walletStatus").innerText =
-    "Wallet: " + address.slice(0,6) + "...";
+          <div class="feature-box">
+            <h3>Elegant Minimal Design</h3>
+            <p>
+              A clean modern style that feels premium and trustworthy.
+            </p>
+          </div>
 
-  contract = new ethers.Contract(contractAddress, abi, signer);
-}
+          <div class="feature-box">
+            <h3>Fast Worldwide Shipping</h3>
+            <p>
+              Reliable delivery with easy returns to create confidence for buyers.
+            </p>
+          </div>
+        </div>
+      </section>
 
-function selectBet(teams, odds) {
-  selectedBet = { teams, odds };
-  document.getElementById("selection").innerText =
-    teams + " @ " + odds;
-}
+      <section class="newsletter container" id="newsletter">
+        <div class="newsletter-box">
+          <h2>Get 10% Off Your First Order</h2>
 
-async function placeBet() {
-  if (!contract) {
-    alert("Connect wallet first");
-    return;
-  }
+          <p>
+            Join the Amicbridge newsletter for exclusive launches and special offers.
+          </p>
 
-  if (!selectedBet) {
-    alert("Select a bet");
-    return;
-  }
+          <form class="newsletter-form">
+            <input type="email" placeholder="Enter your email" />
+            <button class="btn btn-primary">Subscribe</button>
+          </form>
+        </div>
+      </section>
+    </main>
 
-  const stake = document.getElementById("stake").value;
-
-  if (!stake || stake <= 0) {
-    alert("Invalid stake");
-    return;
-  }
-
-  try {
-    const tx = await contract.placeBet(selectedBet.odds, {
-      value: ethers.parseEther(stake)
-    });
-
-    await tx.wait();
-    alert("Bet placed on blockchain!");
-  } catch (err) {
-    console.error(err);
-    alert("Transaction failed");
-  }
-}
-</script>
-
-</body>
+    <footer>
+      <div class="container">
+        © 2026 Amicbridge. All rights reserved.
+      </div>
+    </footer>
+  </body>
 </html>
+```
+
+# Also install Astro correctly
+
+Run these commands in your terminal:
+
+```bash
+npm install
+npm run dev
+```
+
+# Recommended next upgrades
+
+* Add Stripe payments
+* Add Shopify checkout
+* Add product pages
+* Add customer reviews
+* Add Instagram section
+* Add email marketing
+* Add real product photography
+* Connect custom domain `amicbridge.com`
+* Add SEO pages for Google ranking
