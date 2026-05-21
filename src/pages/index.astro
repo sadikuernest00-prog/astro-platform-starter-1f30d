@@ -1,3 +1,371 @@
+---
+const products = [
+  {
+    id: 1,
+    name: "Élise Satin Set",
+    price: 599,
+    image: "/images/nude-bra.jpg",
+    badge: "BEST SELLER",
+    stripe: "https://buy.stripe.com/test_6oU5kC57V9y759y6jP7Re04",
+    monero: "https://nowpayments.io/payment/?iid=4680546954",
+  },
+
+  {
+    id: 2,
+    name: "Noir Essence Collection",
+    price: 599,
+    image: "/images/black-bra.jpg",
+    badge: "NEW",
+    stripe: "https://buy.stripe.com/test_bJecN4gQD4dN31qfUp7Re03",
+    monero: "https://nowpayments.io/payment/?iid=4680546954",
+  },
+
+  {
+    id: 3,
+    name: "Veloura Active",
+    price: 499,
+    image: "/images/black-set.jpg",
+    badge: "HOT",
+    stripe: "https://buy.stripe.com/test_4gM5kCeIvdOnfOccId7Re02",
+    monero: "https://nowpayments.io/payment/?iid=4680546954",
+  },
+
+  {
+    id: 4,
+    name: "Aura Luxe",
+    price: 599,
+    image: "/images/black-b.jpg",
+    badge: "NEW",
+    stripe: "https://buy.stripe.com/test_4gM3cu2ZNcKjdG423z7Re01",
+    monero: "https://nowpayments.io/payment/?iid=4680546954",
+  },
+];
+---
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+    <title>Amic Underwear</title>
+
+    <style>
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: Arial, sans-serif;
+        background: #f5f5f5;
+        color: black;
+      }
+
+      .top-banner {
+        background: black;
+        color: white;
+        text-align: center;
+        padding: 12px;
+        font-size: 14px;
+        font-weight: bold;
+      }
+
+      .navbar {
+        width: 100%;
+        padding: 24px 40px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background: white;
+        border-bottom: 1px solid #eee;
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+      }
+
+      .logo {
+        font-size: 42px;
+        font-weight: 900;
+      }
+
+      .logo span {
+        color: #c1965c;
+      }
+
+      .cart-btn {
+        background: black;
+        color: white;
+        border: none;
+        padding: 14px 24px;
+        border-radius: 999px;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+      }
+
+      .hero {
+        text-align: center;
+        padding: 70px 20px 40px;
+      }
+
+      .hero h1 {
+        font-size: 64px;
+        font-weight: 900;
+        margin-bottom: 20px;
+      }
+
+      .hero p {
+        color: #666;
+        font-size: 22px;
+      }
+
+      .products {
+        max-width: 1450px;
+        margin: auto;
+        padding: 30px;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 25px;
+      }
+
+      .card {
+        background: white;
+        border-radius: 28px;
+        overflow: hidden;
+        transition: 0.3s;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+      }
+
+      .card:hover {
+        transform: translateY(-6px);
+      }
+
+      .image-wrapper {
+        position: relative;
+        overflow: hidden;
+      }
+
+      .card img {
+        width: 100%;
+        height: 420px;
+        object-fit: cover;
+        transition: 0.4s;
+      }
+
+      .card img:hover {
+        transform: scale(1.05);
+      }
+
+      .badge {
+        position: absolute;
+        top: 18px;
+        left: 18px;
+        background: #c1965c;
+        color: white;
+        padding: 10px 18px;
+        border-radius: 999px;
+        font-size: 14px;
+        font-weight: bold;
+      }
+
+      .content {
+        padding: 26px;
+      }
+
+      .content h2 {
+        font-size: 34px;
+        margin-bottom: 12px;
+        font-weight: 900;
+      }
+
+      .price {
+        color: #c1965c;
+        font-size: 42px;
+        font-weight: 900;
+        margin-bottom: 20px;
+      }
+
+      .sizes,
+      .quantity {
+        width: 100%;
+        padding: 14px;
+        border-radius: 12px;
+        border: 1px solid #ddd;
+        margin-bottom: 14px;
+        font-size: 18px;
+      }
+
+      .buttons {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      .btn {
+        border: none;
+        text-decoration: none;
+        text-align: center;
+        padding: 16px;
+        border-radius: 999px;
+        font-size: 18px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: 0.2s;
+      }
+
+      .btn:hover {
+        transform: scale(1.02);
+      }
+
+      .cart-add {
+        background: #c1965c;
+        color: white;
+      }
+
+      .stripe {
+        background: black;
+        color: white;
+      }
+
+      .monero {
+        background: #444;
+        color: white;
+      }
+
+      .cart-sidebar {
+        position: fixed;
+        top: 0;
+        right: -450px;
+        width: 420px;
+        height: 100%;
+        background: white;
+        box-shadow: -10px 0 30px rgba(0,0,0,0.1);
+        padding: 30px;
+        transition: 0.4s;
+        z-index: 2000;
+        overflow-y: auto;
+      }
+
+      .cart-sidebar.active {
+        right: 0;
+      }
+
+      .close-cart {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        background: black;
+        color: white;
+        border: none;
+        width: 42px;
+        height: 42px;
+        border-radius: 50%;
+        font-size: 20px;
+        cursor: pointer;
+        font-weight: bold;
+      }
+
+      .cart-title {
+        font-size: 34px;
+        font-weight: 900;
+        margin-bottom: 25px;
+      }
+
+      .cart-item {
+        border-bottom: 1px solid #eee;
+        padding: 18px 0;
+      }
+
+      .cart-item h4 {
+        margin-bottom: 10px;
+      }
+
+      .cart-total {
+        font-size: 28px;
+        font-weight: 900;
+        margin-top: 30px;
+      }
+
+      .checkout-buttons {
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+        margin-top: 20px;
+      }
+
+      .checkout-btn {
+        width: 100%;
+        padding: 18px;
+        border: none;
+        border-radius: 999px;
+        background: black;
+        color: white;
+        font-size: 18px;
+        font-weight: bold;
+        cursor: pointer;
+      }
+
+      .monero-checkout {
+        background: #444;
+      }
+
+      .remove-btn {
+        margin-top: 10px;
+        background: #e53935;
+        color: white;
+        border: none;
+        padding: 10px 16px;
+        border-radius: 999px;
+        cursor: pointer;
+        font-weight: bold;
+      }
+
+      .reviews-section {
+        max-width: 1450px;
+        margin: 80px auto;
+        padding: 20px;
+      }
+
+      .reviews-title {
+        text-align: center;
+        font-size: 52px;
+        margin-bottom: 50px;
+        font-weight: 900;
+      }
+
+      .reviews-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 25px;
+      }
+
+      .review-card {
+        background: white;
+        padding: 35px;
+        border-radius: 28px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+      }
+
+      .stars {
+        color: #c1965c;
+        font-size: 24px;
+        margin-bottom: 18px;
+      }
+
+      .review-text {
+        color: #555;
+        line-height: 1.7;
+        font-size: 18px;
+        margin-bottom: 20px;
+      }
+
+      .review-name {
+        font-size: 20px;
+        font-weight: bold;
+      }
+
       .trust-section {
         max-width: 1450px;
         margin: 80px auto;
@@ -96,3 +464,55 @@
         font-weight: bold;
         color: #c1965c;
       }
+
+      .footer {
+        margin-top: 80px;
+        padding: 60px 20px;
+        text-align: center;
+        background: white;
+      }
+
+      .footer h3 {
+        font-size: 42px;
+        margin-bottom: 14px;
+      }
+
+      .footer p {
+        color: #666;
+        font-size: 18px;
+      }
+
+    </style>
+  </head>
+
+  <body>
+
+    <div class="top-banner">
+      FREE WORLDWIDE SHIPPING ON ORDERS OVER 1000 NOK
+    </div>
+
+    <nav class="navbar">
+
+      <div class="logo">
+        Amic<span>Underwear</span>
+      </div>
+
+      <button class="cart-btn" onclick="toggleCart()">
+        Cart (<span id="cart-count">0</span>)
+      </button>
+
+    </nav>
+
+    <section class="hero">
+
+      <h1>Luxury Comfort Meets Elegance</h1>
+
+      <p>
+        Premium underwear designed for confidence,
+        softness and modern beauty.
+      </p>
+
+    </section>
+
+  </body>
+</html>
