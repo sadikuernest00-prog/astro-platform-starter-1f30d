@@ -1,27 +1,29 @@
 ---
 const products = [
   {
-    name: "Midnight Lace Set",
+    name: "Aura Luxe",
     price: "$89",
     image:
       "https://images.unsplash.com/photo-1529139574466-a303027c1d8b?q=80&w=1200&auto=format&fit=crop",
     description: "Luxury black lace underwear with premium comfort."
   },
   {
-    name: "Silk Noir Collection",
+    name: "Noir Essence",
     price: "$74",
     image:
       "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?q=80&w=1200&auto=format&fit=crop",
     description: "Minimal modern design with soft premium fabric."
   },
   {
-    name: "Velvet Signature",
+    name: "Velvet Touch",
     price: "$95",
     image:
       "https://images.unsplash.com/photo-1483985988355-763728e1935b?q=80&w=1200&auto=format&fit=crop",
     description: "Elegant luxury underwear crafted for style."
   }
 ];
+
+const currentYear = new Date().getFullYear();
 ---
 
 <html lang="en">
@@ -33,7 +35,7 @@ const products = [
 
     <meta
       name="description"
-      content="Luxury modern underwear brand with premium design and crypto payments."
+      content="Luxury modern underwear brand with premium design and secure payments."
     />
 
     <style>
@@ -41,7 +43,7 @@ const products = [
         --bg: #050505;
         --card: #101010;
         --text: #ffffff;
-        --muted: #999999;
+        --muted: #9d9d9d;
         --line: rgba(255,255,255,0.08);
       }
 
@@ -49,6 +51,10 @@ const products = [
         margin: 0;
         padding: 0;
         box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
       }
 
       body {
@@ -59,8 +65,8 @@ const products = [
       }
 
       a {
-        text-decoration: none;
         color: inherit;
+        text-decoration: none;
       }
 
       .container {
@@ -73,11 +79,10 @@ const products = [
         position: fixed;
         width: 100%;
         top: 0;
-        left: 0;
         z-index: 1000;
-        backdrop-filter: blur(20px);
+        backdrop-filter: blur(16px);
+        background: rgba(5,5,5,0.72);
         border-bottom: 1px solid var(--line);
-        background: rgba(5,5,5,0.7);
       }
 
       nav {
@@ -88,7 +93,7 @@ const products = [
       }
 
       .logo {
-        font-size: 1.4rem;
+        font-size: 1.3rem;
         font-weight: 700;
         letter-spacing: 3px;
       }
@@ -111,22 +116,22 @@ const products = [
         min-height: 100vh;
         display: grid;
         grid-template-columns: 1fr 1fr;
-        align-items: center;
         gap: 60px;
+        align-items: center;
         padding-top: 120px;
       }
 
       .hero-text h1 {
         font-size: 5rem;
         line-height: 0.95;
-        margin-bottom: 24px;
+        margin-bottom: 26px;
       }
 
       .hero-text p {
         color: var(--muted);
         font-size: 1.1rem;
-        max-width: 550px;
-        line-height: 1.7;
+        line-height: 1.8;
+        max-width: 540px;
         margin-bottom: 35px;
       }
 
@@ -154,14 +159,13 @@ const products = [
 
       .btn-secondary {
         border: 1px solid var(--line);
-        color: white;
       }
 
       .hero-image img {
         width: 100%;
         height: 85vh;
         object-fit: cover;
-        border-radius: 30px;
+        border-radius: 28px;
       }
 
       .section {
@@ -169,14 +173,14 @@ const products = [
       }
 
       .section-title {
-        font-size: 2.5rem;
+        font-size: 2.4rem;
         margin-bottom: 50px;
       }
 
       .products {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-        gap: 30px;
+        gap: 28px;
       }
 
       .product-card {
@@ -184,16 +188,16 @@ const products = [
         border: 1px solid var(--line);
         border-radius: 28px;
         overflow: hidden;
-        transition: 0.4s;
+        transition: 0.35s;
       }
 
       .product-card:hover {
-        transform: translateY(-8px);
+        transform: translateY(-6px);
       }
 
       .product-card img {
         width: 100%;
-        height: 420px;
+        height: 430px;
         object-fit: cover;
       }
 
@@ -208,7 +212,7 @@ const products = [
 
       .product-info p {
         color: var(--muted);
-        line-height: 1.6;
+        line-height: 1.7;
         margin-bottom: 20px;
       }
 
@@ -219,8 +223,8 @@ const products = [
       }
 
       .price {
-        font-size: 1.2rem;
         font-weight: 700;
+        font-size: 1.15rem;
       }
 
       .buy-btn {
@@ -240,54 +244,81 @@ const products = [
 
       .about img {
         width: 100%;
-        border-radius: 28px;
         height: 650px;
         object-fit: cover;
+        border-radius: 28px;
       }
 
       .about-text p {
         color: var(--muted);
-        line-height: 1.8;
-        margin-top: 20px;
-        font-size: 1.05rem;
+        line-height: 1.9;
+        margin-bottom: 20px;
       }
 
-      .features {
+      .trust-grid {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
         gap: 24px;
       }
 
-      .feature {
-        border: 1px solid var(--line);
+      .trust-box {
         background: var(--card);
+        border: 1px solid var(--line);
         border-radius: 24px;
-        padding: 30px;
+        padding: 28px;
       }
 
-      .feature h3 {
+      .trust-box h3 {
+        margin-bottom: 14px;
+      }
+
+      .trust-box p {
+        color: var(--muted);
+        line-height: 1.7;
+      }
+
+      .privacy {
+        background: var(--card);
+        border: 1px solid var(--line);
+        border-radius: 28px;
+        padding: 40px;
+      }
+
+      .privacy h3 {
+        margin-top: 30px;
         margin-bottom: 12px;
       }
 
-      .feature p {
+      .privacy p {
         color: var(--muted);
-        line-height: 1.6;
+        line-height: 1.8;
       }
 
       footer {
-        padding: 80px 0;
         border-top: 1px solid var(--line);
+        padding: 60px 0;
+        margin-top: 80px;
       }
 
       .footer-content {
         display: flex;
         justify-content: space-between;
         flex-wrap: wrap;
-        gap: 30px;
+        gap: 20px;
       }
 
-      .footer-content p {
+      .footer-links {
+        display: flex;
+        gap: 18px;
+        flex-wrap: wrap;
+      }
+
+      .footer-links a {
         color: var(--muted);
+      }
+
+      .footer-links a:hover {
+        color: white;
       }
 
       @media (max-width: 900px) {
@@ -300,16 +331,17 @@ const products = [
           font-size: 3.5rem;
         }
 
-        .hero-image img {
-          height: 500px;
-        }
-
+        .hero-image img,
         .about img {
           height: 500px;
         }
 
         .nav-links {
           display: none;
+        }
+
+        .section {
+          padding: 90px 0;
         }
       }
     </style>
@@ -324,7 +356,8 @@ const products = [
           <div class="nav-links">
             <a href="#shop">Shop</a>
             <a href="#about">About</a>
-            <a href="#features">Features</a>
+            <a href="#trust">Trust</a>
+            <a href="#privacy">Privacy</a>
           </div>
         </nav>
       </div>
@@ -338,12 +371,12 @@ const products = [
             <br />
             Underwear
             <br />
-            Redefined
+            Reimagined
           </h1>
 
           <p>
-            AmicBridge combines modern luxury, minimal aesthetics,
-            and premium comfort into a next-generation fashion brand.
+            Modern luxury underwear designed for comfort,
+            confidence, and timeless minimalist aesthetics.
           </p>
 
           <div class="hero-buttons">
@@ -351,8 +384,8 @@ const products = [
               Shop Collection
             </a>
 
-            <a href="#about" class="btn btn-secondary">
-              Learn More
+            <a href="#privacy" class="btn btn-secondary">
+              Privacy & Trust
             </a>
           </div>
         </div>
@@ -401,61 +434,108 @@ const products = [
 
         <div class="about-text">
           <h2 class="section-title">
-            Designed For The Future
+            Built For Modern Luxury
           </h2>
 
           <p>
-            AmicBridge is more than a fashion brand.
-            It is a modern luxury experience built for the new internet.
+            AmicBridge combines premium comfort,
+            minimalist aesthetics, and modern digital commerce.
           </p>
 
           <p>
-            We combine minimalist aesthetics, premium materials,
-            and digital-first commerce to create timeless collections.
+            Every collection is crafted with attention
+            to detail, elegance, and timeless style.
           </p>
 
           <p>
-            Built with elegance, speed, and modern payment systems
-            including crypto integration.
+            We believe online shopping should feel secure,
+            premium, and effortless.
           </p>
         </div>
       </section>
 
-      <section class="section" id="features">
-        <h2 class="section-title">Why AmicBridge</h2>
+      <section class="section" id="trust">
+        <h2 class="section-title">Why Customers Trust Us</h2>
 
-        <div class="features">
-          <div class="feature">
-            <h3>Premium Materials</h3>
+        <div class="trust-grid">
+          <div class="trust-box">
+            <h3>Secure Checkout</h3>
 
             <p>
-              High-quality fabrics with luxury comfort and feel.
+              Protected payment processing with secure encrypted checkout systems.
             </p>
           </div>
 
-          <div class="feature">
-            <h3>Modern Design</h3>
+          <div class="trust-box">
+            <h3>Premium Quality</h3>
 
             <p>
-              Clean minimal branding inspired by luxury fashion houses.
+              Carefully selected materials designed for luxury comfort and durability.
             </p>
           </div>
 
-          <div class="feature">
-            <h3>Crypto Payments</h3>
+          <div class="trust-box">
+            <h3>Private Shopping</h3>
 
             <p>
-              Seamless checkout with USDC and modern payment systems.
+              Customer information is handled with privacy and confidentiality.
             </p>
           </div>
 
-          <div class="feature">
-            <h3>Fast Experience</h3>
+          <div class="trust-box">
+            <h3>Fast Support</h3>
 
             <p>
-              Optimized for mobile devices and lightning-fast loading.
+              Dedicated customer assistance for questions, orders, and support.
             </p>
           </div>
+        </div>
+      </section>
+
+      <section class="section" id="privacy">
+        <h2 class="section-title">Privacy Policy</h2>
+
+        <div class="privacy">
+          <p>
+            At AmicBridge, we value your privacy and are committed to protecting your personal information.
+          </p>
+
+          <h3>Information We Collect</h3>
+
+          <p>
+            We may collect information such as your name,
+            email address, shipping address, and payment details
+            when you place an order or contact us.
+          </p>
+
+          <h3>How We Use Information</h3>
+
+          <p>
+            Your information is used to process orders,
+            improve customer experience, provide support,
+            and maintain website security.
+          </p>
+
+          <h3>Payment Security</h3>
+
+          <p>
+            Payments are securely processed through trusted payment providers.
+            Sensitive payment information is not stored directly on our servers.
+          </p>
+
+          <h3>Cookies</h3>
+
+          <p>
+            Our website may use cookies and analytics tools
+            to improve performance and user experience.
+          </p>
+
+          <h3>Contact</h3>
+
+          <p>
+            For privacy-related questions, contact:
+            support@amicbridge.com
+          </p>
         </div>
       </section>
     </main>
@@ -466,8 +546,17 @@ const products = [
           <div class="logo">AMICBRIDGE</div>
         </div>
 
-        <p>
-          © 2026 AmicBridge. All rights reserved.
+        <div class="footer-links">
+          <a href="#shop">Shop</a>
+          <a href="#about">About</a>
+          <a href="#privacy">Privacy</a>
+          <a href="#">Shipping</a>
+          <a href="#">Returns</a>
+          <a href="#">Contact</a>
+        </div>
+
+        <p style="color: var(--muted)">
+          © {currentYear} AmicBridge. All rights reserved.
         </p>
       </div>
     </footer>
