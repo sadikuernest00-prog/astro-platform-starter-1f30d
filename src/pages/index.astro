@@ -1,632 +1,475 @@
 ---
 const products = [
   {
-    name: "Elegant Lace Set",
-    price: "599 NOK",
-    image: "/images/white-lace.jpg",
-    badge: "Best Seller"
+    name: "Midnight Lace Set",
+    price: "$89",
+    image:
+      "https://images.unsplash.com/photo-1529139574466-a303027c1d8b?q=80&w=1200&auto=format&fit=crop",
+    description: "Luxury black lace underwear with premium comfort."
   },
   {
-    name: "Midnight Black Collection",
-    price: "549 NOK",
-    image: "/images/black-set.jpg",
-    badge: "New"
+    name: "Silk Noir Collection",
+    price: "$74",
+    image:
+      "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?q=80&w=1200&auto=format&fit=crop",
+    description: "Minimal modern design with soft premium fabric."
   },
   {
-    name: "Luxury Satin Sleepwear",
-    price: "599 NOK",
-    image: "/images/satin-set.jpg",
-    badge: "Luxury"
-  },
-  {
-    name: "Comfort Seamless Bra",
-    price: "449 NOK",
-    image: "/images/white-bra.jpg",
-    badge: "Popular"
-  },
-  {
-    name: "Black Comfort Bra",
-    price: "449 NOK",
-    image: "/images/black-bra.jpg",
-    badge: "Trending"
-  },
-  {
-    name: "Nude Comfort Bra",
-    price: "449 NOK",
-    image: "/images/nude-bra.jpg",
-    badge: "Soft Fit"
-  },
+    name: "Velvet Signature",
+    price: "$95",
+    image:
+      "https://images.unsplash.com/photo-1483985988355-763728e1935b?q=80&w=1200&auto=format&fit=crop",
+    description: "Elegant luxury underwear crafted for style."
+  }
 ];
 ---
 
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>Amic Underwear | Luxury Women's Underwear</title>
+    <title>AmicBridge — Luxury Underwear</title>
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <meta
+      name="description"
+      content="Luxury modern underwear brand with premium design and crypto payments."
+    />
 
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-
-  <style>
-
-    :root {
-      --bg: #faf7f5;
-      --white: #ffffff;
-      --text: #111111;
-      --muted: #777777;
-      --gold: #d4a373;
-      --border: #ece7e4;
-      --dark: #121212;
-    }
-
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
-
-    body {
-      font-family: 'Inter', sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      overflow-x: hidden;
-    }
-
-    a {
-      text-decoration: none;
-      color: inherit;
-    }
-
-    img {
-      display: block;
-    }
-
-    .container {
-      width: min(1280px, 92%);
-      margin: auto;
-    }
-
-    header {
-      position: fixed;
-      top: 0;
-      width: 100%;
-      z-index: 999;
-      backdrop-filter: blur(18px);
-      background: rgba(255,255,255,0.75);
-      border-bottom: 1px solid rgba(0,0,0,0.05);
-    }
-
-    nav {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 1.3rem 0;
-    }
-
-    .logo {
-      font-size: 2rem;
-      font-weight: 900;
-      letter-spacing: -2px;
-      color: var(--dark);
-    }
-
-    .logo span {
-      color: var(--gold);
-    }
-
-    .nav-right {
-      display: flex;
-      gap: 2rem;
-      align-items: center;
-    }
-
-    .nav-links {
-      display: flex;
-      gap: 1.8rem;
-      color: var(--muted);
-      font-weight: 500;
-    }
-
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      padding: 1rem 2rem;
-      border-radius: 999px;
-      font-weight: 700;
-      transition: 0.35s ease;
-      cursor: pointer;
-      border: none;
-    }
-
-    .btn-dark {
-      background: var(--dark);
-      color: white;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.15);
-    }
-
-    .btn-dark:hover {
-      transform: translateY(-3px);
-      opacity: 0.95;
-    }
-
-    .btn-light {
-      background: white;
-      color: black;
-      border: 1px solid var(--border);
-    }
-
-    .hero {
-      min-height: 100vh;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 5rem;
-      align-items: center;
-      padding-top: 8rem;
-      padding-bottom: 5rem;
-    }
-
-    .hero-text small {
-      display: inline-block;
-      padding: 0.6rem 1rem;
-      background: white;
-      border-radius: 999px;
-      border: 1px solid var(--border);
-      margin-bottom: 1.5rem;
-      color: var(--gold);
-      font-weight: 700;
-    }
-
-    .hero h1 {
-      font-size: 5.5rem;
-      line-height: 0.95;
-      letter-spacing: -5px;
-      margin-bottom: 2rem;
-      font-weight: 900;
-    }
-
-    .hero p {
-      font-size: 1.15rem;
-      color: var(--muted);
-      max-width: 560px;
-      margin-bottom: 2.2rem;
-      line-height: 1.8;
-    }
-
-    .hero-buttons {
-      display: flex;
-      gap: 1rem;
-      flex-wrap: wrap;
-    }
-
-    .hero-image {
-      position: relative;
-    }
-
-    .hero-image img {
-      width: 100%;
-      height: 820px;
-      object-fit: cover;
-      border-radius: 40px;
-      box-shadow: 0 30px 80px rgba(0,0,0,0.12);
-    }
-
-    .floating-card {
-      position: absolute;
-      bottom: 30px;
-      left: -30px;
-      background: white;
-      padding: 1.2rem 1.5rem;
-      border-radius: 24px;
-      box-shadow: 0 15px 40px rgba(0,0,0,0.12);
-    }
-
-    .floating-card h4 {
-      font-size: 1.1rem;
-      margin-bottom: 0.4rem;
-    }
-
-    .floating-card p {
-      color: var(--muted);
-      font-size: 0.95rem;
-    }
-
-    .section {
-      padding: 7rem 0;
-    }
-
-    .section-title {
-      text-align: center;
-      margin-bottom: 4rem;
-    }
-
-    .section-title h2 {
-      font-size: 4rem;
-      letter-spacing: -3px;
-      margin-bottom: 1rem;
-    }
-
-    .section-title p {
-      color: var(--muted);
-      font-size: 1.05rem;
-    }
-
-    .product-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 2rem;
-    }
-
-    .product-card {
-      background: white;
-      border-radius: 32px;
-      overflow: hidden;
-      border: 1px solid var(--border);
-      transition: 0.4s ease;
-      position: relative;
-    }
-
-    .product-card:hover {
-      transform: translateY(-10px);
-      box-shadow: 0 30px 60px rgba(0,0,0,0.08);
-    }
-
-    .badge {
-      position: absolute;
-      top: 20px;
-      left: 20px;
-      background: white;
-      padding: 0.5rem 1rem;
-      border-radius: 999px;
-      font-size: 0.85rem;
-      font-weight: 700;
-      z-index: 5;
-    }
-
-    .product-card img {
-      width: 100%;
-      height: 460px;
-      object-fit: cover;
-    }
-
-    .product-info {
-      padding: 1.8rem;
-    }
-
-    .product-info h3 {
-      font-size: 1.3rem;
-      margin-bottom: 0.6rem;
-    }
-
-    .price {
-      color: var(--gold);
-      font-size: 1.3rem;
-      font-weight: 800;
-      margin-bottom: 1.3rem;
-    }
-
-    .features-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 2rem;
-    }
-
-    .feature-box {
-      background: white;
-      padding: 2.5rem;
-      border-radius: 32px;
-      border: 1px solid var(--border);
-      transition: 0.3s ease;
-    }
-
-    .feature-box:hover {
-      transform: translateY(-6px);
-    }
-
-    .feature-box h3 {
-      margin-bottom: 1rem;
-      font-size: 1.4rem;
-    }
-
-    .feature-box p {
-      color: var(--muted);
-      line-height: 1.8;
-    }
-
-    .newsletter-box {
-      background: linear-gradient(135deg, #111111, #222222);
-      color: white;
-      border-radius: 40px;
-      padding: 5rem;
-      text-align: center;
-    }
-
-    .newsletter-box h2 {
-      font-size: 4rem;
-      margin-bottom: 1rem;
-      letter-spacing: -3px;
-    }
-
-    .newsletter-box p {
-      color: rgba(255,255,255,0.7);
-      max-width: 700px;
-      margin: auto;
-      margin-bottom: 2rem;
-      line-height: 1.8;
-    }
-
-    .newsletter-form {
-      display: flex;
-      justify-content: center;
-      gap: 1rem;
-      flex-wrap: wrap;
-    }
-
-    .newsletter-form input {
-      width: 360px;
-      padding: 1.1rem 1.4rem;
-      border-radius: 999px;
-      border: none;
-      outline: none;
-      font-size: 1rem;
-    }
-
-    footer {
-      padding: 3rem 0;
-      text-align: center;
-      color: var(--muted);
-    }
-
-    @media(max-width: 980px) {
-
-      .hero,
-      .product-grid,
-      .features-grid {
-        grid-template-columns: 1fr;
+    <style>
+      :root {
+        --bg: #050505;
+        --card: #101010;
+        --text: #ffffff;
+        --muted: #999999;
+        --line: rgba(255,255,255,0.08);
       }
 
-      .hero h1 {
-        font-size: 3.8rem;
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
       }
 
-      .section-title h2 {
-        font-size: 2.8rem;
+      body {
+        background: var(--bg);
+        color: var(--text);
+        font-family: Inter, Arial, sans-serif;
+        overflow-x: hidden;
       }
 
-      .newsletter-box h2 {
-        font-size: 2.8rem;
+      a {
+        text-decoration: none;
+        color: inherit;
       }
 
-      .hero-image img {
-        height: 600px;
+      .container {
+        width: 92%;
+        max-width: 1400px;
+        margin: auto;
+      }
+
+      header {
+        position: fixed;
+        width: 100%;
+        top: 0;
+        left: 0;
+        z-index: 1000;
+        backdrop-filter: blur(20px);
+        border-bottom: 1px solid var(--line);
+        background: rgba(5,5,5,0.7);
+      }
+
+      nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 22px 0;
+      }
+
+      .logo {
+        font-size: 1.4rem;
+        font-weight: 700;
+        letter-spacing: 3px;
       }
 
       .nav-links {
-        display: none;
+        display: flex;
+        gap: 28px;
       }
 
-      .floating-card {
-        left: 20px;
+      .nav-links a {
+        color: var(--muted);
+        transition: 0.3s;
       }
-    }
 
-  </style>
-</head>
+      .nav-links a:hover {
+        color: white;
+      }
 
-<body>
+      .hero {
+        min-height: 100vh;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        align-items: center;
+        gap: 60px;
+        padding-top: 120px;
+      }
 
-<header>
-  <div class="container">
-    <nav>
+      .hero-text h1 {
+        font-size: 5rem;
+        line-height: 0.95;
+        margin-bottom: 24px;
+      }
 
-      <div class="logo">
-        Amic<span>Underwear</span>
-      </div>
+      .hero-text p {
+        color: var(--muted);
+        font-size: 1.1rem;
+        max-width: 550px;
+        line-height: 1.7;
+        margin-bottom: 35px;
+      }
 
-      <div class="nav-right">
+      .hero-buttons {
+        display: flex;
+        gap: 18px;
+        flex-wrap: wrap;
+      }
 
-        <div class="nav-links">
-          <a href="#shop">Shop</a>
-          <a href="#why">Why Us</a>
-          <a href="#newsletter">Newsletter</a>
-        </div>
+      .btn {
+        padding: 15px 28px;
+        border-radius: 999px;
+        font-weight: 600;
+        transition: 0.3s;
+      }
 
-        <a href="#shop" class="btn btn-dark">
-          Shop Now
-        </a>
+      .btn-primary {
+        background: white;
+        color: black;
+      }
 
-      </div>
+      .btn-primary:hover {
+        transform: translateY(-2px);
+      }
 
-    </nav>
-  </div>
-</header>
+      .btn-secondary {
+        border: 1px solid var(--line);
+        color: white;
+      }
 
-<main>
+      .hero-image img {
+        width: 100%;
+        height: 85vh;
+        object-fit: cover;
+        border-radius: 30px;
+      }
 
-<section class="hero container">
+      .section {
+        padding: 120px 0;
+      }
 
-  <div class="hero-text">
+      .section-title {
+        font-size: 2.5rem;
+        margin-bottom: 50px;
+      }
 
-    <small>Luxury Comfort • Premium Quality</small>
+      .products {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 30px;
+      }
 
-    <h1>
-      Underwear designed to feel beautiful.
-    </h1>
+      .product-card {
+        background: var(--card);
+        border: 1px solid var(--line);
+        border-radius: 28px;
+        overflow: hidden;
+        transition: 0.4s;
+      }
 
-    <p>
-      Discover premium collections crafted for elegance, softness and confidence.
-      Minimal luxury designed for modern women.
-    </p>
+      .product-card:hover {
+        transform: translateY(-8px);
+      }
 
-    <div class="hero-buttons">
+      .product-card img {
+        width: 100%;
+        height: 420px;
+        object-fit: cover;
+      }
 
-      <a href="#shop" class="btn btn-dark">
-        Explore Collection
-      </a>
+      .product-info {
+        padding: 24px;
+      }
 
-      <a href="#why" class="btn btn-light">
-        Why AmicUnderwear
-      </a>
+      .product-info h3 {
+        font-size: 1.3rem;
+        margin-bottom: 12px;
+      }
 
-    </div>
+      .product-info p {
+        color: var(--muted);
+        line-height: 1.6;
+        margin-bottom: 20px;
+      }
 
-  </div>
+      .price-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
 
-  <div class="hero-image">
+      .price {
+        font-size: 1.2rem;
+        font-weight: 700;
+      }
 
-    <img
-      src="/images/hero.jpg"
-      alt="Luxury fashion"
-    />
+      .buy-btn {
+        background: white;
+        color: black;
+        padding: 10px 18px;
+        border-radius: 999px;
+        font-weight: 600;
+      }
 
-    <div class="floating-card">
-      <h4>Trusted by Women</h4>
-      <p>Premium comfort with elegant style.</p>
-    </div>
+      .about {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 60px;
+        align-items: center;
+      }
 
-  </div>
+      .about img {
+        width: 100%;
+        border-radius: 28px;
+        height: 650px;
+        object-fit: cover;
+      }
 
-</section>
+      .about-text p {
+        color: var(--muted);
+        line-height: 1.8;
+        margin-top: 20px;
+        font-size: 1.05rem;
+      }
 
-<section class="section container" id="shop">
+      .features {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 24px;
+      }
 
-  <div class="section-title">
+      .feature {
+        border: 1px solid var(--line);
+        background: var(--card);
+        border-radius: 24px;
+        padding: 30px;
+      }
 
-    <h2>Featured Collection</h2>
+      .feature h3 {
+        margin-bottom: 12px;
+      }
 
-    <p>
-      Designed with premium fabrics and timeless elegance.
-    </p>
+      .feature p {
+        color: var(--muted);
+        line-height: 1.6;
+      }
 
-  </div>
+      footer {
+        padding: 80px 0;
+        border-top: 1px solid var(--line);
+      }
 
-  <div class="product-grid">
+      .footer-content {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 30px;
+      }
 
-    {
-      products.map((product) => (
+      .footer-content p {
+        color: var(--muted);
+      }
 
-        <div class="product-card">
+      @media (max-width: 900px) {
+        .hero,
+        .about {
+          grid-template-columns: 1fr;
+        }
 
-          <div class="badge">
-            {product.badge}
+        .hero-text h1 {
+          font-size: 3.5rem;
+        }
+
+        .hero-image img {
+          height: 500px;
+        }
+
+        .about img {
+          height: 500px;
+        }
+
+        .nav-links {
+          display: none;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <header>
+      <div class="container">
+        <nav>
+          <div class="logo">AMICBRIDGE</div>
+
+          <div class="nav-links">
+            <a href="#shop">Shop</a>
+            <a href="#about">About</a>
+            <a href="#features">Features</a>
           </div>
+        </nav>
+      </div>
+    </header>
 
-          <img
-            src={product.image}
-            alt={product.name}
-          />
+    <main class="container">
+      <section class="hero">
+        <div class="hero-text">
+          <h1>
+            Luxury
+            <br />
+            Underwear
+            <br />
+            Redefined
+          </h1>
 
-          <div class="product-info">
+          <p>
+            AmicBridge combines modern luxury, minimal aesthetics,
+            and premium comfort into a next-generation fashion brand.
+          </p>
 
-            <h3>{product.name}</h3>
-
-            <div class="price">
-              {product.price}
-            </div>
-
-            <a href="#" class="btn btn-dark">
-              Add to Cart
+          <div class="hero-buttons">
+            <a href="#shop" class="btn btn-primary">
+              Shop Collection
             </a>
 
+            <a href="#about" class="btn btn-secondary">
+              Learn More
+            </a>
           </div>
-
         </div>
 
-      ))
-    }
+        <div class="hero-image">
+          <img
+            src="https://images.unsplash.com/photo-1496747611176-843222e1e57c?q=80&w=1400&auto=format&fit=crop"
+            alt="Luxury Fashion"
+          />
+        </div>
+      </section>
 
-  </div>
+      <section class="section" id="shop">
+        <h2 class="section-title">Featured Collection</h2>
 
-</section>
+        <div class="products">
+          {
+            products.map((product) => (
+              <div class="product-card">
+                <img src={product.image} alt={product.name} />
 
-<section class="section container" id="why">
+                <div class="product-info">
+                  <h3>{product.name}</h3>
 
-  <div class="section-title">
+                  <p>{product.description}</p>
 
-    <h2>Why Women Love AmicUnderwear</h2>
+                  <div class="price-row">
+                    <span class="price">{product.price}</span>
 
-    <p>
-      Luxury comfort made for confidence and everyday elegance.
-    </p>
+                    <a href="#" class="buy-btn">
+                      Buy Now
+                    </a>
+                  </div>
+                </div>
+              </div>
+            ))
+          }
+        </div>
+      </section>
 
-  </div>
+      <section class="section about" id="about">
+        <img
+          src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?q=80&w=1200&auto=format&fit=crop"
+          alt="About AmicBridge"
+        />
 
-  <div class="features-grid">
+        <div class="about-text">
+          <h2 class="section-title">
+            Designed For The Future
+          </h2>
 
-    <div class="feature-box">
+          <p>
+            AmicBridge is more than a fashion brand.
+            It is a modern luxury experience built for the new internet.
+          </p>
 
-      <h3>Premium Fabrics</h3>
+          <p>
+            We combine minimalist aesthetics, premium materials,
+            and digital-first commerce to create timeless collections.
+          </p>
 
-      <p>
-        Soft breathable materials designed for all-day comfort and luxury feel.
-      </p>
+          <p>
+            Built with elegance, speed, and modern payment systems
+            including crypto integration.
+          </p>
+        </div>
+      </section>
 
-    </div>
+      <section class="section" id="features">
+        <h2 class="section-title">Why AmicBridge</h2>
 
-    <div class="feature-box">
+        <div class="features">
+          <div class="feature">
+            <h3>Premium Materials</h3>
 
-      <h3>Elegant Design</h3>
+            <p>
+              High-quality fabrics with luxury comfort and feel.
+            </p>
+          </div>
 
-      <p>
-        Modern minimalist collections inspired by timeless feminine style.
-      </p>
+          <div class="feature">
+            <h3>Modern Design</h3>
 
-    </div>
+            <p>
+              Clean minimal branding inspired by luxury fashion houses.
+            </p>
+          </div>
 
-    <div class="feature-box">
+          <div class="feature">
+            <h3>Crypto Payments</h3>
 
-      <h3>Fast Worldwide Shipping</h3>
+            <p>
+              Seamless checkout with USDC and modern payment systems.
+            </p>
+          </div>
 
-      <p>
-        Reliable delivery with easy returns to create confidence when shopping.
-      </p>
+          <div class="feature">
+            <h3>Fast Experience</h3>
 
-    </div>
+            <p>
+              Optimized for mobile devices and lightning-fast loading.
+            </p>
+          </div>
+        </div>
+      </section>
+    </main>
 
-  </div>
+    <footer>
+      <div class="container footer-content">
+        <div>
+          <div class="logo">AMICBRIDGE</div>
+        </div>
 
-</section>
-
-<section class="section container" id="newsletter">
-
-  <div class="newsletter-box">
-
-    <h2>Get 10% Off Your First Order</h2>
-
-    <p>
-      Join the AmicUnderwear newsletter for exclusive launches, premium collections and special offers.
-    </p>
-
-    <form class="newsletter-form">
-
-      <input
-        type="email"
-        placeholder="Enter your email address"
-      />
-
-      <button class="btn btn-dark">
-        Subscribe
-      </button>
-
-    </form>
-
-  </div>
-
-</section>
-
-</main>
-
-<footer>
-  © 2026 AmicUnderwear. Luxury Women's Underwear.
-</footer>
-
-</body>
+        <p>
+          © 2026 AmicBridge. All rights reserved.
+        </p>
+      </div>
+    </footer>
+  </body>
 </html>
