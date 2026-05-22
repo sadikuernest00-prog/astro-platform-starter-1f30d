@@ -1,3 +1,4 @@
+
 ---
 const products = [
   {
@@ -6,8 +7,8 @@ const products = [
     price: 599,
     image: "/images/nude-bra.jpg",
     badge: "BEST SELLER",
+    description: "Ultra-soft premium satin comfort with elegant support.",
     stripe: "https://buy.stripe.com/test_6oU5kC57V9y759y6jP7Re04",
-    monero: "https://nowpayments.io/payment/?iid=4680546954",
   },
 
   {
@@ -16,8 +17,8 @@ const products = [
     price: 599,
     image: "/images/black-bra.jpg",
     badge: "NEW",
+    description: "Luxury black collection designed for confidence.",
     stripe: "https://buy.stripe.com/test_bJecN4gQD4dN31qfUp7Re03",
-    monero: "https://nowpayments.io/payment/?iid=4680546954",
   },
 
   {
@@ -26,8 +27,8 @@ const products = [
     price: 499,
     image: "/images/black-set.jpg",
     badge: "HOT",
+    description: "Modern activewear comfort for everyday elegance.",
     stripe: "https://buy.stripe.com/test_4gM5kCeIvdOnfOccId7Re02",
-    monero: "https://nowpayments.io/payment/?iid=4680546954",
   },
 
   {
@@ -35,19 +36,25 @@ const products = [
     name: "Aura Luxe",
     price: 599,
     image: "/images/black-b.jpg",
-    badge: "NEW",
+    badge: "LIMITED",
+    description: "Elegant premium luxury crafted for softness.",
     stripe: "https://buy.stripe.com/test_4gM3cu2ZNcKjdG423z7Re01",
-    monero: "https://nowpayments.io/payment/?iid=4680546954",
   },
 ];
 ---
 
 <html lang="en">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
-    <title>Amic Underwear</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Amic Underwear — Luxury Comfort & Elegance</title>
+
+    <meta
+      name="description"
+      content="Premium luxury underwear designed for comfort, confidence and elegance."
+    />
 
     <style>
 
@@ -57,89 +64,211 @@ const products = [
         box-sizing: border-box;
       }
 
+      html {
+        scroll-behavior: smooth;
+      }
+
       body {
         font-family: Arial, sans-serif;
-        background: #f5f5f5;
-        color: black;
+        background: #f7f7f7;
+        color: #111;
+        overflow-x: hidden;
+      }
+
+      a {
+        text-decoration: none;
       }
 
       .top-banner {
-        background: black;
+        background: linear-gradient(to right, #000, #222);
         color: white;
         text-align: center;
-        padding: 12px;
+        padding: 14px;
         font-size: 14px;
         font-weight: bold;
+        letter-spacing: 1px;
       }
 
       .navbar {
+        position: sticky;
+        top: 0;
+        z-index: 999;
         width: 100%;
-        padding: 24px 40px;
+        background: rgba(255,255,255,0.95);
+        backdrop-filter: blur(10px);
+        border-bottom: 1px solid #eee;
         display: flex;
         justify-content: space-between;
         align-items: center;
-        background: white;
-        border-bottom: 1px solid #eee;
-        position: sticky;
-        top: 0;
-        z-index: 1000;
+        padding: 22px 40px;
       }
 
       .logo {
         font-size: 42px;
         font-weight: 900;
+        letter-spacing: -1px;
       }
 
       .logo span {
         color: #c1965c;
       }
 
+      .nav-links {
+        display: flex;
+        gap: 28px;
+        align-items: center;
+      }
+
+      .nav-links a {
+        color: #111;
+        font-weight: bold;
+        font-size: 15px;
+      }
+
       .cart-btn {
         background: black;
         color: white;
         border: none;
-        padding: 14px 24px;
         border-radius: 999px;
-        font-size: 16px;
+        padding: 14px 24px;
         font-weight: bold;
         cursor: pointer;
+        transition: 0.25s;
       }
 
       .hero {
+        min-height: 92vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
         text-align: center;
-        padding: 70px 20px 40px;
+        padding: 100px 20px;
+        background:
+          linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.45)),
+          url('/images/hero.jpg');
+        background-size: cover;
+        background-position: center;
+        color: white;
+      }
+
+      .hero-content {
+        max-width: 900px;
+      }
+
+      .hero-tag {
+        display: inline-block;
+        padding: 10px 20px;
+        border-radius: 999px;
+        background: rgba(255,255,255,0.15);
+        backdrop-filter: blur(10px);
+        margin-bottom: 25px;
+        font-size: 14px;
+        font-weight: bold;
       }
 
       .hero h1 {
-        font-size: 64px;
+        font-size: 82px;
+        line-height: 1;
+        margin-bottom: 26px;
         font-weight: 900;
-        margin-bottom: 20px;
       }
 
       .hero p {
+        font-size: 24px;
+        line-height: 1.7;
+        color: rgba(255,255,255,0.9);
+        max-width: 700px;
+        margin: auto;
+      }
+
+      .hero-buttons {
+        margin-top: 40px;
+        display: flex;
+        justify-content: center;
+        gap: 18px;
+        flex-wrap: wrap;
+      }
+
+      .hero-btn {
+        padding: 18px 36px;
+        border-radius: 999px;
+        font-size: 18px;
+        font-weight: bold;
+        transition: 0.25s;
+      }
+
+      .primary-btn {
+        background: #c1965c;
+        color: white;
+      }
+
+      .secondary-btn {
+        border: 2px solid white;
+        color: white;
+      }
+
+      .stats {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 20px;
+        max-width: 1400px;
+        margin: -70px auto 0;
+        padding: 0 20px;
+        position: relative;
+        z-index: 2;
+      }
+
+      .stat-card {
+        background: white;
+        border-radius: 28px;
+        padding: 40px;
+        text-align: center;
+        box-shadow: 0 20px 50px rgba(0,0,0,0.08);
+      }
+
+      .stat-card h3 {
+        font-size: 42px;
+        margin-bottom: 12px;
+      }
+
+      .section-title {
+        text-align: center;
+        font-size: 58px;
+        font-weight: 900;
+        margin-bottom: 18px;
+      }
+
+      .section-subtitle {
+        text-align: center;
+        max-width: 760px;
+        margin: auto auto 60px;
         color: #666;
-        font-size: 22px;
+        font-size: 20px;
+        line-height: 1.8;
+      }
+
+      .products-section {
+        padding: 120px 20px 60px;
       }
 
       .products {
         max-width: 1450px;
         margin: auto;
-        padding: 30px;
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-        gap: 25px;
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+        gap: 28px;
       }
 
       .card {
         background: white;
-        border-radius: 28px;
+        border-radius: 32px;
         overflow: hidden;
-        transition: 0.3s;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        box-shadow: 0 18px 45px rgba(0,0,0,0.06);
+        transition: 0.35s;
       }
 
       .card:hover {
-        transform: translateY(-6px);
+        transform: translateY(-10px);
       }
 
       .image-wrapper {
@@ -149,40 +278,45 @@ const products = [
 
       .card img {
         width: 100%;
-        height: 420px;
+        height: 460px;
         object-fit: cover;
         transition: 0.4s;
       }
 
-      .card img:hover {
+      .card:hover img {
         transform: scale(1.05);
       }
 
       .badge {
         position: absolute;
-        top: 18px;
-        left: 18px;
+        top: 20px;
+        left: 20px;
         background: #c1965c;
         color: white;
         padding: 10px 18px;
         border-radius: 999px;
-        font-size: 14px;
+        font-size: 13px;
         font-weight: bold;
       }
 
       .content {
-        padding: 26px;
+        padding: 30px;
       }
 
       .content h2 {
         font-size: 34px;
-        margin-bottom: 12px;
-        font-weight: 900;
+        margin-bottom: 14px;
+      }
+
+      .product-description {
+        color: #666;
+        line-height: 1.7;
+        margin-bottom: 20px;
       }
 
       .price {
-        color: #c1965c;
         font-size: 42px;
+        color: #c1965c;
         font-weight: 900;
         margin-bottom: 20px;
       }
@@ -190,11 +324,11 @@ const products = [
       .sizes,
       .quantity {
         width: 100%;
-        padding: 14px;
-        border-radius: 12px;
         border: 1px solid #ddd;
+        border-radius: 14px;
+        padding: 15px;
         margin-bottom: 14px;
-        font-size: 18px;
+        font-size: 16px;
       }
 
       .buttons {
@@ -204,19 +338,15 @@ const products = [
       }
 
       .btn {
+        width: 100%;
         border: none;
-        text-decoration: none;
-        text-align: center;
-        padding: 16px;
         border-radius: 999px;
-        font-size: 18px;
+        padding: 18px;
+        font-size: 17px;
         font-weight: bold;
         cursor: pointer;
-        transition: 0.2s;
-      }
-
-      .btn:hover {
-        transform: scale(1.02);
+        transition: 0.25s;
+        text-align: center;
       }
 
       .cart-add {
@@ -229,9 +359,116 @@ const products = [
         color: white;
       }
 
-      .monero {
-        background: #444;
+      .trust-bar {
+        margin-top: 14px;
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+
+      .trust-pill {
+        padding: 10px 14px;
+        border-radius: 999px;
+        background: #f1f1f1;
+        font-size: 13px;
+        font-weight: bold;
+      }
+
+      .reviews-section,
+      .trustpilot-section {
+        padding: 100px 20px;
+      }
+
+      .reviews-grid,
+      .trustpilot-grid {
+        max-width: 1450px;
+        margin: auto;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+        gap: 25px;
+      }
+
+      .review-card,
+      .trustpilot-card {
+        background: white;
+        border-radius: 28px;
+        padding: 35px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+      }
+
+      .stars,
+      .tp-stars {
+        color: #00b67a;
+        font-size: 24px;
+        margin-bottom: 18px;
+      }
+
+      .review-text,
+      .trustpilot-card p {
+        color: #555;
+        line-height: 1.8;
+        font-size: 18px;
+      }
+
+      .review-name {
+        margin-top: 18px;
+        font-weight: bold;
+      }
+
+      .trustpilot-header {
+        text-align: center;
+        margin-bottom: 60px;
+      }
+
+      .trustpilot-stars {
+        color: #00b67a;
+        font-size: 42px;
+        margin-bottom: 20px;
+      }
+
+      .trustpilot-header h2 {
+        font-size: 58px;
+        margin-bottom: 18px;
+      }
+
+      .newsletter {
+        padding: 120px 20px;
+        background: black;
         color: white;
+        text-align: center;
+      }
+
+      .newsletter h2 {
+        font-size: 58px;
+        margin-bottom: 20px;
+      }
+
+      .newsletter-form {
+        max-width: 700px;
+        margin: auto;
+        display: flex;
+        gap: 14px;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+
+      .newsletter-form input {
+        flex: 1;
+        min-width: 260px;
+        padding: 18px;
+        border-radius: 999px;
+        border: none;
+        font-size: 16px;
+      }
+
+      .newsletter-form button {
+        padding: 18px 32px;
+        border-radius: 999px;
+        border: none;
+        background: #c1965c;
+        color: white;
+        font-weight: bold;
+        cursor: pointer;
       }
 
       .cart-sidebar {
@@ -241,11 +478,11 @@ const products = [
         width: 420px;
         height: 100%;
         background: white;
-        box-shadow: -10px 0 30px rgba(0,0,0,0.1);
         padding: 30px;
-        transition: 0.4s;
+        transition: 0.35s;
         z-index: 2000;
         overflow-y: auto;
+        box-shadow: -10px 0 40px rgba(0,0,0,0.15);
       }
 
       .cart-sidebar.active {
@@ -256,50 +493,37 @@ const products = [
         position: absolute;
         top: 20px;
         right: 20px;
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        border: none;
         background: black;
         color: white;
-        border: none;
-        width: 42px;
-        height: 42px;
-        border-radius: 50%;
-        font-size: 20px;
         cursor: pointer;
-        font-weight: bold;
       }
 
       .cart-title {
         font-size: 34px;
-        font-weight: 900;
-        margin-bottom: 25px;
+        margin-bottom: 30px;
       }
 
       .cart-item {
+        padding: 20px 0;
         border-bottom: 1px solid #eee;
-        padding: 18px 0;
-      }
-
-      .cart-item h4 {
-        margin-bottom: 10px;
       }
 
       .cart-total {
-        font-size: 28px;
+        font-size: 30px;
         font-weight: 900;
         margin-top: 30px;
       }
 
-      .checkout-buttons {
-        display: flex;
-        flex-direction: column;
-        gap: 14px;
-        margin-top: 20px;
-      }
-
       .checkout-btn {
+        margin-top: 20px;
         width: 100%;
         padding: 18px;
-        border: none;
         border-radius: 999px;
+        border: none;
         background: black;
         color: white;
         font-size: 18px;
@@ -307,194 +531,94 @@ const products = [
         cursor: pointer;
       }
 
-      .monero-checkout {
-        background: #444;
-      }
-
-      .remove-btn {
-        margin-top: 10px;
-        background: #e53935;
-        color: white;
-        border: none;
-        padding: 10px 16px;
-        border-radius: 999px;
-        cursor: pointer;
-        font-weight: bold;
-      }
-
-      .reviews-section {
-        max-width: 1450px;
-        margin: 80px auto;
-        padding: 20px;
-      }
-
-      .reviews-title {
-        text-align: center;
-        font-size: 52px;
-        margin-bottom: 50px;
-        font-weight: 900;
-      }
-
-      .reviews-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-        gap: 25px;
-      }
-
-      .review-card {
-        background: white;
-        padding: 35px;
-        border-radius: 28px;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-      }
-
-      .stars {
-        color: #c1965c;
-        font-size: 24px;
-        margin-bottom: 18px;
-      }
-
-      .review-text {
-        color: #555;
-        line-height: 1.7;
-        font-size: 18px;
-        margin-bottom: 20px;
-      }
-
-      .review-name {
-        font-size: 20px;
-        font-weight: bold;
-      }
-
-      .trust-section {
-        max-width: 1450px;
-        margin: 80px auto;
-        padding: 20px;
-      }
-
-      .trust-title {
-        text-align: center;
-        font-size: 52px;
-        font-weight: 900;
-        margin-bottom: 16px;
-      }
-
-      .trust-subtitle {
-        text-align: center;
-        color: #666;
-        font-size: 20px;
-        margin-bottom: 50px;
-      }
-
-      .trust-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-        gap: 25px;
-      }
-
-      .trust-card {
-        background: white;
-        padding: 35px;
-        border-radius: 28px;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-      }
-
-      .trust-card h3 {
-        font-size: 24px;
-        margin-bottom: 18px;
-      }
-
-      .trust-card p {
-        color: #666;
-        line-height: 1.7;
-        font-size: 17px;
-      }
-
-      .policy-section {
-        max-width: 1200px;
-        margin: 80px auto;
-        padding: 20px;
-      }
-
-      .policy-title {
-        text-align: center;
-        font-size: 52px;
-        font-weight: 900;
-        margin-bottom: 40px;
-      }
-
-      .policy-box {
-        background: white;
-        padding: 40px;
-        border-radius: 28px;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-        color: #555;
-        line-height: 1.9;
-        font-size: 18px;
-      }
-
-      .contact-section {
-        max-width: 1000px;
-        margin: 80px auto;
-        padding: 20px;
-        text-align: center;
-      }
-
-      .contact-container {
-        background: white;
-        padding: 50px;
-        border-radius: 28px;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-      }
-
-      .contact-title {
-        font-size: 48px;
-        font-weight: 900;
-        margin-bottom: 20px;
-      }
-
-      .contact-text {
-        color: #666;
-        font-size: 20px;
-        margin-bottom: 16px;
-      }
-
-      .contact-email {
-        font-size: 24px;
-        font-weight: bold;
-        color: #c1965c;
-      }
-
       .footer {
-        margin-top: 80px;
-        padding: 60px 20px;
-        text-align: center;
         background: white;
+        padding: 80px 20px;
+      }
+
+      .footer-container {
+        max-width: 1450px;
+        margin: auto;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 40px;
       }
 
       .footer h3 {
-        font-size: 42px;
-        margin-bottom: 14px;
+        margin-bottom: 20px;
+        font-size: 24px;
       }
 
-      .footer p {
+      .footer p,
+      .footer a {
         color: #666;
-        font-size: 18px;
+        line-height: 2;
+      }
+
+      .footer-bottom {
+        margin-top: 60px;
+        text-align: center;
+        color: #777;
+      }
+
+      @media (max-width: 768px) {
+
+        .hero h1 {
+          font-size: 48px;
+        }
+
+        .hero p {
+          font-size: 18px;
+        }
+
+        .navbar {
+          padding: 18px 20px;
+        }
+
+        .nav-links {
+          display: none;
+        }
+
+        .logo {
+          font-size: 28px;
+        }
+
+        .section-title,
+        .trustpilot-header h2,
+        .newsletter h2 {
+          font-size: 42px;
+        }
+
+        .card img {
+          height: 360px;
+        }
+
+        .cart-sidebar {
+          width: 100%;
+        }
+
       }
 
     </style>
+
   </head>
 
   <body>
 
     <div class="top-banner">
-      FREE WORLDWIDE SHIPPING ON ORDERS OVER 1000 NOK
+      FREE WORLDWIDE SHIPPING • PREMIUM QUALITY • SECURE CHECKOUT
     </div>
 
     <nav class="navbar">
 
       <div class="logo">
         Amic<span>Underwear</span>
+      </div>
+
+      <div class="nav-links">
+        <a href="#products">Shop</a>
+        <a href="#reviews">Reviews</a>
+        <a href="#trust">Trustpilot</a>
       </div>
 
       <button class="cart-btn" onclick="toggleCart()">
@@ -505,14 +629,21 @@ const products = [
 
     <section class="hero">
 
-      <h1>Luxury Comfort Meets Elegance</h1>
+      <div class="hero-content">
 
-      <p>
-        Premium underwear designed for confidence,
-        softness and modern beauty.
-      </p>
+        <div class="hero-tag">
+          PREMIUM LUXURY UNDERWEAR
+        </div>
+
+        <h1>
+          Confidence Begins With Comfort
+        </h1>
+
+        <p>
+          Luxury underwear crafted with premium softness,
+          elegant design and modern comfort trusted worldwide.
+        </p>
+
+      </div>
 
     </section>
-
-  </body>
-</html>
