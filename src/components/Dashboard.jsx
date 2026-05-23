@@ -1,15 +1,43 @@
-import { useState } from "react";
+import React, {
+  useEffect,
+  useState
+} from "react";
 
 export default function Dashboard() {
+
+  const [mounted, setMounted] =
+    useState(false);
 
   const [wallet, setWallet] =
     useState("");
 
+  /*
+   PREVENT SSR ERRORS
+  */
+  useEffect(() => {
+
+    setMounted(true);
+
+  }, []);
+
+  /*
+   CONNECT WALLET
+  */
   async function connectWallet() {
 
     try {
 
-      if (!window.ethereum) {
+      if (
+        typeof window ===
+        "undefined"
+      ) {
+
+        return;
+      }
+
+      if (
+        !window.ethereum
+      ) {
 
         alert(
           "Please install MetaMask"
@@ -36,6 +64,14 @@ export default function Dashboard() {
         "Wallet connection failed"
       );
     }
+  }
+
+  /*
+   WAIT FOR CLIENT LOAD
+  */
+  if (!mounted) {
+
+    return null;
   }
 
   return (
