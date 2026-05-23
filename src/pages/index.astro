@@ -14,20 +14,23 @@ import Dashboard from "../components/Dashboard.jsx";
     />
 
     <title>
-      AmicBridge AI Escrow Security
+      AmicBridge AI Escrow
     </title>
 
     <style>
 
       * {
+
         margin: 0;
+
         padding: 0;
+
         box-sizing: border-box;
       }
 
       body {
 
-        background: black;
+        background: #000;
 
         color: white;
 
@@ -48,7 +51,7 @@ import Dashboard from "../components/Dashboard.jsx";
         background:
           radial-gradient(
             circle at top,
-            rgba(255, 215, 0, 0.12),
+            rgba(250,204,21,0.12),
             transparent 40%
           );
 
@@ -72,37 +75,40 @@ import Dashboard from "../components/Dashboard.jsx";
 
       .badge {
 
-        border: 1px solid rgba(255,255,255,0.1);
+        background:
+          rgba(255,255,255,0.05);
 
-        background: rgba(255,255,255,0.04);
+        border:
+          1px solid rgba(255,255,255,0.08);
 
-        padding: 10px 20px;
+        padding: 12px 22px;
 
         border-radius: 999px;
-
-        margin-bottom: 30px;
 
         color: #facc15;
 
         font-size: 14px;
 
         letter-spacing: 1px;
+
+        margin-bottom: 40px;
       }
 
       h1 {
 
-        font-size: 72px;
+        font-size: 80px;
+
+        line-height: 1.05;
 
         text-align: center;
 
-        max-width: 1100px;
-
-        line-height: 1.05;
+        max-width: 1200px;
 
         font-weight: 900;
       }
 
       .gold {
+
         color: #facc15;
       }
 
@@ -110,20 +116,20 @@ import Dashboard from "../components/Dashboard.jsx";
 
         margin-top: 40px;
 
-        max-width: 900px;
+        color: #a1a1aa;
 
         text-align: center;
-
-        color: #a1a1aa;
 
         font-size: 24px;
 
         line-height: 1.8;
+
+        max-width: 950px;
       }
 
-      .cards {
+      .features {
 
-        margin-top: 90px;
+        margin-top: 100px;
 
         display: grid;
 
@@ -153,8 +159,6 @@ import Dashboard from "../components/Dashboard.jsx";
 
         border-radius: 30px;
 
-        backdrop-filter: blur(10px);
-
         transition: 0.3s ease;
       }
 
@@ -164,14 +168,14 @@ import Dashboard from "../components/Dashboard.jsx";
           translateY(-8px);
 
         border-color:
-          rgba(250,204,21,0.5);
+          rgba(250,204,21,0.4);
       }
 
       .card h2 {
 
-        font-size: 26px;
+        font-size: 28px;
 
-        margin-bottom: 18px;
+        margin-bottom: 20px;
       }
 
       .card p {
@@ -208,7 +212,7 @@ import Dashboard from "../components/Dashboard.jsx";
 
       .security h2 {
 
-        font-size: 52px;
+        font-size: 54px;
 
         margin-bottom: 30px;
       }
@@ -242,9 +246,9 @@ import Dashboard from "../components/Dashboard.jsx";
 
         font-size: 24px;
 
-        margin-bottom: 16px;
-
         color: #facc15;
+
+        margin-bottom: 16px;
       }
 
       .security-box p {
@@ -254,22 +258,22 @@ import Dashboard from "../components/Dashboard.jsx";
         line-height: 1.7;
       }
 
-      .dashboard-wrapper {
-
-        margin-top: 120px;
+      .dashboard {
 
         width: 100%;
 
         max-width: 1400px;
+
+        margin-top: 120px;
       }
 
       footer {
 
         margin-top: 120px;
 
-        text-align: center;
-
         color: #71717a;
+
+        text-align: center;
 
         padding-bottom: 60px;
 
@@ -294,26 +298,26 @@ import Dashboard from "../components/Dashboard.jsx";
 
       <h1>
 
-        Enterprise Escrow Infrastructure
+        Secure Escrow Infrastructure
 
         <span class="gold">
-          Powered By AI Fraud Detection
+
+          For International Trade
+
         </span>
 
       </h1>
 
       <p class="subtitle">
 
-        AmicBridge combines blockchain escrow,
-        USDC smart contracts, decentralized
-        settlement and real-time AI fraud
-        analysis to secure international trade,
-        crypto payments and high-value
-        transactions.
+        AmicBridge combines AI fraud detection,
+        USDC smart contracts and decentralized
+        blockchain settlement to secure
+        international trade and crypto payments.
 
       </p>
 
-      <div class="cards">
+      <div class="features">
 
         <div class="card">
 
@@ -324,7 +328,7 @@ import Dashboard from "../components/Dashboard.jsx";
           <p>
 
             Funds are secured directly
-            onchain through immutable
+            onchain using immutable
             escrow contracts deployed
             on Base blockchain.
 
@@ -340,11 +344,10 @@ import Dashboard from "../components/Dashboard.jsx";
 
           <p>
 
-            Machine intelligence analyzes
-            transaction behavior, wallet
-            reputation, escrow velocity,
-            amount anomalies and suspicious
-            patterns before settlement.
+            Artificial intelligence analyzes
+            suspicious activity, wallet
+            behavior, escrow velocity and
+            transaction anomalies.
 
           </p>
 
@@ -353,13 +356,13 @@ import Dashboard from "../components/Dashboard.jsx";
         <div class="card">
 
           <h2>
-            Stablecoin Settlement
+            USDC Settlement
           </h2>
 
           <p>
 
-            USDC powered payments allow
-            instant global settlement with
+            Stablecoin settlement enables
+            fast global payments with
             blockchain transparency and
             reduced banking friction.
 
@@ -387,10 +390,9 @@ import Dashboard from "../components/Dashboard.jsx";
 
             <p>
 
-              Detects suspicious wallet
-              activity, blacklist matches,
-              unusual behavior and risky
-              transaction patterns.
+              Detect suspicious wallets,
+              scam behavior and blacklist
+              matches before settlement.
 
             </p>
 
@@ -399,14 +401,14 @@ import Dashboard from "../components/Dashboard.jsx";
           <div class="security-box">
 
             <h3>
-              Transaction Risk Scoring
+              Risk Scoring
             </h3>
 
             <p>
 
-              Every escrow transaction
-              receives dynamic AI risk
-              analysis before approval.
+              Every escrow receives
+              real-time AI transaction
+              risk analysis.
 
             </p>
 
@@ -415,15 +417,15 @@ import Dashboard from "../components/Dashboard.jsx";
           <div class="security-box">
 
             <h3>
-              Anti Scam Protection
+              Escrow Monitoring
             </h3>
 
             <p>
 
-              AI systems identify scam
-              behavior, escrow farming,
-              rapid abuse attempts and
-              abnormal fund movement.
+              Analyze escrow creation
+              frequency, suspicious
+              velocity and abnormal
+              transaction behavior.
 
             </p>
 
@@ -437,10 +439,9 @@ import Dashboard from "../components/Dashboard.jsx";
 
             <p>
 
-              Future integrations include
-              sanctions screening,
-              AML compliance and advanced
-              blockchain analytics.
+              Future-ready architecture
+              for AML, sanctions screening
+              and compliance systems.
 
             </p>
 
@@ -450,7 +451,7 @@ import Dashboard from "../components/Dashboard.jsx";
 
       </section>
 
-      <div class="dashboard-wrapper">
+      <div class="dashboard">
 
         <Dashboard client:load />
 
